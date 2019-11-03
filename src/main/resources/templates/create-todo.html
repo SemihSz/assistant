@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Login</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <form action="/home/create-todo" th:action="@{/home/create-todo}" th:object="${todoRequestModel}" method="post">
+        <div class="container">
+            <label class="col-form-label">Title</label><input type="text" class="form-control" th:field="*{title}">
+        </div>
+        <div class="container">
+            <label class="col-form-label">Description</label><input type="text" class="form-control"
+                                                                    th:field="*{description}">
+        </div>
+        <div class="container">
+            <label class="col-form-label">category</label><input type="text" class="form-control" th:field="*{category}">
+        </div>
+
+        <div class="container">
+            <label class="col-form-label"> Example select</label>
+            <select class="form-control" th:field="*{importantLevel}">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+        </div>
+        <div class="container">
+
+            <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
+
+        </div>
+        <div class="container">
+            <label class="col-form-label">User ID</label><input type="text" class="form-control" th:field="*{userId}">
+        </div>
+        <br>
+        <div class="container">
+            <input type="submit" class="btn btn-success" value="Submit"/>
+        </div>
+
+    </form>
+
+
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

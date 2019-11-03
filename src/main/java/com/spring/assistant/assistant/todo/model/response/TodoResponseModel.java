@@ -1,31 +1,19 @@
-package com.spring.assistant.assistant.home.entity;
+package com.spring.assistant.assistant.todo.model.response;
 
-import lombok.Getter;
-
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-public class Todo {
+public class TodoResponseModel {
 
-    @Id
-    @GeneratedValue
     private long id;
     private String title;
     private String description;
-    private String category;
     private String userId;
-    @Temporal(TemporalType.DATE)
     private Date createdDate;
     private String importantLevel;
-    @Temporal(TemporalType.DATE)
     private Date expectFinishDate;
-    private boolean isFinnished = false;
-    @Temporal(TemporalType.DATE)
     private Date updatedDate;
+    private String taskId;
 
-    public Todo() {
-    }
 
     public long getId() {
         return id;
@@ -49,14 +37,6 @@ public class Todo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getUserId() {
@@ -91,19 +71,19 @@ public class Todo {
         this.expectFinishDate = expectFinishDate;
     }
 
-    public boolean isFinnished() {
-        return isFinnished;
-    }
-
-    public void setFinnished(boolean finnished) {
-        isFinnished = finnished;
-    }
-
     public Date getUpdatedDate() {
         return updatedDate;
     }
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

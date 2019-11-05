@@ -1,17 +1,11 @@
-package com.spring.assistant.assistant.todo.entity;
+package com.spring.assistant.assistant.todo.shared;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class SubTodoEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+public class SubTodoDto {
+
     private long id;
     private String taskId;
     private String subTodoTitle;
@@ -25,52 +19,16 @@ public class SubTodoEntity implements Serializable {
     private Date subTodoUpdateDate;
     private Boolean isFinished = false;
     private String subTaskId;
-    public SubTodoEntity() {
+
+    public SubTodoDto() {
     }
 
-    public String getSubTodoTitle() {
-        return subTodoTitle;
+    public long getId() {
+        return id;
     }
 
-    public SubTodoEntity setSubTodoTitle(String subTodoTitle) {
-        this.subTodoTitle = subTodoTitle;
-        return this;
-    }
-
-    public String getSubTodoDescription() {
-        return subTodoDescription;
-    }
-
-    public SubTodoEntity setSubTodoDescription(String subTodoDescription) {
-        this.subTodoDescription = subTodoDescription;
-        return this;
-    }
-
-    public String getSubTodoCategory() {
-        return subTodoCategory;
-    }
-
-    public SubTodoEntity setSubTodoCategory(String subTodoCategory) {
-        this.subTodoCategory = subTodoCategory;
-        return this;
-    }
-
-    public Date getSubTodoCreatedDate() {
-        return subTodoCreatedDate;
-    }
-
-    public SubTodoEntity setSubTodoCreatedDate(Date subTodoCreatedDate) {
-        this.subTodoCreatedDate = subTodoCreatedDate;
-        return this;
-    }
-
-    public Date getSubTodoFinishDate() {
-        return subTodoFinishDate;
-    }
-
-    public SubTodoEntity setSubTodoFinishDate(Date subTodoFinishDate) {
-        this.subTodoFinishDate = subTodoFinishDate;
-        return this;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTaskId() {
@@ -81,12 +39,44 @@ public class SubTodoEntity implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getSubTaskId() {
-        return subTaskId;
+    public String getSubTodoTitle() {
+        return subTodoTitle;
     }
 
-    public void setSubTaskId(String subTaskId) {
-        this.subTaskId = subTaskId;
+    public void setSubTodoTitle(String subTodoTitle) {
+        this.subTodoTitle = subTodoTitle;
+    }
+
+    public String getSubTodoDescription() {
+        return subTodoDescription;
+    }
+
+    public void setSubTodoDescription(String subTodoDescription) {
+        this.subTodoDescription = subTodoDescription;
+    }
+
+    public String getSubTodoCategory() {
+        return subTodoCategory;
+    }
+
+    public void setSubTodoCategory(String subTodoCategory) {
+        this.subTodoCategory = subTodoCategory;
+    }
+
+    public Date getSubTodoCreatedDate() {
+        return subTodoCreatedDate;
+    }
+
+    public void setSubTodoCreatedDate(Date subTodoCreatedDate) {
+        this.subTodoCreatedDate = subTodoCreatedDate;
+    }
+
+    public Date getSubTodoFinishDate() {
+        return subTodoFinishDate;
+    }
+
+    public void setSubTodoFinishDate(Date subTodoFinishDate) {
+        this.subTodoFinishDate = subTodoFinishDate;
     }
 
     public Date getSubTodoUpdateDate() {
@@ -103,5 +93,13 @@ public class SubTodoEntity implements Serializable {
 
     public void setFinished(Boolean finished) {
         isFinished = finished;
+    }
+
+    public String getSubTaskId() {
+        return subTaskId;
+    }
+
+    public void setSubTaskId(String subTaskId) {
+        this.subTaskId = subTaskId;
     }
 }

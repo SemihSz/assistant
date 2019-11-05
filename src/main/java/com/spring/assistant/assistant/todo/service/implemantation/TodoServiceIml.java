@@ -8,11 +8,18 @@ import com.spring.assistant.assistant.todo.shared.TodoDto;
 import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
+
+@Primary
 @Service
+@Qualifier("todo")
 public class TodoServiceIml implements TodoService {
 
     private final int TASK_RANDOM_NUMBER = 15;
@@ -25,7 +32,7 @@ public class TodoServiceIml implements TodoService {
     @Autowired
     GenerateNumberUtil generateNumberUtil;
 
-
+    //TODO mail yap 05.11.19
     @Override
     public TodoDto createNewTodo(TodoDto todo) {
         TodoEntity entityTodoEntity = new TodoEntity();
@@ -92,8 +99,6 @@ public class TodoServiceIml implements TodoService {
 
         }
 
-
-
         return null;
         //TODO Bİr kullanıcının birden fazla todo olabilir.
     }
@@ -110,7 +115,7 @@ public class TodoServiceIml implements TodoService {
 
     @Override
     public TodoDto getUser(String userId) {
-        TodoEntity entity =  todoRepository.findByTaskId(userId);
+        TodoEntity entity =  todoRepository.findByUserId(userId);
         TodoDto todoDto = new TodoDto();
         BeanUtils.copyProperties(entity, todoDto);
         return todoDto;
@@ -124,8 +129,8 @@ public class TodoServiceIml implements TodoService {
         return title.length() > 5;
     }
 
-    private String stringRandom(int lengt){
-        String s = generateNumberUtil.generateUserId(lengt);
+    private String stringRandom(int lenght){
+        String s = generateNumberUtil.generateUserId(lenght);
         return s;
     }
 
@@ -140,6 +145,16 @@ public class TodoServiceIml implements TodoService {
 
     private void showRunTimeMessag(String message){
         throw new RuntimeException(message);
+    }
+
+    @Override
+    public List<TodoEntity> showTodoList() {
+        return (List<TodoEntity>) todoRepository.findAll();
+    }
+
+    @Override
+    public List<TodoEntity> showSpecifTodoAndSubTask(String taskId) {
+        return this.showTodoList();
     }
     //TODO Service'leri ekle
     //TODO Sadece bir kullancı için todo'lar create etme.

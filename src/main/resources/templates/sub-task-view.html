@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>About</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+
+<body>
+<h2 th:object="${getr}" th:text="*{taskId + userId}"></h2>
+<div class="row d-flex justify-content-center mx-auto">
+    <div class="card text-white bg-primary mb-3 text-center" style="max-width: 35rem;">
+        <div class="card-header">Header</div>
+        <div class="card-body">
+            <h5 class="card-title">Primary card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+    </div>
+</div>
+<br><br>
+<div id="dd">
+    <p class="h3 row d-flex justify-content-center mx-auto">Choose Operation</p>
+    <br><br>
+    <div class="row d-flex justify-content-center mx-auto">
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#ss" role="button" aria-expanded="false"
+               aria-controls="dd">
+                Link with href
+            </a>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="ss">
+                Button with data-target
+            </button>
+        </p>
+    </div>
+</div>
+<br><br>
+<div class="container" id="collapseExample">
+    <p class="h3 row d-flex justify-content-center mx-auto">Adding Sub Task</p>
+    <form>
+        <div class="form-group">
+            <label for="title">SubTask Title</label>
+                <input type="text" class="form-control" id="title">
+        </div>
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="desc">Description</label>
+            <textarea class="form-control" id="desc" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="createdDate">Created Date</label>
+            <input class="form-control" type="date" id="createdDate" />
+        </div>
+
+        <div class="form-group">
+            <label for="finishedDate">Finished Date</label>
+            <input class="form-control" type="date" id="finishedDate" />
+        </div>
+        <br>
+        <div>
+            <input type="submit" class="btn btn-primary" value="Submit"/>
+        </div>
+    </form>
+</div>
+
+<div id="ss" style="display: none">
+    dajkhasjkdhakjdhjad
+</div>
+
+
+<!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+     <div class="carousel-inner align-content-center">
+         <div class="carousel-item active">
+             <img class="d-block w-75"
+                  src="https://www.bmw.ca/content/dam/bmw/common/home/teaser/bmw-m8-competition-gran-coupe-hometeaser-desktop.jpg/_jcr_content/renditions/cq5dam.resized.img.1680.large.time1570528809713.jpg"
+                  alt="First slide">
+         </div>
+         <div class="carousel-item">
+             <img class="d-block w-100" src="..." alt="Second slide">
+         </div>
+         <div class="carousel-item">
+             <img class="d-block w-100" src="..." alt="Third slide">
+         </div>
+     </div>
+ </div>-->
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

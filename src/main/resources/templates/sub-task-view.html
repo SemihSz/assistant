@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<h2 th:object="${getr}" th:text="*{taskId + userId}"></h2>
+<h2 th:object="${subTodoRequestModel}" ></h2>
 <div class="row d-flex justify-content-center mx-auto">
     <div class="card text-white bg-primary mb-3 text-center" style="max-width: 35rem;">
         <div class="card-header">Header</div>
@@ -85,6 +85,12 @@
     dajkhasjkdhakjdhjad
 </div>
 
+<div>
+
+    <form th:action="@{/subtask/create/{userId}/{taskId}(userId=${subTodoRequestModel.userId},taskId=${subTodoRequestModel.taskId})}" th:object="${subTodoRequestModel}" method="post">
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </form>
+</div>
 
 <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
      <div class="carousel-inner align-content-center">

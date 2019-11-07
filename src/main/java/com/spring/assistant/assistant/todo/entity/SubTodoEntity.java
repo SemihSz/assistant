@@ -25,6 +25,16 @@ public class SubTodoEntity implements Serializable {
     private Date subTodoUpdateDate;
     private Boolean isFinished = false;
     private String subTaskId;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public SubTodoEntity() {
     }
 

@@ -105,6 +105,7 @@ public class TodoPageController {
     @GetMapping(path = "/update-todo")
     public String showUpdateTodoPage(){
         System.out.println();
+        System.out.println();
         return "Now you are in the update todo task";
     }
 

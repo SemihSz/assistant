@@ -2,6 +2,7 @@ package com.spring.assistant.assistant.todo.shared;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class SubTodoDto {
@@ -11,14 +12,12 @@ public class SubTodoDto {
     private String subTodoTitle;
     private String subTodoDescription;
     private String subTodoCategory;
-    @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
-    private Date subTodoCreatedDate;
-    @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
-    private Date subTodoFinishDate;
-    @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm")
-    private Date subTodoUpdateDate;
+    private LocalDate subTodoCreatedDate;
+    private LocalDate subTodoFinishDate;
+    private LocalDate subTodoUpdateDate;
     private Boolean isFinished = false;
     private String subTaskId;
+    private String userId;
 
     public SubTodoDto() {
     }
@@ -63,27 +62,27 @@ public class SubTodoDto {
         this.subTodoCategory = subTodoCategory;
     }
 
-    public Date getSubTodoCreatedDate() {
+    public LocalDate getSubTodoCreatedDate() {
         return subTodoCreatedDate;
     }
 
-    public void setSubTodoCreatedDate(Date subTodoCreatedDate) {
+    public void setSubTodoCreatedDate(LocalDate subTodoCreatedDate) {
         this.subTodoCreatedDate = subTodoCreatedDate;
     }
 
-    public Date getSubTodoFinishDate() {
+    public LocalDate getSubTodoFinishDate() {
         return subTodoFinishDate;
     }
 
-    public void setSubTodoFinishDate(Date subTodoFinishDate) {
+    public void setSubTodoFinishDate(LocalDate subTodoFinishDate) {
         this.subTodoFinishDate = subTodoFinishDate;
     }
 
-    public Date getSubTodoUpdateDate() {
+    public LocalDate getSubTodoUpdateDate() {
         return subTodoUpdateDate;
     }
 
-    public void setSubTodoUpdateDate(Date subTodoUpdateDate) {
+    public void setSubTodoUpdateDate(LocalDate subTodoUpdateDate) {
         this.subTodoUpdateDate = subTodoUpdateDate;
     }
 
@@ -101,5 +100,13 @@ public class SubTodoDto {
 
     public void setSubTaskId(String subTaskId) {
         this.subTaskId = subTaskId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

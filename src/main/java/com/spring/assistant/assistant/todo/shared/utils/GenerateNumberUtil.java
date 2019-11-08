@@ -23,4 +23,10 @@ public class GenerateNumberUtil {
         }
         return new String(retrun);
     }
+    public String generateSubTaskId(int lenght){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("subtask=?");
+        stringBuilder.append(generateRandomString(lenght));
+        return String.valueOf(stringBuilder);
+    }
 }

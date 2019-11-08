@@ -1,5 +1,8 @@
 package com.spring.assistant.assistant.todo.model.request;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class SubTodoRequestModel {
@@ -9,8 +12,10 @@ public class SubTodoRequestModel {
     private String subTodoTitle;
     private String subTodoDescription;
     private String subTodoCategory;
-    private Date subTodoCreatedDate;
-    private Date subTodoFinishDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate subTodoCreatedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate subTodoFinishDate;
     private String userId;
 
     public String getSubTodoTitle() {
@@ -37,19 +42,20 @@ public class SubTodoRequestModel {
         this.subTodoCategory = subTodoCategory;
     }
 
-    public Date getSubTodoCreatedDate() {
+
+    public LocalDate getSubTodoCreatedDate() {
         return subTodoCreatedDate;
     }
 
-    public void setSubTodoCreatedDate(Date subTodoCreatedDate) {
+    public void setSubTodoCreatedDate(LocalDate subTodoCreatedDate) {
         this.subTodoCreatedDate = subTodoCreatedDate;
     }
 
-    public Date getSubTodoFinishDate() {
+    public LocalDate getSubTodoFinishDate() {
         return subTodoFinishDate;
     }
 
-    public void setSubTodoFinishDate(Date subTodoFinishDate) {
+    public void setSubTodoFinishDate(LocalDate subTodoFinishDate) {
         this.subTodoFinishDate = subTodoFinishDate;
     }
 

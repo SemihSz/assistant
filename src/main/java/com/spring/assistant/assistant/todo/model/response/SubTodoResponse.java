@@ -1,5 +1,6 @@
 package com.spring.assistant.assistant.todo.model.response;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class SubTodoResponse {
@@ -9,8 +10,8 @@ public class SubTodoResponse {
     private String subTodoTitle;
     private String subTodoDescription;
     private String subTodoCategory;
-    private Date subTodoCreatedDate;
-    private Date subTodoFinishDate;
+    private LocalDate subTodoCreatedDate;
+    private LocalDate subTodoFinishDate;
     private String userId;
 
     public String getUserId() {
@@ -56,19 +57,19 @@ public class SubTodoResponse {
         this.subTodoCategory = subTodoCategory;
     }
 
-    public Date getSubTodoCreatedDate() {
+    public LocalDate getSubTodoCreatedDate() {
         return subTodoCreatedDate;
     }
 
-    public void setSubTodoCreatedDate(Date subTodoCreatedDate) {
+    public void setSubTodoCreatedDate(LocalDate subTodoCreatedDate) {
         this.subTodoCreatedDate = subTodoCreatedDate;
     }
 
-    public Date getSubTodoFinishDate() {
+    public LocalDate getSubTodoFinishDate() {
         return subTodoFinishDate;
     }
 
-    public void setSubTodoFinishDate(Date subTodoFinishDate) {
+    public void setSubTodoFinishDate(LocalDate subTodoFinishDate) {
         this.subTodoFinishDate = subTodoFinishDate;
     }
 }

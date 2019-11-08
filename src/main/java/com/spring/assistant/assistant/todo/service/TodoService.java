@@ -1,5 +1,6 @@
 package com.spring.assistant.assistant.todo.service;
 
+import com.spring.assistant.assistant.todo.entity.SubTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public interface TodoService {
     TodoDto createNewSubTodoTask(TodoDto todo);
     List<TodoEntity> showTodoList();
     List<TodoEntity> showSpecifTodoAndSubTask(String taskId);
+
     //TODO delete, update, show, put,
 
 }

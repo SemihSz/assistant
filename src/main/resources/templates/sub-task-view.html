@@ -29,50 +29,51 @@
     <br><br>
     <div class="row d-flex justify-content-center mx-auto">
         <p>
-            <a class="btn btn-primary" data-toggle="collapse" href="#ss" role="button" aria-expanded="false"
-               aria-controls="dd">
-                Link with href
-            </a>
+
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="ss">
                 Button with data-target
             </button>
         </p>
     </div>
+</div> <!--TODO Div görünmez yapmaya çalış -->
+<div>
+    <a class="btn btn-primary" th:href="@{/subtask/list/{userId}/{taskId}(userId=${subTodoRequestModel.userId},taskId=${subTodoRequestModel.taskId})}"
+       th:object="${subTodoRequestModel}" role="button" aria-expanded="false">
+        Show list
+    </a>
 </div>
 <br><br>
 <div class="container" id="collapseExample">
     <p class="h3 row d-flex justify-content-center mx-auto">Adding Sub Task</p>
-    <form>
+    <form th:action="@{/subtask/create/{userId}/{taskId}(userId=${subTodoRequestModel.userId},taskId=${subTodoRequestModel.taskId})}" th:object="${subTodoRequestModel}" method="post">
         <div class="form-group">
             <label for="title">SubTask Title</label>
-                <input type="text" class="form-control" id="title">
-        </div>
-        <div class="form-group">
-
-        </div>
-        <div class="form-group">
-            <label for="category">Category</label>
-            <select class="form-control" id="category">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
+                <input type="text" class="form-control" th:field="*{subTodoTitle}" id="title">
         </div>
         <div class="form-group">
             <label for="desc">Description</label>
-            <textarea class="form-control" id="desc" rows="3"></textarea>
+            <textarea th:field="*{subTodoDescription}" class="form-control" id="desc" rows="3"></textarea>
         </div>
         <div class="form-group">
-            <label for="createdDate">Created Date</label>
-            <input class="form-control" type="date" id="createdDate" />
+            <label class="col-form-label">Category</label>
+            <select th:field="*{subTodoCategory}" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="targetDate">Created Date</label>
+            <input class="form-control" th:field="*{subTodoCreatedDate}" type="date" id="targetDate" />
         </div>
 
         <div class="form-group">
             <label for="finishedDate">Finished Date</label>
-            <input class="form-control" type="date" id="finishedDate" />
+            <input class="form-control" type="date" th:field="*{subTodoFinishDate}" id="finishedDate" />
         </div>
         <br>
         <div>
@@ -83,13 +84,6 @@
 
 <div id="ss" style="display: none">
     dajkhasjkdhakjdhjad
-</div>
-
-<div>
-
-    <form th:action="@{/subtask/create/{userId}/{taskId}(userId=${subTodoRequestModel.userId},taskId=${subTodoRequestModel.taskId})}" th:object="${subTodoRequestModel}" method="post">
-        <input type="submit" class="btn btn-primary" value="Submit"/>
-    </form>
 </div>
 
 <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
@@ -109,5 +103,21 @@
  </div>-->
 <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    $('#targetDate').datepicker(
+        {
+            format:'yyyy-MM-dd'
+        }
+    );
+    $('#finishedDate').datepicker(
+        {
+            format:'yyyy-MM-dd'
+        }
+    );
+
+
+
+</script>
 </body>
 </html>

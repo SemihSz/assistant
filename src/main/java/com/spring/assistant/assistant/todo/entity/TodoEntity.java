@@ -1,12 +1,15 @@
 package com.spring.assistant.assistant.todo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 public class TodoEntity {
 
     @Id
@@ -17,16 +20,13 @@ public class TodoEntity {
     private String category;
     private String userId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date createdDate;
+    private LocalDate createdDate;
     private String importantLevel;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date expectFinishDate;
+    private LocalDate expectFinishDate;
     private Boolean isFinnished = false;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date updatedDate;
+    private LocalDate updatedDate;
     @Column(name = "task_id")
     private String taskId;
 
@@ -74,11 +74,11 @@ public class TodoEntity {
         this.userId = userId;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -90,15 +90,15 @@ public class TodoEntity {
         this.importantLevel = importantLevel;
     }
 
-    public Date getExpectFinishDate() {
+    public LocalDate getExpectFinishDate() {
         return expectFinishDate;
     }
 
-    public void setExpectFinishDate(Date expectFinishDate) {
+    public void setExpectFinishDate(LocalDate expectFinishDate) {
         this.expectFinishDate = expectFinishDate;
     }
 
-    public Boolean isFinnished() {
+    public boolean isFinnished() {
         return isFinnished;
     }
 
@@ -106,11 +106,11 @@ public class TodoEntity {
         isFinnished = finnished;
     }
 
-    public Date getUpdatedDate() {
+    public LocalDate getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(LocalDate updatedDate) {
         this.updatedDate = updatedDate;
     }
 

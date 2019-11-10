@@ -79,35 +79,6 @@ public class TodoPageController {
         httpSession.setAttribute("id", todoResponseModel.getId());
         return  "index";//ResponseEntity.accepted().body(todoResponseModel); // Response bu şekilde de yapılabilir ResponseEntity.status().body içeriği böyle olabilir:
     }
-    /*
-    @PostMapping(path = "/das")
-    public TodoResponseAll showTodoController(@RequestBody TodoTaskIdRequestModel todoTaskIdRequestModel){
-
-        TodoResponseAll todoResponseAll = new TodoResponseAll();
-        TodoDto todoDto = new TodoDto();
-
-        //TODO SERVİCE İMPLENENT İÇİNDE YAPILMALI
-
-        todoDto.setTitle("dlkadhkjahΩd");
-        todoDto.setDescription("dhahdhasddkjhjda");
-        todoDto.setTaskId(todoTaskIdRequestModel.getTaskId());
-        TodoDto newCreateTodo = todoService.specialNewTodo(todoDto);
-        BeanUtils.copyProperties(newCreateTodo,todoResponseAll);
-        return todoResponseAll;
-
-    }*/
-    @GetMapping(path = "/sub-todo") //TODO Html buraya basınca bu sayfaya gönderilecek
-    public String showSubTodoPage(){
-        return "Now you are in the sub todo task";
-        //TODO Sub-todo html page gözükecek
-    }
-
-    @GetMapping(path = "/update-todo")
-    public String showUpdateTodoPage(){
-        System.out.println();
-        System.out.println();
-        return "Now you are in the update todo task";
-    }
 
     @GetMapping(path = "/show-todo-task")
     public TodoResponseAll showTodoTaskNumber(@RequestBody TodoTaskIdRequestModel todoTaskIdRequestModel){
@@ -119,14 +90,43 @@ public class TodoPageController {
         return todoResponseAll;
 
     }
+    @GetMapping(value = "/update/{taskId}")
+    public String getCreatTaskId(@PathVariable("taskId") String taskId, Model model){
+        TodoRequestModel updateTodoRequestModel =new TodoRequestModel();
+        updateTodoRequestModel.setTaskId(taskId);
+        model.addAttribute("updateTodoRequestModel", updateTodoRequestModel);
+        return "update-todo";
+    }
+    /**
+     * Putmaping olamıyor çünkü thymleaf ve html form yapılarında put yok!!!!!!
+     * */
+    @PostMapping(value = "/update/{taskId}")
+    public ResponseEntity<TodoDto> updateSpecificTodo(@PathVariable("taskId") String taskId, @ModelAttribute("updateTodoRequestModel") TodoRequestModel todoRequestModel){
+        todoRequestModel.setTaskId(taskId);
+        TodoDto updateDto = todoService.updateSpecifTask(todoRequestModel);
+        return ResponseEntity.ok().body(updateDto);
 
+    }
 
-    //TODO DELETE Todo
+    @GetMapping(value = "/finish/{taskId}")
+    public String getFinishSpecificTodo(@PathVariable("taskId") String taskId, @ModelAttribute("finishTodoRequestModel") TodoTaskIdRequestModel todoTaskIdRequestModel){
+        todoTaskIdRequestModel.setTaskId(taskId);
+        TodoDto todoDto = todoService.finishTodo(todoTaskIdRequestModel);
+        return "redirect:/home/list";
+    }
+    //TODO DELETE Sonlarda Test et
+    @GetMapping(value = "delete-all")
+    public String deleteAllTodos(){
+        todoService.deleteAll();
+        return "redirect:/home";
+    }
 
-    //TODO Finish
-
-    //TODO SHOW Todo in html
-
+    @GetMapping(value = "/delete/{taskId}")
+    public String deleteSpecificTodo(@PathVariable("taskId") String taskId, @ModelAttribute("finishTodoRequestModel") TodoTaskIdRequestModel todoTaskIdRequestModel){
+        todoTaskIdRequestModel.setTaskId(taskId);
+        todoService.deleteSpecificTodo(todoTaskIdRequestModel);
+        return "redirect:/home/list";
+    }
 
 
 }

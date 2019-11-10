@@ -1,21 +1,34 @@
 package com.spring.assistant.assistant.todo.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TodoRequestModel {
 
-
+    private long id;
     private String title;
     private String description;
     private String category;
-    private Date createdDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdDate;
     private String importantLevel;
-    private Date expectFinishDate;
-    private Date updatedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate expectFinishDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate updatedDate;
     private String taskId;
     private String userId;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;
@@ -49,11 +62,11 @@ public class TodoRequestModel {
         this.category = category;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -65,19 +78,19 @@ public class TodoRequestModel {
         this.importantLevel = importantLevel;
     }
 
-    public Date getExpectFinishDate() {
+    public LocalDate getExpectFinishDate() {
         return expectFinishDate;
     }
 
-    public void setExpectFinishDate(Date expectFinishDate) {
+    public void setExpectFinishDate(LocalDate expectFinishDate) {
         this.expectFinishDate = expectFinishDate;
     }
 
-    public Date getUpdatedDate() {
+    public LocalDate getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(LocalDate updatedDate) {
         this.updatedDate = updatedDate;
     }
 

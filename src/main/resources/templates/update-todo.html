@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Login</title>
+    <title></title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
     <base href="/"/>
@@ -32,7 +32,8 @@
     </div>
 </nav>
 <br><br>
-    <form th:if="@{/home/create-todo}" th:action="@{/home/create-todo}" th:object="${todoRequestModel}" method="post">
+<div class="mx-auto">
+    <form  th:action="@{/home/update/{taskId}/(taskId=${updateTodoRequestModel.taskId})}" th:object="${updateTodoRequestModel}" method="post">
         <div class="container">
             <label class="col-form-label">Title</label><input type="text" class="form-control" th:field="*{title}">
         </div>
@@ -69,19 +70,13 @@
             <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
 
         </div>
-        <div class="container">
-            <label class="col-form-label">User ID</label><input type="text" class="form-control" th:field="*{userId}">
-        </div>
+
         <br>
         <div class="container">
             <input type="submit" class="btn btn-success" value="Submit"/>
         </div>
-
     </form>
-
-
-<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</div>
 <script>
     $('#targetDate').datepicker(
         {
@@ -95,6 +90,7 @@
     );
 </script>
 
-
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

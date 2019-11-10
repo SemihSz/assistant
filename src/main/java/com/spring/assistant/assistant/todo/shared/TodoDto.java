@@ -1,5 +1,6 @@
 package com.spring.assistant.assistant.todo.shared;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TodoDto {
@@ -9,11 +10,11 @@ public class TodoDto {
     private String description;
     private String category;
     private String userId;
-    private Date createdDate;
+    private LocalDate createdDate;
     private String importantLevel;
-    private Date expectFinishDate;
+    private LocalDate expectFinishDate;
     private boolean isFinnished = false;
-    private Date updatedDate;
+    private LocalDate updatedDate;
     private String taskId;
 
     public TodoDto() {
@@ -59,11 +60,11 @@ public class TodoDto {
         this.userId = userId;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -75,11 +76,11 @@ public class TodoDto {
         this.importantLevel = importantLevel;
     }
 
-    public Date getExpectFinishDate() {
+    public LocalDate getExpectFinishDate() {
         return expectFinishDate;
     }
 
-    public void setExpectFinishDate(Date expectFinishDate) {
+    public void setExpectFinishDate(LocalDate expectFinishDate) {
         this.expectFinishDate = expectFinishDate;
     }
 
@@ -91,11 +92,11 @@ public class TodoDto {
         isFinnished = finnished;
     }
 
-    public Date getUpdatedDate() {
+    public LocalDate getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(LocalDate updatedDate) {
         this.updatedDate = updatedDate;
     }
 

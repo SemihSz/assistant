@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Login</title>
+    <title></title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
     <base href="/"/>
@@ -23,65 +23,46 @@
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/home/create">Add Todo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/home/list">Show Task List</a>
+                <a class="nav-link" href="/subtask/list">Show Task List</a>
             </li>
         </ul>
     </div>
 </nav>
 <br><br>
-    <form th:if="@{/home/create-todo}" th:action="@{/home/create-todo}" th:object="${todoRequestModel}" method="post">
+<div class="mx-auto">
+    <form  th:action="@{/subtask/update/{subTaskId}/(subTaskId=${updateSubTodoRequestModel.subTaskId})}" th:object="${updateSubTodoRequestModel}" method="post">
         <div class="container">
-            <label class="col-form-label">Title</label><input type="text" class="form-control" th:field="*{title}">
+            <label class="col-form-label">Title</label><input type="text" class="form-control" th:field="*{subTodoTitle}">
         </div>
         <div class="container">
             <label class="col-form-label">Description</label><input type="text" class="form-control"
-                                                                    th:field="*{description}">
+                                                                    th:field="*{subTodoDescription}">
         </div>
         <div class="container">
-            <label class="col-form-label">category</label><input type="text" class="form-control" th:field="*{category}">
+            <label class="col-form-label">category</label><input type="text" class="form-control" th:field="*{subTodoCategory}">
         </div>
 
-        <div class="container">
-            <label class="col-form-label"> Example select</label>
-            <select class="form-control" th:field="*{importantLevel}">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-
-        </div>
         <div class="container">
             <div class="form-group">
                 <label for="targetDate">Created Date</label>
-                <input class="form-control" th:field="*{createdDate}" type="date" id="targetDate" />
+                <input class="form-control" th:field="*{subTodoCreatedDate}" type="date" id="targetDate" />
             </div>
 
             <div class="form-group">
                 <label for="finishedDate">Finished Date</label>
-                <input class="form-control" type="date" th:field="*{expectFinishDate}" id="finishedDate" />
+                <input class="form-control" type="date" th:field="*{subTodoFinishDate}" id="finishedDate" />
             </div>
 
             <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
 
         </div>
-        <div class="container">
-            <label class="col-form-label">User ID</label><input type="text" class="form-control" th:field="*{userId}">
-        </div>
+
         <br>
         <div class="container">
             <input type="submit" class="btn btn-success" value="Submit"/>
         </div>
-
     </form>
-
-
-<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</div>
 <script>
     $('#targetDate').datepicker(
         {
@@ -95,6 +76,7 @@
     );
 </script>
 
-
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

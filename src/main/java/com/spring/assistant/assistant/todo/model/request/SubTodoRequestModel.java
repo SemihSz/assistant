@@ -17,6 +17,15 @@ public class SubTodoRequestModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate subTodoFinishDate;
     private String userId;
+    private String subTaskId;
+
+    public String getSubTaskId() {
+        return subTaskId;
+    }
+
+    public void setSubTaskId(String subTaskId) {
+        this.subTaskId = subTaskId;
+    }
 
     public String getSubTodoTitle() {
         return subTodoTitle;

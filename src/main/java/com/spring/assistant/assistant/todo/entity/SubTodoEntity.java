@@ -1,6 +1,7 @@
 package com.spring.assistant.assistant.todo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 public class SubTodoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,11 +99,11 @@ public class SubTodoEntity implements Serializable {
         this.subTodoUpdateDate = subTodoUpdateDate;
     }
 
-    public Boolean getFinished() {
+    public boolean getFinished() {
         return isFinished;
     }
 
-    public void setFinished(Boolean finished) {
+    public void setFinished(boolean finished) {
         isFinished = finished;
     }
 

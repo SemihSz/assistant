@@ -15,7 +15,7 @@ public class SubTodoDto {
     private LocalDate subTodoCreatedDate;
     private LocalDate subTodoFinishDate;
     private LocalDate subTodoUpdateDate;
-    private Boolean isFinished = false;
+    private boolean isFinished = false;
     private String subTaskId;
     private String userId;
 
@@ -86,11 +86,11 @@ public class SubTodoDto {
         this.subTodoUpdateDate = subTodoUpdateDate;
     }
 
-    public Boolean getFinished() {
+    public boolean getFinished() {
         return isFinished;
     }
 
-    public void setFinished(Boolean finished) {
+    public void setFinished(boolean finished) {
         isFinished = finished;
     }
 

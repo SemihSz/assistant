@@ -38,6 +38,7 @@ public class SubTodoController {
     private final static String GET_SPECIF_TASK_ID_DELETE_SUB_TODO_FROM_SUB_TODO_ID = "/show-specific-task-id-sub-todo-list/delete/{subTaskId}/{taskId}";
     private final static String GET_SPECIF_TASK_ID_FINISH_SUB_TODO_FROM_SUB_TODO_ID = "/show-specific-task-id-sub-todo-list/finish/{subTaskId}/{taskId}";
 
+    //TODO todo yapılan sadece belli user tasklarını göster.
 
     @Autowired
     private SubTodoServiceIml service; // private yap kesinlikle

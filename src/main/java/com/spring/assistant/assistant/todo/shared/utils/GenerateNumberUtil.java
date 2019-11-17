@@ -1,10 +1,12 @@
 package com.spring.assistant.assistant.todo.shared.utils;
 
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 import java.util.Random;
 @Component
+@NoArgsConstructor
 public class GenerateNumberUtil {
 
     private  final Random random = new SecureRandom();

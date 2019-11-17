@@ -12,111 +12,237 @@
 </head>
 
 <body>
-    <div class="container">
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    <a class="text-muted">Subscribe</a>
-                </div>
-                <div class="col-4 text-center">
-                    <a class="blog-header-logo text-dark" href="#">Large</a>
-                </div>
-                <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="text-muted" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-                    </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+<div class="container">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-4 pt-1">
+                <a class="text-muted">Subscribe</a>
+            </div>
+            <div class="col-4 text-center">
+                <a class="blog-header-logo text-dark" href="#">Large</a>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <a class="text-muted" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="mx-3">
+                        <circle cx="10.5" cy="10.5" r="7.5"></circle>
+                        <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
+                    </svg>
+                </a>
+                <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+            </div>
+        </div>
+    </header>
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
+            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
+                efficiently about what's most interesting in this post's contents.</p>
+            <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="card align-items-lg-start">
+    <div class="card-body align-items-lg-end">
+        <div th:switch="${todos}" class="container">
+            <div class="align-items-center">
+                <br>
+                <a data-toggle="modal" data-target=".bd-example-modal-xl" class="btn btn-primary text-light"><i> Add
+                    Todo</i></a>
+                <a data-toggle="modal" data-target=".bd-example-modal-sm" class="btn btn-primary text-light"><i> Add
+                    Category</i></a>
+            </div>
+            <div>
+
+
+            </div>
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <form th:action="@{/home/create-todo}" th:object="${todoRequestModel}" method="post">
+                            <div class="container">
+                                <label class="col-form-label">Title</label><input type="text" class="form-control"
+                                                                                  th:field="*{title}">
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">Description</label><input type="text" class="form-control"
+                                                                                        th:field="*{description}">
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">Category</label>
+                                <select class="form-control" th:field="*{category}">
+                                    <option
+                                            th:each="category : ${categories}"
+                                            th:text="${category.categoryName}"
+                                            th:value="${category.categoryName}"
+
+                                    ></option>
+                                </select>
+
+
+                            </div>
+
+                            <div class="container">
+                                <label class="col-form-label">Important Level</label>
+                                <select class="form-control" th:field="*{importantLevel}">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+
+                            </div>
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="targetDate">Created Date</label>
+                                    <input class="form-control" th:field="*{createdDate}" type="date" id="targetDate"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="finishedDate">Finished Date</label>
+                                    <input class="form-control" type="date" th:field="*{expectFinishDate}"
+                                           id="finishedDate"/>
+                                </div>
+
+                                <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
+
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">User ID</label><input type="text" class="form-control"
+                                                                                    th:field="*{userId}">
+                            </div>
+                            <br>
+                            <div class="container">
+                                <input type="submit" class="btn btn-success" value="Submit"/>
+                            </div>
+                        </form>
+
+                        <br>
+                    </div>
                 </div>
             </div>
-        </header>
-        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-            <div class="col-md-6 px-0">
-                <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
-                <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <form th:action="@{home/category}" th:object="${categoryRequestModel}" method="post">
+                            <div class="container">
+                                <label class="col-form-label">Add Category Into Database</label><input type="text"
+                                                                                                       class="form-control"
+                                                                                                       th:field="*{categoryName}">
+                            </div>
+                            <br>
+                            <div class="container">
+                                <input type="submit" class="btn btn-info" value="Submit">
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </div>
             </div>
+
+
+            <br>
+            <div style="margin-left: 10%">
+                <h2 th:case="null">No todos yet!</h2>
+                <div th:case="*">
+                    <table class="table text-center table-striped table-responsive-lg table-hover table-bordered">
+                        <thead class="thead-dark">
+                        <tr style="font-size: 12px">
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Title</th>
+                            <th class="col-sm-3">Description</th>
+                            <th class="text-center">Category</th>
+                            <th class="text-center">Important Level</th>
+                            <th class="text-center">Created Date</th>
+                            <th class="text-center">Expect Finish Date</th>
+                            <th class="text-center">Update Date</th>
+                            <th class="text-center">Is Finished?</th>
+                            <th class="text-center">Task ID</th>
+                            <th class="text-center">Update</th>
+                            <th class="text-center">Finish</th>
+                            <th class="text-center">Delete</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="font-size: 12px" th:each="todo : ${todos}" th:if="${todo.isFinnished() == false}"
+                            class="table-danger">
+                            <td th:text="${todo.id}"></td>
+                            <td th:text="${todo.title}"></td>
+                            <td th:text="${todo.description}"></td>
+                            <td th:text="${todo.category}"></td>
+                            <td th:text="${todo.importantLevel}"></td>
+                            <td th:text="${todo.createdDate}"></td>
+                            <td th:text="${todo.expectFinishDate}"></td>
+                            <td th:text="${todo.updatedDate}"></td>
+                            <td><span style='font-size:20px;'>&#10060;</span></td>
+                            <td>
+                                <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}"
+                                   th:text="${todo.taskId}"></a></td>
+                            <td class="table"><a class="btn btn-warning"
+                                                 th:href="@{/home/update/{taskId}(taskId=${todo.taskId})}">Update</a>
+                            </td>
+                            <td class="table"><a class="btn btn-success"
+                                                 th:href="@{/home/finish/{taskId}(taskId=${todo.taskId})}">Finish</a>
+                            </td>
+                            <td class="table"><a class="btn btn-danger"
+                                                 th:href="@{/home/delete/{taskId}(taskId=${todo.taskId})}">Delete</a>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 12px" th:each="todo : ${todos}" th:if="${todo.isFinnished() == true}"
+                            class="table-success">
+                            <td th:text="${todo.id}"></td>
+                            <td th:text="${todo.title}"></td>
+                            <td th:text="${todo.description}"></td>
+                            <td th:text="${todo.category}"></td>
+                            <td th:text="${todo.importantLevel}"></td>
+                            <td th:text="${todo.createdDate}"></td>
+                            <td th:text="${todo.expectFinishDate}"></td>
+                            <td th:text="${todo.updatedDate}"></td>
+                            <td><span style='font-size:20px;'>&#9989;</span></td>
+                            <td>
+                                <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}"
+                                   th:text="${todo.taskId}"></a></td>
+                            <td class="table"><a class="btn btn-warning"
+                                                 th:href="@{/home/update/{taskId}(taskId=${todo.taskId})}">Update</a>
+                            </td>
+                            <td class="table"><a>-</a></td>
+                            <td class="table"><a class="btn btn-danger"
+                                                 th:href="@{/home/delete/{taskId}(taskId=${todo.taskId})}">Delete</a>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
         </div>
     </div>
 
-
-
-        <div class="card align-items-lg-start">
-            <div class="card-body align-items-lg-end">
-                <div th:switch="${todos}" class="container" >
-                    <div>
-                        <a th:href="@{/home/create}" class="btn btn-primary"><i
-                                class="fas fa-user-plus ml-2"> Add Todo</i></a>
-                        <br>
-                    </div>
-                <br>
-                <div class="col-md-10">
-                    <h2 th:case="null">No todos yet!</h2>
-                    <div th:case="*">
-                        <table class="table table-striped table-responsive-md table-hover text-center table-bordered">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Title</th>
-                                <th class="text-center">Description</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">User ID</th>
-                                <th class="text-center">Important Level</th>
-                                <th class="text-center">Created Date</th>
-                                <th class="text-center">Expect Finish Date</th>
-                                <th class="text-center">Update Date</th>
-                                <th class="text-center">Is Finished?</th>
-                                <th class="text-center">Task ID</th>
-                                <th class="text-center">Update</th>
-                                <th class="text-center">Finish</th>
-                                <th class="text-center">Delete</th>
-
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="todo : ${todos}" th:if="${todo.isFinnished() == false}" class="table-danger">
-                                    <td th:text="${todo.id}"></td>
-                                    <td th:text="${todo.title}"></td>
-                                    <td th:text="${todo.description}"></td>
-                                    <td th:text="${todo.category}"></td>
-                                    <td th:text="${todo.userId}"></td>
-                                    <td th:text="${todo.importantLevel}"></td>
-                                    <td th:text="${todo.createdDate}"></td>
-                                    <td th:text="${todo.expectFinishDate}"></td>
-                                    <td th:text="${todo.updatedDate}"></td>
-                                    <td th:text="${todo.isFinnished()}"></td>
-                                    <td><a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}" th:text="${todo.taskId}"></a></td>
-                                    <td class="table"><a class="btn btn-warning" th:href="@{/home/update/{taskId}(taskId=${todo.taskId})}">Update</a></td>
-                                    <td class="table"><a class="btn btn-success" th:href="@{/home/finish/{taskId}(taskId=${todo.taskId})}">Finish</a></td>
-                                    <td class="table"><a class="btn btn-danger" th:href="@{/home/delete/{taskId}(taskId=${todo.taskId})}">Delete</a></td>
-                                </tr>
-                                <tr th:each="todo : ${todos}" th:if="${todo.isFinnished() == true}" class="table-success">
-                                    <td th:text="${todo.id}"></td>
-                                    <td th:text="${todo.title}"></td>
-                                    <td th:text="${todo.description}"></td>
-                                    <td th:text="${todo.category}"></td>
-                                    <td th:text="${todo.userId}"></td>
-                                    <td th:text="${todo.importantLevel}"></td>
-                                    <td th:text="${todo.createdDate}"></td>
-                                    <td th:text="${todo.expectFinishDate}"></td>
-                                    <td th:text="${todo.updatedDate}"></td>
-                                    <td th:text="${todo.isFinnished()}"></td>
-                                    <td><a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}" th:text="${todo.taskId}"></a></td>
-                                    <td class="table"><a class="btn btn-warning" th:href="@{/home/update/{taskId}(taskId=${todo.taskId})}">Update</a></td>
-                                    <td class="table"><a>-</a></td>
-                                    <td class="table"><a class="btn btn-danger" th:href="@{/home/delete/{taskId}(taskId=${todo.taskId})}">Delete</a></td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-
-<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        $('#targetDate').datepicker(
+            {
+                format: 'yyyy-MM-dd'
+            }
+        );
+        $('#finishedDate').datepicker(
+            {
+                format: 'yyyy-MM-dd'
+            }
+        );
+    </script>
 </body>
 </html>

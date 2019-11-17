@@ -22,6 +22,7 @@ public interface TodoService {
     void deleteSpecificTodo(TodoTaskIdRequestModel todoTaskIdRequestModel);
     void deleteAll();
     List<TodoEntity> showTodoList();
+    List<TodoEntity> showTodoListCurrentUser();
     List<TodoEntity> showSpecifTodoAndSubTask(String taskId);
 
     //TODO delete, update, show, put,

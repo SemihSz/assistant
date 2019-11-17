@@ -1,12 +1,15 @@
 package com.spring.assistant.assistant.todo.service.implemantation;
 
+import com.spring.assistant.assistant.todo.Prefix;
+import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.SubTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.SubTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.model.request.SubTodoRequestModel;
-import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
+
+import com.spring.assistant.assistant.todo.repository.DeleteAllTodoRepository;
 import com.spring.assistant.assistant.todo.repository.SubTodoRepository;
-import com.spring.assistant.assistant.todo.repository.TodoRepository;
+
 import com.spring.assistant.assistant.todo.service.SubTodoService;
 import com.spring.assistant.assistant.todo.shared.SubTodoDto;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
@@ -16,7 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -34,6 +37,9 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
 
     @Autowired
     SubTodoRepository subTodoRepository;
+
+    @Autowired
+    private DeleteAllTodoRepository deleteAllTodoRepository;
 
     private LocalDate localDate = LocalDate.now();
 
@@ -68,7 +74,7 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
         subTodoEntity.setFinished(isFinnished);
         subTodoEntity.setSubTodoCategory(subTodoRequestModel.getSubTodoCategory());
 
-        if (!controlTheStartDateAndFinsih(subTodoRequestModel.getSubTodoCreatedDate(), subTodoRequestModel.getSubTodoFinishDate())) {
+        if (controlTheStartDateAndFinsih(subTodoRequestModel.getSubTodoCreatedDate(), subTodoRequestModel.getSubTodoFinishDate())) {
             subTodoEntity.setSubTodoCreatedDate(subTodoRequestModel.getSubTodoCreatedDate());
             subTodoEntity.setSubTodoFinishDate(subTodoRequestModel.getSubTodoFinishDate());
 
@@ -161,6 +167,18 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
     @Override
     public void deleteSpecificTodo(SubTaskIdRequestModel subTaskIdRequestModel) {
         SubTodoEntity subTodoEntity = subTodoRepository.findBySubTaskId(subTaskIdRequestModel.getSubTaskId());
+
+        DeleteAllTodoEntity deleteAllTodoEntity = DeleteAllTodoEntity.builder()
+                .subTodoTitle(subTodoEntity.getSubTodoTitle())
+                .subTodoDescription(subTodoEntity.getSubTodoDescription())
+                .subTodoCategory(subTodoEntity.getSubTodoCategory())
+                .subTodoCreatedDate(subTodoEntity.getSubTodoCreatedDate())
+                .subTodoFinishDate(subTodoEntity.getSubTodoFinishDate())
+                .subTodoUpdateDate(subTodoEntity.getSubTodoUpdateDate())
+                .subTaskId(subTodoEntity.getSubTaskId())
+                .todoPrefix(Prefix.SUBTODO.toString())
+                .build();
+        deleteAllTodoRepository.save(deleteAllTodoEntity);
         subTodoRepository.delete(subTodoEntity);
     }
 
@@ -195,7 +213,7 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
 
     @Override
     public Boolean controlTheStartDateAndFinsih(LocalDate start, LocalDate end) {
-        if (start.compareTo(end) > 0) {
+        if (start.compareTo(end) >= 0) {
             return true;
         } else if (start.compareTo(end) == 0) {
             return true;

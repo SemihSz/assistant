@@ -1,14 +1,12 @@
 package com.spring.assistant.assistant.todo.model.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SubTaskIdRequestModel {
 
     private String subTaskId;
 
-    public String getSubTaskId() {
-        return subTaskId;
-    }
-
-    public void setSubTaskId(String subTaskId) {
-        this.subTaskId = subTaskId;
-    }
 }

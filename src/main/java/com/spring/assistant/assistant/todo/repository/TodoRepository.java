@@ -17,6 +17,9 @@ public interface TodoRepository extends CrudRepository<TodoEntity, Long> {
     TodoEntity findById(long id);
     List<TodoEntity> findByTaskId(String taskId);
     TodoEntity findByUserId(String userId);
+
+    @Query("SELECT t FROM TodoEntity t WHERE t.userId=:userId")
+    List<TodoEntity> finds(@Param("userId") String userId);
     /**
      *
      * BU YAPI BAYA ÖNEMLİ BURADAN BAK ARADA GÜZEL OLDU

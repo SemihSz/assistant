@@ -1,16 +1,22 @@
 package com.spring.assistant.assistant.todo.service.implemantation;
 
 
+import com.spring.assistant.assistant.mailservice.AutomaticMailServiceImpl;
+import com.spring.assistant.assistant.mailservice.MailInfoModel;
 import com.spring.assistant.assistant.mailservice.MailService;
-import com.spring.assistant.assistant.todo.Prefix;
 import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
+import com.spring.assistant.assistant.todo.model.request.TodoSortRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.repository.DeleteAllTodoRepository;
 import com.spring.assistant.assistant.todo.repository.TodoRepository;
 import com.spring.assistant.assistant.todo.service.TodoService;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
+import com.spring.assistant.assistant.todo.shared.enums.EmailType;
+import com.spring.assistant.assistant.todo.shared.enums.ImportantType;
+import com.spring.assistant.assistant.todo.shared.enums.PageType;
+import com.spring.assistant.assistant.todo.shared.enums.PrefixType;
 import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
 import com.spring.assistant.assistant.usercontroller.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +26,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +36,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,6 +65,9 @@ public class TodoServiceIml implements TodoService, Serializable {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AutomaticMailServiceImpl automaticEmailService;
 
     //TODO mail yap 05.11.19
     @Override
@@ -91,6 +104,7 @@ public class TodoServiceIml implements TodoService, Serializable {
                     entityTodoEntity.setUpdatedDate(todo.getCreatedDate());
                     entityTodoEntity.setExpectFinishDate(todo.getExpectFinishDate());
                     entityTodoEntity.setFinnished(false);
+                    entityTodoEntity.setEmail(EmailType.NEW.getEmailType());
                     TodoEntity storeTodos =  todoRepository.save(entityTodoEntity);
                     BeanUtils.copyProperties(storeTodos,returnValue);
                 }
@@ -141,37 +155,32 @@ public class TodoServiceIml implements TodoService, Serializable {
         BeanUtils.copyProperties(todos, todoEntity);
         try {
 
-
-        if (todoRequestModel.getTitle().isEmpty()) {
-            todoEntity.setTitle(todos.get(0).getTitle());
-        } else {
-            todoEntity.setTitle(todoRequestModel.getTitle());
-        }
-        if (todoRequestModel.getDescription().isEmpty()){
-            todoEntity.setDescription(todos.get(0).getDescription());
-        }
-        else {
-            todoEntity.setDescription(todoRequestModel.getDescription());
-        }
-        if (todoRequestModel.getCategory().isEmpty()){
-            todoEntity.setCategory(todos.get(0).getCategory());
-        }
-        else {
-            todoEntity.setCategory(todoRequestModel.getCategory());
-        }
-        todoEntity.setImportantLevel(todos.get(0).getImportantLevel());
-        if (todoRequestModel.getCreatedDate().equals(null)){
-            todoEntity.setCreatedDate(todos.get(0).getCreatedDate());
-        }
-        else{
-            todoEntity.setCreatedDate(todoRequestModel.getCreatedDate());
-        }
-        if (todoRequestModel.getExpectFinishDate().equals(null)){
-            todoEntity.setCreatedDate(todos.get(0).getExpectFinishDate());
-        }
-        else{
-            todoEntity.setExpectFinishDate(todoRequestModel.getExpectFinishDate());
-        }
+            if (todoRequestModel.getTitle().isEmpty()) {
+                todoEntity.setTitle(todos.get(0).getTitle());
+            } else {
+                todoEntity.setTitle(todoRequestModel.getTitle());
+            }
+            if (todoRequestModel.getDescription().isEmpty()) {
+                todoEntity.setDescription(todos.get(0).getDescription());
+            } else {
+                todoEntity.setDescription(todoRequestModel.getDescription());
+            }
+            if (todoRequestModel.getCategory().isEmpty()) {
+                todoEntity.setCategory(todos.get(0).getCategory());
+            } else {
+                todoEntity.setCategory(todoRequestModel.getCategory());
+            }
+            todoEntity.setImportantLevel(todos.get(0).getImportantLevel());
+            if (todoRequestModel.getCreatedDate().equals(null)) {
+                todoEntity.setCreatedDate(todos.get(0).getCreatedDate());
+            } else {
+                todoEntity.setCreatedDate(todoRequestModel.getCreatedDate());
+            }
+            if (todoRequestModel.getExpectFinishDate().equals(null)) {
+                todoEntity.setCreatedDate(todos.get(0).getExpectFinishDate());
+            } else {
+                todoEntity.setExpectFinishDate(todoRequestModel.getExpectFinishDate());
+            }
         }catch (NullPointerException e){
             logger.error(e.getMessage());
         }
@@ -192,23 +201,28 @@ public class TodoServiceIml implements TodoService, Serializable {
     @Override
     public TodoDto finishTodo(TodoTaskIdRequestModel todoTaskIdRequestModel) {
         LocalDate localDate = LocalDate.now();
-        int x =  todoRepository.update(todoTaskIdRequestModel.getTaskId(),localDate);
+        TodoEntity currentEntity = null;
         List<TodoEntity> todoEntity = todoRepository.findByTaskId(todoTaskIdRequestModel.getTaskId());
-        try {
-            StringBuilder stringBuilderText = new StringBuilder();
-            stringBuilderText
-                    .append(todoEntity.get(0).getDescription())
-                    .append(" Task id: ")
-                    .append(todoEntity.get(0).getTaskId())
-                    .append(" is finish ").append(todoEntity.get(0).getUpdatedDate())
-                    .append(" Task bitmiştir. Tebrikler!");
-            mailService.sendStandartMail("semirhayy@gmail.com",
-                    todoEntity.get(0).getTaskId() + " " + todoEntity.get(0).getTitle(),"<h2>Finish Todo "+todoEntity.get(0).getTaskId() +" \" id of todo is finished at \"" +"</h2>"+
-                    todoEntity.get(0).getUpdatedDate()+ " Detail: " + todoEntity.get(0).getDescription()
-            );
-            logger.info("!!!Email Sending Now!!!");
+        if (todoEntity.size() > 1) {
+            log.error("Two different task id cannot be same");
+            throw new RuntimeException("Two different task id cannot be same");
+        } else {
+            currentEntity = todoEntity.get(0);
+        }
 
-            //notificationService.sendEmail(stringBuilderText.toString(), todoEntity.get(0).getTitle());
+        try {
+            MailInfoModel mailInfoModel = MailInfoModel.builder()
+                    .body1(currentEntity.getTaskId())
+                    .body2(currentEntity.getDescription())
+                    .body3(currentEntity.getCategory())
+                    .body4(" Task bitmiştir. Tebrikler!")
+                    .subject(currentEntity.getTitle() + " " + currentEntity.getTaskId())
+                    .to(showEmailAddress()).build();
+
+            mailService.sendStandartMail(mailInfoModel);
+            int x = todoRepository.update(todoTaskIdRequestModel.getTaskId(), localDate);
+            logger.info("!!!Email Sending Now!!!");
+//Todo mail gönderildiğinde db'de bunu göstermeliyiz
         }catch (MailException e){
             e.printStackTrace();
             logger.error("Email sending error");
@@ -219,11 +233,43 @@ public class TodoServiceIml implements TodoService, Serializable {
             e.printStackTrace();
             logger.error("Email sending error");
         }
-        System.out.println("x: "+ x);
         TodoEntity entity =new TodoEntity();
         TodoDto todoDto = new TodoDto();
         BeanUtils.copyProperties(entity,todoDto);
         return todoDto;
+    }
+
+    @Override
+    public void automaticEmailService() {
+        String username = userService.giveUserAuthenticationInformation();
+        String userId = userService.findByEmail(username).getUserId();
+        List<TodoEntity> todoEntity = todoRepository.finds(userId);
+        for (TodoEntity currentTodo : todoEntity) {
+            final LocalDate expectedDate = currentTodo.getExpectFinishDate();
+            if (currentTodo.getEmail().equals(EmailType.NEW.emailType)
+                    && currentTodo.getImportantLevel().equals(ImportantType.FIVE.importantLevelNum)) {
+                MailInfoModel mailInfoModel = MailInfoModel.builder()
+                        .body1(currentTodo.getTaskId())
+                        .body2(currentTodo.getDescription())
+                        .body3(currentTodo.getCategory())
+                        .body4(" Task bitmiştir. Tebrikler!")
+                        .subject(currentTodo.getTitle() + " " + currentTodo.getTaskId())
+                        .to(showEmailAddress()).build();
+                try {
+                    automaticEmailService.getAllAutomatic(mailInfoModel, expectedDate);
+                    currentTodo.setEmail(EmailType.SEND.getEmailType());
+                    todoRepository.save(currentTodo);
+                } catch (MessagingException e) {
+                    log.error(e.getMessage());
+
+                }
+
+            } else {
+                currentTodo.setEmail(EmailType.NOTSEND.getEmailType());
+                throw new RuntimeException("You sent this task b before");
+            }
+        }
+
     }
 
     @Override
@@ -242,12 +288,53 @@ public class TodoServiceIml implements TodoService, Serializable {
                 .isFinished(newTodoEntity.isFinnished())
                 .updatedDate(newTodoEntity.getUpdatedDate())
                 .taskId(newTodoEntity.getTaskId())
-                .todoPrefix(Prefix.TODO.toString())
+                .todoPrefix(PrefixType.TODO.toString())
                 .build();
         logger.info("!!!Save the deleted item into All Todo Entity!!!");
         deleteAllTodoRepository.save(allTodoEntity);
         logger.info("!!!Delete specific todo!!!");
         todoRepository.deleteById(newTodoEntity.getId());
+    }
+
+    @Override
+    public List<TodoEntity> sortAllTodos() {
+        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
+        return getlAllTodosWithPagination(todoSortRequestModel);
+    }
+
+    @Override
+    public List<TodoEntity> getlAllTodosWithPagination(TodoSortRequestModel todoSortRequestModel) {
+        return getSortOperation(todoSortRequestModel);
+    }
+
+    private List<TodoEntity> getSortOperation(TodoSortRequestModel todoSortRequestModel) {
+        logger.info("Sorting operations is starting");
+        String username = userService.giveUserAuthenticationInformation();
+        String userId = userService.findByEmail(username).getUserId();
+        String sortBy = null;
+        if (todoSortRequestModel.getId() != null) {
+            sortBy = todoSortRequestModel.getId();
+        }
+        if (todoSortRequestModel.getImportantLevel() != null) {
+            sortBy = todoSortRequestModel.getImportantLevel();
+        }
+        if (todoSortRequestModel.getCreatedDate() != null) {
+            sortBy = todoSortRequestModel.getCreatedDate();
+        }
+        if (todoSortRequestModel.getCategory() != null) {
+            sortBy = todoSortRequestModel.getCategory();
+        }
+        org.springframework.data.domain.Pageable pageable = PageRequest.of(PageType.PAGENO.getPageType(),
+                PageType.PAGESIZE.getPageType(),
+                Sort.by(sortBy).ascending());
+        Page<TodoEntity> pageResult = todoRepository.pages(userId, pageable);
+        logger.info("Sorting operations is finished");
+        if (pageResult.hasContent()) {
+            return pageResult.getContent();
+
+        } else
+            return new ArrayList<TodoEntity>();
+
     }
 
     @Override
@@ -282,11 +369,6 @@ public class TodoServiceIml implements TodoService, Serializable {
         return title.length() > 5;
     }
 
-    private String stringRandom(int lenght){
-        String s = generateNumberUtil.generateUserId(lenght);
-        return s;
-    }
-
     private boolean descLenght(String desc){
         return desc.length() >= MIN && MAX >= desc.length();
     }
@@ -313,6 +395,10 @@ public class TodoServiceIml implements TodoService, Serializable {
         String username = userService.giveUserAuthenticationInformation();
         userId =  userService.findByEmail(username).getUserId();
         return (List<TodoEntity>) todoRepository.finds(userId);
+    }
+
+    private String showEmailAddress() {
+        return userService.giveUserAuthenticationInformation();
     }
 
     @Override

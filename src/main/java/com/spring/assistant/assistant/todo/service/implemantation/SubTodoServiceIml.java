@@ -1,25 +1,21 @@
 package com.spring.assistant.assistant.todo.service.implemantation;
 
-import com.spring.assistant.assistant.todo.Prefix;
 import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.SubTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.SubTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.model.request.SubTodoRequestModel;
-
 import com.spring.assistant.assistant.todo.repository.DeleteAllTodoRepository;
 import com.spring.assistant.assistant.todo.repository.SubTodoRepository;
-
 import com.spring.assistant.assistant.todo.service.SubTodoService;
 import com.spring.assistant.assistant.todo.shared.SubTodoDto;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
-
+import com.spring.assistant.assistant.todo.shared.enums.PrefixType;
 import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -176,7 +172,7 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
                 .subTodoFinishDate(subTodoEntity.getSubTodoFinishDate())
                 .subTodoUpdateDate(subTodoEntity.getSubTodoUpdateDate())
                 .subTaskId(subTodoEntity.getSubTaskId())
-                .todoPrefix(Prefix.SUBTODO.toString())
+                .todoPrefix(PrefixType.SUBTODO.toString())
                 .build();
         deleteAllTodoRepository.save(deleteAllTodoEntity);
         subTodoRepository.delete(subTodoEntity);

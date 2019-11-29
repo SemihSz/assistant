@@ -9,6 +9,6 @@ import java.io.IOException;
 @Service
 public interface MailService {
 
-    void sendStandartMail(String email,String subject, String textBody) throws MessagingException, IOException, MailException;
+    void sendStandartMail(MailInfoModel mailInfoModel) throws MessagingException, IOException, MailException;
 
 }

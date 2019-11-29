@@ -1,10 +1,9 @@
 package com.spring.assistant.assistant.todo.service;
 
-import com.spring.assistant.assistant.todo.entity.SubTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
+import com.spring.assistant.assistant.todo.model.request.TodoSortRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoTaskIdRequestModel;
-import com.spring.assistant.assistant.todo.model.response.TodoResponseModel;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,11 @@ public interface TodoService {
     List<TodoEntity> showTodoListCurrentUser();
     List<TodoEntity> showSpecifTodoAndSubTask(String taskId);
 
+    List<TodoEntity> getlAllTodosWithPagination(TodoSortRequestModel todoSortRequestModel);
+
+    void automaticEmailService();
+
+    List<TodoEntity> sortAllTodos();
     //TODO delete, update, show, put,
 
 }

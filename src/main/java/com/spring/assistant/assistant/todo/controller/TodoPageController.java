@@ -1,10 +1,10 @@
 package com.spring.assistant.assistant.todo.controller;
 
 
-
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.CategoryRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
+import com.spring.assistant.assistant.todo.model.request.TodoSortRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.model.response.TodoResponseAll;
 import com.spring.assistant.assistant.todo.model.response.TodoResponseModel;
@@ -18,23 +18,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 // https://github.com/khandelwal-arpit/springboot-starterkit/tree/master/src/main/java/com/starterkit/springboot/brs/service
 @Controller
-//@RestController //Postman kullanırsan sadece Rest fakat index ise controller gerekiyor
 @RequestMapping("/home")
 public class TodoPageController {
 
@@ -64,10 +59,12 @@ public class TodoPageController {
         String id = userId.getUserId();
         CategoryRequestModel categoryRequestModel = new CategoryRequestModel();
         TodoRequestModel todoRequestModel = new TodoRequestModel();
+        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
         model.addAttribute("todos", todoService.showTodoListCurrentUser());
         model.addAttribute("todoRequestModel", todoRequestModel);
         model.addAttribute("categories", categoryService.showCategories());
         model.addAttribute("categoryRequestModel", categoryRequestModel);
+        model.addAttribute("todoSortRequestModel", todoSortRequestModel);
         return "about";
     }
 
@@ -82,11 +79,7 @@ public class TodoPageController {
     @PostMapping(path = "/category")
     public String createCategory(Model model, CategoryRequestModel categoryRequestModel, BindingResult result){
         model.addAttribute("categoryRequestModel", categoryRequestModel);
-
-
-
         categoryService.createNewCategory(categoryRequestModel);
-
         return "redirect:/home/list";
     }
 
@@ -94,8 +87,10 @@ public class TodoPageController {
     public String homePageLinkAboutPage(Model model){
         TodoRequestModel todoRequestModel = new TodoRequestModel();
         CategoryRequestModel categoryRequestModel = new CategoryRequestModel();
+        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
         model.addAttribute("todoRequestModel", todoRequestModel);
         model.addAttribute("categoryRequestModel", categoryRequestModel);
+        model.addAttribute("todoSortRequestModel", todoSortRequestModel);
         return "about";
     }
 
@@ -132,6 +127,36 @@ public class TodoPageController {
         return todoResponseAll;
 
     }
+
+    @GetMapping(path = "/sort-todo")
+    public String getAllTodosSort(Model model) {
+        CategoryRequestModel categoryRequestModel = new CategoryRequestModel();
+        TodoRequestModel todoRequestModel = new TodoRequestModel();
+        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
+        model.addAttribute("todos", todoService.showTodoListCurrentUser());
+        model.addAttribute("todoRequestModel", todoRequestModel);
+        model.addAttribute("categories", categoryService.showCategories());
+        model.addAttribute("categoryRequestModel", categoryRequestModel);
+        model.addAttribute("todoSortRequestModel", todoSortRequestModel);
+        model.getAttribute("sorttods");
+        return "sort";
+    }
+
+    @PostMapping(path = "/sort-todo")
+    public String postAllTodosSort(TodoSortRequestModel todoSortRequestModel, Model model) {
+        List<TodoEntity> list = todoService.getlAllTodosWithPagination(todoSortRequestModel);
+        model.addAttribute("sorttodos", list);
+        return "sort";
+    }
+
+    //TODO Response objesi yarat şirkete yönelik olsun
+    @GetMapping(path = "/automatic-email-service")
+    public ResponseEntity automaticEmail() {
+        todoService.automaticEmailService();
+        return ResponseEntity.ok().body("okey");
+    }
+
+    //TODO service içinde yap
     @GetMapping(value = "/update/{taskId}")
     public String getCreatTaskId(@PathVariable("taskId") String taskId, Model model){
         TodoRequestModel updateTodoRequestModel =new TodoRequestModel();

@@ -6,7 +6,10 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
@@ -43,6 +46,9 @@ public class TodoEntity {
 
     @Column(name = "task_id")
     private String taskId;
+
+    @Column(name = "email")
+    private String email;
 
 
 }

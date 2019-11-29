@@ -1,17 +1,16 @@
 package com.spring.assistant.assistant.mailservice;
 
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 
 @Service
+@NoArgsConstructor
 public class MailServiceImpl implements MailService{
 
 
@@ -20,17 +19,13 @@ public class MailServiceImpl implements MailService{
 
 
     @Override
-    public void sendStandartMail(String email, String subject, String textBody) throws  MessagingException{
+    public void sendStandartMail(MailInfoModel mailInfoModel) throws MessagingException {
         MimeMessage mimeMessage = mail.createMimeMessage();
         MimeMessageHelper helper;
         helper = new MimeMessageHelper(mimeMessage,true);
-        helper.setTo(email);
-        helper.setSubject(subject);
-        helper.setText(textBody,true);
-        /*SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject(subject);
-        message.setText(textBody);*/
+        helper.setTo(mailInfoModel.getTo());
+        helper.setSubject(mailInfoModel.getSubject());
+        helper.setText(mailInfoModel.getBody1() + " " + mailInfoModel.getBody2(), true);
         mail.send(mimeMessage);
     }
 }

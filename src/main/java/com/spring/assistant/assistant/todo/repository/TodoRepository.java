@@ -30,8 +30,10 @@ public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query("UPDATE TodoEntity t SET t.isFinnished = true, t.updatedDate=:updatedDate WHERE t.taskId=:taskId")
-    int update(@Param("taskId") String taskId, @Param("updatedDate")LocalDate updatedDate);
+    @Query("UPDATE TodoEntity t SET t.isFinnished = true, t.updatedDate=:updatedDate, t.email=:email WHERE t.taskId=:taskId")
+    int update(@Param("taskId") String taskId,
+               @Param("updatedDate") LocalDate updatedDate,
+               @Param("email") String email);
 
 
 }

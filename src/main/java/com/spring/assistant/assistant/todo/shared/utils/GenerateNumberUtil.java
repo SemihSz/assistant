@@ -31,4 +31,8 @@ public class GenerateNumberUtil {
         stringBuilder.append(generateRandomString(lenght));
         return String.valueOf(stringBuilder);
     }
+
+    public String generateCommentId() {
+        return generateRandomString(12);
+    }
 }

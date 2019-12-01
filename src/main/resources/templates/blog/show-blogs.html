@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Login</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Semih WebSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/create">Add Todo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">l
+                    Logout</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/blog/get-different-user-list">Show All Personal Blog</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div class="container">
+    <div id="blog" class="row">
+        <div th:action="@{/blog/get-different-user-listl}">
+            <div th:each="post : ${posts}" class="col-md-10 blogShort">
+                <h1 th:text="*{post.title}"></h1>
+                <img src="http://www.kaczmarek-photo.com/wp-content/uploads/2012/06/guinnes-150x150.jpg" alt="post img"
+                     class="pull-left img-responsive thumb margin10 img-thumbnail">
+                <label></label>
+                <article th:text="*{post.body}"><p>
+                </p></article>
+                <br><br><br>
+                <span class="badge" th:text="*{post.createDate}"></span>
+                <div class="pull-right"><span th:if="${post.getBadgeOne() != null}" th:text="*{post.getBadgeOne()}"
+                                              class="badge badge-dark"></span> <span
+                        th:if="${post.getBadgeTwo() != null}" th:text="*{post.getBadgeTwo()}"
+                        class="badge badge-primary"></span> <span th:if="${post.getBadgeThree() != null}"
+                                                                  th:text="*{post.getBadgeThree()}"
+                                                                  class="badge badge-success"></span> <span
+                        th:if="${post.getBadgeFour() != null}" th:text="*{post.getBadgeFour()}"
+                        class="badge badge-info"></span> <span th:if="${post.getBadgeFive() != null}"
+                                                               th:text="*{post.getBadgeFive()}"
+                                                               class="badge badge-warning"></span>®
+                    <br><br>
+                    <a class="btn btn-success pull-right marginBottom10 text-light" id="myBtn">READ MORE</a>
+                </div>
+                <hr>
+                <br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+    <script src="deneme.js"></script>
+    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var posts = /*[[${posts}]]*/ 'default';
+        var list = [];
+        console.log(posts);
+        for (i = 0; i <= posts.length; i++) {
+            list.push(posts[i]);
+        }
+        console.log(list);
+
+
+        /*]]>*/
+    </script>
+
+
+</body>
+</html>

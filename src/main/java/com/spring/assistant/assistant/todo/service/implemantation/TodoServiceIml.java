@@ -197,7 +197,6 @@ public class TodoServiceIml implements TodoService, Serializable {
     }
 
 
-    //TODO bu methodu değiştir bence
     @Override
     public TodoDto finishTodo(TodoTaskIdRequestModel todoTaskIdRequestModel) {
         LocalDate localDate = LocalDate.now();
@@ -220,9 +219,9 @@ public class TodoServiceIml implements TodoService, Serializable {
                     .to(showEmailAddress()).build();
 
             mailService.sendStandartMail(mailInfoModel);
-            int x = todoRepository.update(todoTaskIdRequestModel.getTaskId(), localDate);
+            int x = todoRepository.update(todoTaskIdRequestModel.getTaskId(), localDate,
+                    EmailType.SEND.getEmailType());
             logger.info("!!!Email Sending Now!!!");
-//Todo mail gönderildiğinde db'de bunu göstermeliyiz
         }catch (MailException e){
             e.printStackTrace();
             logger.error("Email sending error");
@@ -296,11 +295,6 @@ public class TodoServiceIml implements TodoService, Serializable {
         todoRepository.deleteById(newTodoEntity.getId());
     }
 
-    @Override
-    public List<TodoEntity> sortAllTodos() {
-        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
-        return getlAllTodosWithPagination(todoSortRequestModel);
-    }
 
     @Override
     public List<TodoEntity> getlAllTodosWithPagination(TodoSortRequestModel todoSortRequestModel) {

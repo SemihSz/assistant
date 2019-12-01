@@ -23,12 +23,8 @@ public interface TodoService {
     List<TodoEntity> showTodoList();
     List<TodoEntity> showTodoListCurrentUser();
     List<TodoEntity> showSpecifTodoAndSubTask(String taskId);
-
     List<TodoEntity> getlAllTodosWithPagination(TodoSortRequestModel todoSortRequestModel);
-
     void automaticEmailService();
 
-    List<TodoEntity> sortAllTodos();
-    //TODO delete, update, show, put,
 
 }

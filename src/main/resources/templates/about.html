@@ -201,7 +201,6 @@
                             <th class="text-center">Update</th>
                             <th class="text-center">Finish</th>
                             <th class="text-center">Delete</th>
-                            <th class="text-center">Deneme</th>
 
 
                         </tr>
@@ -231,9 +230,6 @@
                                                  th:href="@{/home/delete/{taskId}(taskId=${todo.taskId})}">Delete</a>
                             </td>
 
-                            <td class="table"><a class="btn btn-danger"
-                                                 th:href="@{/home/automatic-email-service}">Deneme</a>
-                            </td>
                         </tr>
                         <tr style="font-size: 12px" th:each="todo : ${todos}" th:if="${todo.isFinnished() == true}"
                             class="table-success">

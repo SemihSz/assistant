@@ -1,5 +1,6 @@
-package com.spring.assistant.assistant.mailservice;
+package com.spring.assistant.assistant.mailservice.service;
 
+import com.spring.assistant.assistant.mailservice.model.MailInfoModel;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

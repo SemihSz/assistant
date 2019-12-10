@@ -28,13 +28,15 @@ public class PostCurrentUserResponse {
 
     private PostStatusType postStatusType;
 
-    private String badgeOne;
+	private String badgeOne;
 
-    private String badgeTwo;
+	private String badgeTwo;
 
-    private String badgeThree;
+	private String badgeThree;
 
-    private String badgeFour;
+	private String badgeFour;
 
-    private String badgeFive;
+	private String badgeFive;
+
+	private String urlLink;
 }

@@ -1,9 +1,17 @@
 package com.spring.assistant.assistant.blog.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
@@ -19,14 +27,16 @@ public class DbUploadFileEntity {
 
     private String userId;
 
-    private String fileName;
+	private String fileName;
 
-    private String fileType;
+	private String fileType;
 
-    @Lob
-    private byte[] data;
+	@Lob
+	private byte[] data;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date createDate;
+
+	private String urlLink;
 }

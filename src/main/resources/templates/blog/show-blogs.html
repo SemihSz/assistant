@@ -48,6 +48,8 @@
                 <label></label>
                 <article th:text="*{post.body}"><p>
                 </p></article>
+                <br>
+                <a th:href="*{post.urlLink}" th:if="${post.getUrlLink() != null}" th:text="*{post.urlLink}"></a>
                 <br><br><br>
                 <span class="badge" th:text="*{post.createDate}"></span>
                 <div class="pull-right"><span th:if="${post.getBadgeOne() != null}" th:text="*{post.getBadgeOne()}"
@@ -61,7 +63,9 @@
                                                                th:text="*{post.getBadgeFive()}"
                                                                class="badge badge-warning"></span>®
                     <br><br>
-                    <a class="btn btn-success pull-right marginBottom10 text-light" id="myBtn">READ MORE</a>
+                    <a class="btn btn-success pull-right marginBottom10 text-light" id="myBtn" th:href="*{post.urlLink}"
+                       th:if="${post.getUrlLink() != null}">READ MORE</a>
+                    <a class="btn btn-warning pull-right marginBottom10 text-light">Update</a>
                 </div>
                 <hr>
                 <br><br><br><br>

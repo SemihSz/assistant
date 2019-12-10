@@ -1,9 +1,11 @@
 package com.spring.assistant.assistant.todo.service.implemantation;
 
 
-import com.spring.assistant.assistant.mailservice.AutomaticMailServiceImpl;
-import com.spring.assistant.assistant.mailservice.MailInfoModel;
-import com.spring.assistant.assistant.mailservice.MailService;
+import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.general.GenerateService;
+import com.spring.assistant.assistant.mailservice.model.MailInfoModel;
+import com.spring.assistant.assistant.mailservice.service.AutomaticMailServiceImpl;
+import com.spring.assistant.assistant.mailservice.service.MailService;
 import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
@@ -69,33 +71,37 @@ public class TodoServiceIml implements TodoService, Serializable {
     @Autowired
     private AutomaticMailServiceImpl automaticEmailService;
 
+    @Autowired
+    private GenerateService generateService;
+
+    @Autowired
+    private GetUserIdService getUserIdService;
+
     //TODO mail yap 05.11.19
     @Override
     public TodoDto createNewTodo(TodoDto todo) {
         TodoEntity entityTodoEntity = new TodoEntity();
         TodoDto returnValue = new TodoDto();
         String userId = null;
-        String username = userService.giveUserAuthenticationInformation();
         BeanUtils.copyProperties(todo, entityTodoEntity);
-        if (controlTheTitleOfTodo(todo.getTitle())){
-            if (sizeOfTitle(todo.getTitle())){
-                if (descLenght(todo.getDescription())){
-                    if (!todo.getUserId().isEmpty() && todo.getUserId().equals("")){
+        if (controlTheTitleOfTodo(todo.getTitle())) {
+            if (sizeOfTitle(todo.getTitle())) {
+                if (descLenght(todo.getDescription())) {
+                    if (!todo.getUserId().isEmpty() && todo.getUserId().equals("")) {
                         userId = todo.getUserId();
+                    } else {
+                        userId = getUserIdService.getUserId();
                     }
-                    else {
-                        userId = userService.findByEmail(username).getUserId();
-                    }
-                    //TODO Kontroller yaz
-                    String taskId = generateRandomTaskId();
-                    //String taskId = "k8pdhzNYrOGs9Jm";
-                    if (todoRepository.findByTaskId(taskId) !=null){
-                        String newTaskId = generateRandomTaskId();
-                        if (!newTaskId.equals(taskId)){
+
+                    String taskId = generateService.generateRandomTaskId();
+
+                    if (todoRepository.findByTaskId(taskId) == null) {
+                        String newTaskId = generateService.generateRandomTaskId();
+                        if (!newTaskId.equals(taskId)) {
                             entityTodoEntity.setTaskId(newTaskId);
                         }
-                    }
-                    else {
+
+                    } else {
                         entityTodoEntity.setTaskId(taskId);
                     }
 
@@ -105,16 +111,18 @@ public class TodoServiceIml implements TodoService, Serializable {
                     entityTodoEntity.setExpectFinishDate(todo.getExpectFinishDate());
                     entityTodoEntity.setFinnished(false);
                     entityTodoEntity.setEmail(EmailType.NEW.getEmailType());
-                    TodoEntity storeTodos =  todoRepository.save(entityTodoEntity);
-                    BeanUtils.copyProperties(storeTodos,returnValue);
-                }
-                else {
+                    TodoEntity storeTodos = todoRepository.save(entityTodoEntity);
+                    BeanUtils.copyProperties(storeTodos, returnValue);
+
+                } else {
                     showRunTimeMessag("Your description is so short");
                 }
             }
-        }else{
+        } else {
+
             showRunTimeMessag("Your title is so short");
         }
+
         logger.info("!!!Create New Todo!!!");
         return returnValue;
     }
@@ -240,8 +248,8 @@ public class TodoServiceIml implements TodoService, Serializable {
 
     @Override
     public void automaticEmailService() {
-        String username = userService.giveUserAuthenticationInformation();
-        String userId = userService.findByEmail(username).getUserId();
+
+        String userId = getUserIdService.getUserId();
         List<TodoEntity> todoEntity = todoRepository.finds(userId);
         for (TodoEntity currentTodo : todoEntity) {
             final LocalDate expectedDate = currentTodo.getExpectFinishDate();

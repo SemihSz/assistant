@@ -3,7 +3,7 @@ package com.spring.assistant.assistant.blog.controller;
 import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.request.PostRequestModel;
 import com.spring.assistant.assistant.blog.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/blog")
+@AllArgsConstructor
 public class BlogController {
 
-    @Autowired
-    PostService postService;
+    private final PostService postService;
 
     @GetMapping(path = "/home")
     public ResponseEntity blogHomePage() {
@@ -46,7 +46,7 @@ public class BlogController {
         return ResponseEntity.ok().body(postService.showCurrentUserList());
     }
 
-    @GetMapping(path = "get-different-user-list")
+    @GetMapping(path = "/get-different-user-list")
     public String getList(Model model) {
         model.addAttribute("posts", postService.postCurrentUserResponse());
         return "blog/show-blogs";

@@ -1,6 +1,7 @@
-package com.spring.assistant.assistant.mailservice;
+package com.spring.assistant.assistant.mailservice.service;
 
 
+import com.spring.assistant.assistant.mailservice.model.MailInfoModel;
 import com.spring.assistant.assistant.todo.repository.SubTodoRepository;
 import com.spring.assistant.assistant.todo.repository.TodoRepository;
 import lombok.NoArgsConstructor;

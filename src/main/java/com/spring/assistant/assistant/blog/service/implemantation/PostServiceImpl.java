@@ -1,50 +1,63 @@
 package com.spring.assistant.assistant.blog.service.implemantation;
 
 import com.spring.assistant.assistant.blog.entity.PostEntity;
+import com.spring.assistant.assistant.blog.executable.service.BadgeStatisticService;
+import com.spring.assistant.assistant.blog.executable.service.BodyStatisticService;
+import com.spring.assistant.assistant.blog.executable.service.CreateNewBlogService;
+import com.spring.assistant.assistant.blog.executable.service.GenerateBadgeService;
+import com.spring.assistant.assistant.blog.executable.service.GetCurrentUserPostService;
+import com.spring.assistant.assistant.blog.executable.service.StatisticBlogService;
+import com.spring.assistant.assistant.blog.model.PostBodyModel;
+import com.spring.assistant.assistant.blog.model.PostSaveModel;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.request.PostRequestModel;
 import com.spring.assistant.assistant.blog.response.BadgeResponse;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
 import com.spring.assistant.assistant.blog.service.PostService;
 import com.spring.assistant.assistant.blog.service.UploadService;
-import com.spring.assistant.assistant.exception.MaximumSizeException;
-import com.spring.assistant.assistant.exception.ResourceNotFoundException;
-import com.spring.assistant.assistant.todo.shared.enums.BadgeIndexType;
+import com.spring.assistant.assistant.blog.statistic.BadgeStatisticModel;
+import com.spring.assistant.assistant.blog.statistic.BodyStatisticModel;
+import com.spring.assistant.assistant.blog.statistic.entity.StatisticEntity;
+import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.general.GenerateService;
 import com.spring.assistant.assistant.todo.shared.enums.PostStatusType;
-import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
-import com.spring.assistant.assistant.usercontroller.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
-@Qualifier("post")
 @Slf4j
+@AllArgsConstructor
 public class PostServiceImpl implements PostService, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
+    private final GetUserIdService getUserIdService;
 
-    @Autowired
-    private UserService userService;
+    private final PostRepository postRepository;
 
-    @Autowired
-    private PostRepository postRepository;
+    private final GenerateService generateService;
 
-    @Autowired
-    private GenerateNumberUtil generateNumberUtil;
+    private final GenerateBadgeService generateBadgeService;
 
-    @Autowired
-    private UploadService uploadService;
+    private final UploadService uploadService;
+
+    private final CreateNewBlogService createNewBlogServiceService;
+
+    private final GetCurrentUserPostService getCurrentUserPostService;
+
+    private final StatisticBlogService statisticBlogService;
+
+    private final BadgeStatisticService badgeStatisticService;
+
+    private final BodyStatisticService bodyStatisticService;
 
     @Override
     public PostEntity saveNewPost(PostRequestModel postRequestModel, MultipartFile multipartFile) {
@@ -53,22 +66,18 @@ public class PostServiceImpl implements PostService, Serializable {
         BadgeResponse badgeResponse = badgeList.get(0);
         logger.info("Now Creating the new post");
 
-        String commentId = createCommentId();
+        String commentId = generateService.createCommentId();
 
-        final PostEntity postEntity = PostEntity.builder()
+        final PostSaveModel postSaveModel = PostSaveModel.builder()
                 .title(postRequestModel.getTitle())
                 .body(postRequestModel.getBody())
                 .category(postRequestModel.getCategory())
                 .createDate(new Date())
                 .updatedDate(null)
-                .userId(getUserId())
+                .userId(getUserIdService.getUserId())
                 .commentId(commentId)
                 .postStatusType(PostStatusType.NEW)
-                .badgeOne(badgeResponse.getBadgeOne())
-                .badgeTwo(badgeResponse.getBadgeTwo())
-                .badgeThree(badgeResponse.getBadgeThree())
-                .badgeFour(badgeResponse.getBadgeFour())
-                .badgeFive(badgeResponse.getBadgeFive())
+                .urlLink(postRequestModel.getUrlLink())
                 .build();
 
 
@@ -76,137 +85,46 @@ public class PostServiceImpl implements PostService, Serializable {
 
             logger.info("Now Starting the upload service!");
             uploadService.storeFile(multipartFile, commentId);
-            logger.info("Now uploading image into db Comment id = {}, user id = {}", postEntity.getCommentId(), postEntity.getUserId());
+            logger.info("Now uploading image into db Comment id = {}, user id = {}", postSaveModel.getCommentId(), postSaveModel.getUserId());
 
         }
 
-        logger.info("Comment id = {}, user id = {}", postEntity.getCommentId(), postEntity.getUserId());
+        logger.info("Comment id = {}, user id = {}", postSaveModel.getCommentId(), postSaveModel.getUserId());
 
-        postRepository.save(postEntity);
+        final PostEntity postEntity = createNewBlogServiceService.apply(postSaveModel,
+                null, badgeResponse);
 
         logger.info("Save post into DB!");
+
+        final BadgeStatisticModel badgeStatisticModel = badgeStatisticService.apply(badgeResponse);
+
+        final PostBodyModel postBodyModel = PostBodyModel.builder()
+                .postBody(postSaveModel.getBody())
+                .build();
+
+        final BodyStatisticModel bodyStatisticModel = bodyStatisticService.apply(postBodyModel);
+
+        final StatisticEntity StatisticEntity = statisticBlogService.apply(postSaveModel,
+                badgeStatisticModel, bodyStatisticModel);
 
         return postEntity;
     }
 
     private List<BadgeResponse> separateBadge(String badgeAll) {
 
-        List<BadgeResponse> responses = new ArrayList<>();
-
-        if (badgeAll == null) {
-
-            logger.error("!! Badge is null. This process stop before separate process start!! badge={}", badgeAll);
-            throw new ResourceNotFoundException("Badge is null. This process stop before separate process start");
-
-        }
-
-        String[] arr = badgeAll.split(" ");
-
-        if (arr.length > 5) {
-
-            logger.error("!! Badge maximum capacity is 5. This process stop before separate process start!! arrayList lenght={}", arr.length);
-            throw new MaximumSizeException("Reach the max. of badge size. You have to remove some bage!");
-
-        }
-
-        List<String> list = new ArrayList<>();
-
-        try {
-            for (int i = 1; i <= 5; i++) {
-                if (arr.length >= i) {
-                    list.add(arr[i - 1].substring(0, 1).toUpperCase() + arr[i - 1].substring(1).toLowerCase());
-                }
-                if (arr.length == i) {
-                    for (int j = 1; j <= (5 - arr.length); j++) {
-                        list.add("");
-                    }
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-
-        BadgeResponse badgeResponse = BadgeResponse.builder()
-                .badgeOne(list.get(BadgeIndexType.ZERO.getCode()))
-                .badgeTwo(list.get(BadgeIndexType.ONE.getCode()))
-                .badgeThree(list.get(BadgeIndexType.TWO.getCode()))
-                .badgeFour(list.get(BadgeIndexType.THREE.getCode()))
-                .badgeFive(list.get(BadgeIndexType.FOUR.getCode()))
-                .build();
-
-        responses.add(badgeResponse);
-
-        return responses;
-
+        return generateBadgeService.apply(badgeAll);
     }
 
     @Override
     public List<PostEntity> showCurrentUserList() {
 
-        return postRepository.findByUserId(getUserId());
-
+        return postRepository.findByUserId(getUserIdService.getUserId());
     }
 
     @Override
     public List<PostCurrentUserResponse> postCurrentUserResponse() {
 
-        List<PostEntity> getCurrentPosts = postRepository.findByUserId(getUserId());
-        List<PostCurrentUserResponse> newResponse = new ArrayList<>();
-        for (PostEntity post : getCurrentPosts) {
-
-            PostCurrentUserResponse postCurrentUserResponse = PostCurrentUserResponse.builder()
-                    .title(post.getTitle())
-                    .body(post.getBody())
-                    .commentId(post.getCommentId())
-                    .postStatusType(post.getPostStatusType())
-                    .attachFile(post.getCategory())
-                    .createDate(post.getCreateDate())
-                    .updatedDate(post.getUpdatedDate())
-                    .badgeOne(post.getBadgeOne())
-                    .badgeTwo(post.getBadgeTwo())
-                    .badgeThree(post.getBadgeThree())
-                    .badgeFour(post.getBadgeFour())
-                    .badgeFive(post.getBadgeFive())
-                    .build();
-
-            newResponse.add(postCurrentUserResponse);
-        }
-
-        return newResponse;
-
+        return getCurrentUserPostService.apply(showCurrentUserList());
     }
 
-
-    public String getUserId() {
-        logger.info("Taking the user id");
-        final String username = showEmailAddress();
-        return userService.findByEmail(username).getUserId();
-
-    }
-
-    private String showEmailAddress() {
-
-        return userService.giveUserAuthenticationInformation();
-
-    }
-
-    private String createCommentId() {
-        logger.info("Controlling the comment id");
-        boolean controller = true;
-        String commentId = null;
-        while (controller) {
-            commentId = generateNumberUtil.generateCommentId();
-            PostEntity controllComentId = postRepository.findByCommentId(commentId);
-            if (controllComentId != null) {
-                logger.info("This comment id  has been created before = {}", commentId);
-                commentId = generateNumberUtil.generateCommentId();
-                logger.info("Create New Comment id = {}", commentId);
-
-            } else {
-                logger.info("Create New Comment id = {}", commentId);
-                controller = false;
-            }
-        }
-        return commentId;
-    }
 }

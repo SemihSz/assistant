@@ -12,16 +12,26 @@ import java.util.Date;
 public class TodoResponseAll {
 
     private long id;
-    private String title;
-    private String description;
-    private String category;
-    private String userId;
-    private Date createdDate;
-    private String importantLevel;
-    private Date expectFinishDate;
-    private Date updatedDate;
-    private String taskId;
-    private Boolean isFinnished;
+
+	private String title;
+
+	private String description;
+
+	private String category;
+
+	private String userId;
+
+	private Date createdDate;
+
+	private String importantLevel;
+
+	private Date expectFinishDate;
+
+	private Date updatedDate;
+
+	private String taskId;
+
+	private Boolean isFinnished;
 
 
 }

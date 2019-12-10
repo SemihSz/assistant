@@ -1,5 +1,6 @@
-package com.spring.assistant.assistant.mailservice;
+package com.spring.assistant.assistant.mailservice.service;
 
+import com.spring.assistant.assistant.mailservice.model.MailInfoModel;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 

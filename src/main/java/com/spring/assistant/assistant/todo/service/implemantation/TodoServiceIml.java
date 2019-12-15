@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
@@ -337,6 +338,12 @@ public class TodoServiceIml implements TodoService, Serializable {
         } else
             return new ArrayList<TodoEntity>();
 
+    }
+
+    public Page<TodoEntity> getWorkLogs(Pageable pageable) {
+        final Pageable pageableWithDefaultSort = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSortOr(Sort.by(
+                Sort.Direction.DESC, "id")));
+        return todoRepository.findAll(pageableWithDefaultSort);
     }
 
     @Override

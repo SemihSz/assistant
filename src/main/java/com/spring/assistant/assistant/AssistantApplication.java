@@ -21,5 +21,4 @@ public class AssistantApplication {
 	@Bean(name = "TodoServiceIml")
 	@Primary
 	public TodoServiceIml serviceIml(){return new TodoServiceIml();}
-
 }

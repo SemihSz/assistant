@@ -14,19 +14,21 @@ import java.util.Date;
 @Builder
 public class PostCurrentUserResponse {
 
-    private String title;
+	private String title;
 
-    private String body;
+	private String body;
 
-    private String attachFile;
+	private String attachFile;
 
-    private Date createDate;
+	private Date createDate;
 
-    private Date updatedDate;
+	private String category;
 
-    private String commentId;
+	private Date updatedDate;
 
-    private PostStatusType postStatusType;
+	private String commentId;
+
+	private PostStatusType postStatusType;
 
 	private String badgeOne;
 
@@ -39,4 +41,6 @@ public class PostCurrentUserResponse {
 	private String badgeFive;
 
 	private String urlLink;
+
+	private String badgeAll;
 }

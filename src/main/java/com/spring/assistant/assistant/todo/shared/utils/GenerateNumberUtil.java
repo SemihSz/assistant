@@ -10,8 +10,8 @@ import java.util.Random;
 public class GenerateNumberUtil {
 
     private final Random random = new SecureRandom();
-    private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?&%#";
-    private final int ITERATIONS = 10000;
+	private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?&";
+	private final int ITERATIONS = 10000;
     private final int KEY_LENGHT = 256;
 
     protected static final Integer FILE_ID_LENGHT = 21;

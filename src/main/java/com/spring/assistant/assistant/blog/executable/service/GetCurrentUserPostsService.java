@@ -16,7 +16,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Service
-public class GetCurrentUserPostService implements BasicTask<List<PostEntity>, List<PostCurrentUserResponse>> {
+public class GetCurrentUserPostsService implements BasicTask<List<PostEntity>, List<PostCurrentUserResponse>> {
 
 
 	private final PostRepository postRepository;

@@ -5,8 +5,10 @@ import com.spring.assistant.assistant.blog.executable.service.BadgeStatisticServ
 import com.spring.assistant.assistant.blog.executable.service.BodyStatisticService;
 import com.spring.assistant.assistant.blog.executable.service.CreateNewBlogService;
 import com.spring.assistant.assistant.blog.executable.service.GenerateBadgeService;
-import com.spring.assistant.assistant.blog.executable.service.GetCurrentUserPostService;
+import com.spring.assistant.assistant.blog.executable.service.GetCurrentUserPostsService;
+import com.spring.assistant.assistant.blog.executable.service.GetCurrentUserSinglePostService;
 import com.spring.assistant.assistant.blog.executable.service.StatisticBlogService;
+import com.spring.assistant.assistant.blog.executable.service.UpdatePostService;
 import com.spring.assistant.assistant.blog.model.PostBodyModel;
 import com.spring.assistant.assistant.blog.model.PostSaveModel;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
@@ -39,9 +41,9 @@ public class PostServiceImpl implements PostService, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
-    private final GetUserIdService getUserIdService;
-
     private final PostRepository postRepository;
+
+    private final GetUserIdService getUserIdService;
 
     private final GenerateService generateService;
 
@@ -51,13 +53,17 @@ public class PostServiceImpl implements PostService, Serializable {
 
     private final CreateNewBlogService createNewBlogServiceService;
 
-    private final GetCurrentUserPostService getCurrentUserPostService;
+    private final GetCurrentUserPostsService getCurrentUserPostsService;
 
     private final StatisticBlogService statisticBlogService;
 
     private final BadgeStatisticService badgeStatisticService;
 
     private final BodyStatisticService bodyStatisticService;
+
+    private final GetCurrentUserSinglePostService getCurrentUserSinglePostService;
+
+    private final UpdatePostService updatePostService;
 
     @Override
     public PostEntity saveNewPost(PostRequestModel postRequestModel, MultipartFile multipartFile) {
@@ -124,7 +130,45 @@ public class PostServiceImpl implements PostService, Serializable {
     @Override
     public List<PostCurrentUserResponse> postCurrentUserResponse() {
 
-        return getCurrentUserPostService.apply(showCurrentUserList());
+        return getCurrentUserPostsService.apply(showCurrentUserList());
     }
 
+    @Override
+    public PostCurrentUserResponse updatePostCurrentUserResponse(PostCurrentUserResponse postCurrentUserResponse) {
+
+        final PostCurrentUserResponse userRequest = getCurrentUserSinglePostService.apply(postCurrentUserResponse.getCommentId());
+
+        List<BadgeResponse> badgeList = separateBadge(postCurrentUserResponse.getBadgeAll());
+
+        BadgeResponse badgeResponse = badgeList.get(0);
+
+        final PostSaveModel postSaveModel = PostSaveModel.builder()
+                .title(postCurrentUserResponse.getTitle().isEmpty() ? userRequest.getTitle() : postCurrentUserResponse.getTitle())
+                .commentId(userRequest.getCommentId())
+                .postStatusType(userRequest.getPostStatusType())
+                .body((postCurrentUserResponse.getBody().isEmpty() && !postCurrentUserResponse.getBody().equals(userRequest.getBody()))
+                        ? userRequest.getBody() : postCurrentUserResponse.getBody())
+                .category((postCurrentUserResponse.getCategory().isEmpty() && !(postCurrentUserResponse.getCategory().equals(userRequest.getCategory())))
+                        ? userRequest.getCategory() : postCurrentUserResponse.getCategory())
+                .createDate(userRequest.getCreateDate())
+                .updatedDate(new Date())
+                .userId(getUserIdService.getUserId())
+                .urlLink((postCurrentUserResponse.getUrlLink().isEmpty() && !postCurrentUserResponse.getUrlLink().equals(userRequest.getUrlLink()))
+                        ? userRequest.getUrlLink() : postCurrentUserResponse.getUrlLink())
+                .badgeOne((!userRequest.getBadgeOne().equals(badgeResponse.getBadgeOne()) && badgeResponse.getBadgeOne().isEmpty())
+                        ? userRequest.getBadgeOne() : badgeResponse.getBadgeOne())
+                .badgeTwo((!userRequest.getBadgeTwo().equals(badgeResponse.getBadgeTwo()) && badgeResponse.getBadgeTwo().isEmpty())
+                        ? userRequest.getBadgeTwo() : badgeResponse.getBadgeTwo())
+                .badgeThree((!userRequest.getBadgeThree().equals(badgeResponse.getBadgeThree()) && badgeResponse.getBadgeThree().isEmpty())
+                        ? userRequest.getBadgeThree() : badgeResponse.getBadgeThree())
+                .badgeFour((!userRequest.getBadgeFour().equals(badgeResponse.getBadgeFour()) && badgeResponse.getBadgeFour().isEmpty())
+                        ? userRequest.getBadgeFour() : badgeResponse.getBadgeFour())
+                .badgeFive((!userRequest.getBadgeFive().equals(badgeResponse.getBadgeFive()) && badgeResponse.getBadgeFive().isEmpty())
+                        ? userRequest.getBadgeFive() : badgeResponse.getBadgeFive())
+                .build();
+
+        final PostCurrentUserResponse newUserResponse = updatePostService.apply(postSaveModel);
+
+        return null;
+    }
 }

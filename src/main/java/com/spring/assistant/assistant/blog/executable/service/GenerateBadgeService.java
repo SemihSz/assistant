@@ -27,7 +27,7 @@ public class GenerateBadgeService implements BasicTask<String, List<BadgeRespons
 	public List<BadgeResponse> apply(String badgeAll) {
 		List<BadgeResponse> responses = new ArrayList<>();
 
-		if (badgeAll == null) {
+		if (badgeAll == null || badgeAll.equals("")) {
 
 			logger.error("!! Badge is null. This process stop before separate process start!! badge={}", badgeAll);
 			throw new ResourceNotFoundException("Badge is null. This process stop before separate process start");

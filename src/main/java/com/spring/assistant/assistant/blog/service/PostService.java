@@ -11,13 +11,15 @@ import java.util.List;
 
 @Service
 @Qualifier("post")
-public interface PostService {
+public interface PostService<T> {
 
-    PostEntity saveNewPost(PostRequestModel postRequestModel, MultipartFile multipartFile);
+	PostEntity saveNewPost(PostRequestModel postRequestModel, MultipartFile multipartFile);
 
-    List<PostEntity> showCurrentUserList();
+	List<PostEntity> showCurrentUserList();
 
-    List<PostCurrentUserResponse> postCurrentUserResponse();
+	List<PostCurrentUserResponse> postCurrentUserResponse();
+
+	PostCurrentUserResponse updatePostCurrentUserResponse(PostCurrentUserResponse postCurrentUserResponse);
 
 
 }

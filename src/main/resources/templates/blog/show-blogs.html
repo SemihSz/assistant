@@ -4,10 +4,12 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Login</title>
+    <title>Show Blogs</title>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width"/>
     <base href="/"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
@@ -65,7 +67,66 @@
                     <br><br>
                     <a class="btn btn-success pull-right marginBottom10 text-light" id="myBtn" th:href="*{post.urlLink}"
                        th:if="${post.getUrlLink() != null}">READ MORE</a>
-                    <a class="btn btn-warning pull-right marginBottom10 text-light">Update</a>
+                    <a class="btn btn-warning pull-right marginBottom10 text-light" data-target=".bd-example-modal-xl"
+                       data-toggle="modal">Update</a>
+                    <div aria-hidden="true" aria-labelledby="myExtraLargeModalLabel"
+                         class="modal fade bd-example-modal-xl"
+                         role="dialog" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <form method="post"
+                                      th:action="@{/blog/update-post/{commentId}(commentId =${post.getCommentId()})}"
+                                      th:object="${postRequestModel}">
+                                    <div class="container">
+                                        <label class="col-form-label">Title</label><input class="form-control"
+                                                                                          th:field="*{title}"
+                                                                                          type="text">
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                        <label for="exampleFormControlTextarea1">Body</label>
+                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea1"
+                                                  rows="10"
+                                                  th:field="*{body}"></textarea>
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                        <label class="col-form-label">Category</label><input class="form-control"
+                                                                                             th:field="*{category}"
+                                                                                             type="text">
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="container">
+                                        <div class="alert alert-warning">
+                                            You have write max.<strong> 5 words</strong> and each words have space
+                                            character between them.
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <label class="col-form-label" for="badge">Badge</label><input
+                                            class="form-control" id="badge"
+                                            th:field="*{badgeAll}" type="text">
+                                    </div>
+
+                                    <div class="container">
+                                        <label class="col-form-label">Url Link</label><input class="form-control"
+                                                                                             th:field="*{urlLink}"
+                                                                                             type="url">
+                                    </div>
+
+
+                                    <br>
+                                    <div class="container">
+                                        <input class="btn btn-success" type="submit" value="Submit"/>
+                                    </div>
+                                </form>
+
+                                <br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <br><br><br><br>
@@ -73,18 +134,24 @@
         </div>
     </div>
 
+
     <script src="deneme.js"></script>
     <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
     <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
 
         var posts = /*[[${posts}]]*/ 'default';
         var list = [];
         console.log(posts);
+
+
         for (i = 0; i <= posts.length; i++) {
             list.push(posts[i]);
         }
+        var title = list.values();
+
         console.log(list);
 
 

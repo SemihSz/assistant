@@ -49,9 +49,4 @@ public class GenerateNumberUtil {
 
     }
 
-    public String generateCommentId() {
-
-        return generateRandomString(COMENT_ID_LENGHT);
-
-    }
 }

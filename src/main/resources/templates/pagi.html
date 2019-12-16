@@ -54,62 +54,77 @@
     </div>
 </nav>
 
+<div class="container">
+    <table class="table table-bordered table-responsive-lg table-hover" style="margin-top: 25px">
+        <thead>
+        <tr>
+            <th class="text-center th-sm">ID</th>
+            <th class="text-center th-sm">Title</th>
+            <th class="text-center th-sm">Category</th>
+            <th class="text-center th-sm">Important Level</th>
+            <th class="text-center">Created Date</th>
+            <th class="text-center">Expect Finish Date</th>
+            <th class="text-center">Update Date</th>
+            <th class="text-center">Is Finished?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-success" style="font-size: 12px" th:each="customer : ${customers}"
+            th:if="${customer.isFinnished() == true}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.title}"></td>
+            <td th:text="${customer.category}"></td>
+            <td th:text="${customer.importantLevel}"></td>
+            <td th:text="${customer.createdDate}"></td>
+            <td th:text="${customer.expectFinishDate}"></td>
+            <td th:text="${customer.updatedDate}"></td>
+            <td th:text="${customer.finnished}"></td>
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th class="text-center th-sm">ID</th>
-        <th class="text-center th-sm">Title</th>
-        <th class="text-center th-sm">Category</th>
-        <th class="text-center th-sm">Important Level</th>
-        <th class="text-center">Created Date</th>
-        <th class="text-center">Expect Finish Date</th>
-        <th class="text-center">Update Date</th>
-        <th class="text-center">Is Finished?</th>
-        <
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="customer : ${customers}">
-        <td th:text="${customer.id}"></td>
-        <td th:text="${customer.title}"></td>
-        <td th:text="${customer.category}"></td>
-        <td th:text="${customer.importantLevel}"></td>
-        <td th:text="${customer.createdDate}"></td>
-        <td th:text="${customer.expectFinishDate}"></td>
-        <td th:text="${customer.updatedDate}"></td>
-        <td th:text="${customer.finnished}"></td>
+        </tr>
+        <tr class="table-warning" style="font-size: 12px" th:each="customer : ${customers}"
+            th:if="${customer.isFinnished() == false}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.title}"></td>
+            <td th:text="${customer.category}"></td>
+            <td th:text="${customer.importantLevel}"></td>
+            <td th:text="${customer.createdDate}"></td>
+            <td th:text="${customer.expectFinishDate}"></td>
+            <td th:text="${customer.updatedDate}"></td>
+            <td th:text="${customer.finnished}"></td>
 
-    </tr>
-    </tbody>
-</table>
+        </tr>
+        </tbody>
+    </table>
 
-<!-- customers pagination -->
-<nav aria-label="Pagination" th:if="${customers.totalPages gt 0}">
-    <ul class="pagination justify-content-center font-weight-bold">
-        <li class="page-item" th:classappend="${customers.number eq 0} ? 'disabled'">
-            <a aria-label="Previous"
-               class="page-link"
-               data-toggle="tooltip"
-               th:href="@{/customers?page={id}(id=${customers.number lt 2 ? 1 : customers.number})}"
-               title="Previous Page">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item" th:classappend="${i eq customers.number + 1} ? 'active'"
-            th:each="i : ${#numbers.sequence( 1, customers.totalPages, 1)}">
-            <a class="page-link" data-toggle="tooltip" th:href="@{/customers?page={id}(id=${i})}"
-               th:text="${i}" th:title="${'Page '+ i}"></a>
-        </li>
-        <li class="page-item" th:classappend="${customers.number + 1 eq customers.totalPages} ? 'disabled'">
-            <a aria-label="Next"
-               class="page-link"
-               data-toggle="tooltip" th:href="@{/customers?page={id}(id=${customers.number + 2})}" title="Next Page">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <!-- customers pagination -->
+    <nav aria-label="Pagination" th:if="${customers.totalPages gt 0}">
+        <ul class="pagination justify-content-center font-weight-bold">
+            <li class="page-item" th:classappend="${customers.number eq 0} ? 'disabled'">
+                <a aria-label="Previous"
+                   class="page-link"
+                   data-toggle="tooltip"
+                   th:href="@{/customers?page={id}(id=${customers.number lt 2 ? 1 : customers.number})}"
+                   title="Previous Page">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${i eq customers.number + 1} ? 'active'"
+                th:each="i : ${#numbers.sequence( 1, customers.totalPages, 1)}">
+                <a class="page-link" data-toggle="tooltip" th:href="@{/customers?page={id}(id=${i})}"
+                   th:text="${i}" th:title="${'Page '+ i}"></a>
+            </li>
+            <li class="page-item" th:classappend="${customers.number + 1 eq customers.totalPages} ? 'disabled'">
+                <a aria-label="Next"
+                   class="page-link"
+                   data-toggle="tooltip" th:href="@{/customers?page={id}(id=${customers.number + 2})}"
+                   title="Next Page">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 
 <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
 <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>

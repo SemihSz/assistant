@@ -34,7 +34,7 @@ public class CustomerController {
 	public String customersPage(HttpServletRequest request, Model model) {
 		//Todo user size ve sort type al.
 		int page = 0; //default page number is 0 (yes it is weird)
-		int size = 2; //default page size is 10
+		int size = 5; //default page size is 10
 
 		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 			page = Integer.parseInt(request.getParameter("page")) - 1;
@@ -44,7 +44,7 @@ public class CustomerController {
 			size = Integer.parseInt(request.getParameter("size"));
 		}
 
-		model.addAttribute("customers", todoRepository.pages(getUserIdService.getUserId(), PageRequest.of(page, size, Sort.by("id"))));
+		model.addAttribute("customers", todoRepository.pages(getUserIdService.getUserId(), PageRequest.of(page, size, Sort.by("category"))));
 		return "pagi";
 	}
 }

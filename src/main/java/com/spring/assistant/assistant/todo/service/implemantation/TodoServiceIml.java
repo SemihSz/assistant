@@ -241,6 +241,7 @@ public class TodoServiceIml implements TodoService, Serializable {
             e.printStackTrace();
             logger.error("Email sending error");
         }
+        //Todo kontrol in progress ise bunu o listeden kaldır
         TodoEntity entity =new TodoEntity();
         TodoDto todoDto = new TodoDto();
         BeanUtils.copyProperties(entity,todoDto);

@@ -40,13 +40,19 @@ public class GenerateNumberUtil {
 
     }
 
-    public String generateSubTaskId(int lenght){
+	public String generateSubTaskId(int lenght) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("subtask=?");
-        stringBuilder.append(generateRandomString(lenght));
-        return String.valueOf(stringBuilder);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("subtask=?");
+		stringBuilder.append(generateRandomString(lenght));
+		return String.valueOf(stringBuilder);
 
-    }
+	}
+
+	public String generateCommentId() {
+
+		return generateRandomString(COMENT_ID_LENGHT);
+
+	}
 
 }

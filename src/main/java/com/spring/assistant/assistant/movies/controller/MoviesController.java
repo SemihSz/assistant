@@ -35,8 +35,8 @@ public class MoviesController {
 
 	@GetMapping(path = "/movie-list")
 	public String showMoviesList() {
-
-		return "movie/show-movies";
+		movieService.getUserMovieList();
+		return "okey";
 	}
 
 

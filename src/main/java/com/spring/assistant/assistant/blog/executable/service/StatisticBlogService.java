@@ -5,7 +5,7 @@ import com.spring.assistant.assistant.blog.statistic.BadgeStatisticModel;
 import com.spring.assistant.assistant.blog.statistic.BodyStatisticModel;
 import com.spring.assistant.assistant.blog.statistic.entity.StatisticEntity;
 import com.spring.assistant.assistant.blog.statistic.repository.StatisticRepository;
-import com.spring.assistant.assistant.executable.interfaces.Mappers;
+import com.spring.assistant.assistant.interfaces.Mappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

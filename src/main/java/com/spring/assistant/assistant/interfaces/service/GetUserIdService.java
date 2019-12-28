@@ -1,6 +1,6 @@
-package com.spring.assistant.assistant.executable.interfaces.service;
+package com.spring.assistant.assistant.interfaces.service;
 
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.usercontroller.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class GetUserIdService implements BasicTask<String, String> {
+public class GetUserIdService implements SimpleTask<String, String> {
 
 	private final UserService userService;
 

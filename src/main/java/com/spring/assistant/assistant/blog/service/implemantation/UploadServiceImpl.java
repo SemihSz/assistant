@@ -7,7 +7,7 @@ import com.spring.assistant.assistant.blog.repository.DbUploadFileRepository;
 import com.spring.assistant.assistant.blog.service.UploadService;
 import com.spring.assistant.assistant.exception.FileStorageException;
 import com.spring.assistant.assistant.exception.ResourceNotFoundException;
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

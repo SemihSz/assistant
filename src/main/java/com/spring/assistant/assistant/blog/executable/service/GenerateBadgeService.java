@@ -3,7 +3,7 @@ package com.spring.assistant.assistant.blog.executable.service;
 import com.spring.assistant.assistant.blog.response.BadgeResponse;
 import com.spring.assistant.assistant.exception.MaximumSizeException;
 import com.spring.assistant.assistant.exception.ResourceNotFoundException;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.todo.shared.enums.BadgeIndexType;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class GenerateBadgeService implements BasicTask<String, List<BadgeResponse>> {
+public class GenerateBadgeService implements SimpleTask<String, List<BadgeResponse>> {
 
 	private static final Logger logger = LoggerFactory.getLogger(GenerateBadgeService.class);
 

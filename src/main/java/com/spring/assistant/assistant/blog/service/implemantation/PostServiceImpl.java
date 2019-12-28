@@ -20,8 +20,8 @@ import com.spring.assistant.assistant.blog.service.UploadService;
 import com.spring.assistant.assistant.blog.statistic.BadgeStatisticModel;
 import com.spring.assistant.assistant.blog.statistic.BodyStatisticModel;
 import com.spring.assistant.assistant.blog.statistic.entity.StatisticEntity;
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.general.GenerateService;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.todo.shared.enums.PostStatusType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -169,6 +169,6 @@ public class PostServiceImpl implements PostService, Serializable {
 
         final PostCurrentUserResponse newUserResponse = updatePostService.apply(postSaveModel);
 
-        return null;
+	    return newUserResponse;
     }
 }

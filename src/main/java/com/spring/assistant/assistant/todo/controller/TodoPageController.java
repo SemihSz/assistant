@@ -1,7 +1,7 @@
 package com.spring.assistant.assistant.todo.controller;
 
 
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.CategoryRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
@@ -97,8 +97,36 @@ public class TodoPageController {
         return "about";
     }
 
-    @RequestMapping(path = "/create",method = RequestMethod.GET)
-    public String todoPageView(Model model){
+    @RequestMapping(path = "/list/{sortType}", method = RequestMethod.GET)
+    public String sortList(HttpServletRequest request, Model model, @PathVariable("sortType") String sortType) {
+
+        CategoryRequestModel categoryRequestModel = new CategoryRequestModel();
+        TodoRequestModel todoRequestModel = new TodoRequestModel();
+        TodoSortRequestModel todoSortRequestModel = new TodoSortRequestModel();
+        //model.addAttribute("todos", todoService.showTodoListCurrentUser());
+        model.addAttribute("todoRequestModel", todoRequestModel);
+        model.addAttribute("categories", categoryService.showCategories());
+        model.addAttribute("categoryRequestModel", categoryRequestModel);
+        model.addAttribute("todoSortRequestModel", todoSortRequestModel);
+
+        int page = 0; //default page number is 0 (yes it is weird)
+        int size = 5; //default page size is 10
+
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+
+        model.addAttribute("customers", todoRepository.pages(getUserIdService.getUserId(), PageRequest.of(page, size, Sort.by(sortType))));
+
+        return "about";
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.GET)
+    public String todoPageView(Model model) {
 
         TodoRequestModel todoRequestModel = new TodoRequestModel();
 
@@ -177,7 +205,6 @@ public class TodoPageController {
         model.addAttribute("sorttodos", list);
         return "sort";
     }
-
     //TODO Response objesi yarat şirkete yönelik olsun
     @GetMapping(path = "/automatic-email-service")
     public ResponseEntity automaticEmail() {

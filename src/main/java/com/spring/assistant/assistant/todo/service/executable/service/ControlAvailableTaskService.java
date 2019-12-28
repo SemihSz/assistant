@@ -1,6 +1,6 @@
 package com.spring.assistant.assistant.todo.service.executable.service;
 
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.todo.entity.InProgressEntity;
 import com.spring.assistant.assistant.todo.repository.InProgressRepository;
 import com.spring.assistant.assistant.todo.shared.enums.AvailableResponseType;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ControlAvailableTaskService implements BasicTask<String, AvailableResponseType> {
+public class ControlAvailableTaskService implements SimpleTask<String, AvailableResponseType> {
 
 	private final InProgressRepository inProgressRepository;
 

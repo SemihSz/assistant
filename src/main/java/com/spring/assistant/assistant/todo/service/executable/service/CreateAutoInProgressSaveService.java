@@ -1,6 +1,6 @@
 package com.spring.assistant.assistant.todo.service.executable.service;
 
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.todo.entity.InProgressEntity;
 import com.spring.assistant.assistant.todo.repository.InProgressRepository;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class CreateAutoInProgressSaveService implements BasicTask<String, InProgressEntity> {
+public class CreateAutoInProgressSaveService implements SimpleTask<String, InProgressEntity> {
 
 
 	private final InProgressRepository inProgressRepository;

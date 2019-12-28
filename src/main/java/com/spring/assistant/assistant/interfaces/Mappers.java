@@ -1,4 +1,4 @@
-package com.spring.assistant.assistant.executable.interfaces;
+package com.spring.assistant.assistant.interfaces;
 
 /**
  * @author semih on Aralık, 2019, 14.12.2019, 00:57:45

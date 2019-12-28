@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <title>Login</title>
+    <title>Todo List</title>
     <meta content="" name="description"/>
     <meta content="width=device-width" name="viewport"/>
     <base href="/"/>
@@ -61,11 +61,15 @@
             <th class="text-center th-sm">ID</th>
             <th class="text-center th-sm">Title</th>
             <th class="text-center th-sm">Category</th>
-            <th class="text-center th-sm">Important Level</th>
-            <th class="text-center">Created Date</th>
-            <th class="text-center">Expect Finish Date</th>
-            <th class="text-center">Update Date</th>
-            <th class="text-center">Is Finished?</th>
+            <th class="text-center th-sm">Level</th>
+            <th class="text-center th-sm">Created Date</th>
+            <th class="text-center th-sm">Update Date</th>
+            <th class="text-center th-sm">Expect Date</th>
+            <th class="text-center th-sm">Is Done?</th>
+            <th class="text-center th-sm">Task ID</th>
+            <th class="text-center th-sm" style="width: 5%">Update</th>
+            <th class="text-center th-sm" style="width: 10%">Finish</th>
+            <th class="text-center th-sm" style="width: 10%">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -76,9 +80,19 @@
             <td th:text="${customer.category}"></td>
             <td th:text="${customer.importantLevel}"></td>
             <td th:text="${customer.createdDate}"></td>
-            <td th:text="${customer.expectFinishDate}"></td>
             <td th:text="${customer.updatedDate}"></td>
-            <td th:text="${customer.finnished}"></td>
+            <td th:text="${customer.expectFinishDate}"></td>
+            <td><span style='font-size:20px;'>&#9989;</span></td>
+            <td>
+                <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${customer.userId},taskId=${customer.taskId})}"
+                   th:text="${customer.taskId}"></a></td>
+            <td class="table text-center"><a class="btn btn-warning"
+                                             th:href="@{/home/update/{taskId}(taskId=${customer.taskId})}">Update</a>
+            </td>
+            <td class="table text-center"><a>-</a></td>
+            <td class="table text-center"><a class="btn btn-danger"
+                                             th:href="@{/home/delete/{taskId}(taskId=${customer.taskId})}">Delete</a>
+            </td>
 
         </tr>
         <tr class="table-warning" style="font-size: 12px" th:each="customer : ${customers}"
@@ -88,9 +102,21 @@
             <td th:text="${customer.category}"></td>
             <td th:text="${customer.importantLevel}"></td>
             <td th:text="${customer.createdDate}"></td>
-            <td th:text="${customer.expectFinishDate}"></td>
             <td th:text="${customer.updatedDate}"></td>
-            <td th:text="${customer.finnished}"></td>
+            <td th:text="${customer.expectFinishDate}"></td>
+            <td><span style='font-size:20px;'>&#10060;</span></td>
+            <td>
+                <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${customer.userId},taskId=${customer.taskId})}"
+                   th:text="${customer.taskId}"></a></td>
+            <td class="table text-center"><a class="btn btn-warning"
+                                             th:href="@{/home/update/{taskId}(taskId=${customer.taskId})}">Update</a>
+            </td>
+            <td class="table text-center"><a class="btn btn-success"
+                                             th:href="@{/home/finish/{taskId}(taskId=${customer.taskId})}">Finish</a>
+            </td>
+            <td class="table text-center"><a class="btn btn-danger"
+                                             th:href="@{/home/delete/{taskId}(taskId=${customer.taskId})}">Delete</a>
+            </td>
 
         </tr>
         </tbody>

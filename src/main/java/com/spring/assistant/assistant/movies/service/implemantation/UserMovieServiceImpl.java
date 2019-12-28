@@ -1,13 +1,17 @@
 package com.spring.assistant.assistant.movies.service.implemantation;
 
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.movies.model.UserMovieModel;
 import com.spring.assistant.assistant.movies.request.UserMoviesRequest;
+import com.spring.assistant.assistant.movies.response.MovieListResponse;
 import com.spring.assistant.assistant.movies.service.MovieService;
+import com.spring.assistant.assistant.movies.service.executable.GetMovieListService;
 import com.spring.assistant.assistant.movies.service.executable.UserSaveMovieService;
 import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author semih on Aralık, 2019, 22.12.2019, 15:55:46
@@ -22,12 +26,15 @@ public class UserMovieServiceImpl implements MovieService {
 
 	private final UserSaveMovieService userSaveMovieService;
 
+	private final GetMovieListService getMovieListService;
+
 	@Override
 	public void saveMovieUser(UserMoviesRequest userMoviesRequest) {
 
 
 		final UserMovieModel userMovieModel = UserMovieModel.builder()
-				.movieUserScore(Integer.parseInt(userMoviesRequest.getMovieScore()))
+				.movieUserScore(userMoviesRequest.getUserMovieScore())
+				.generalScore(userMoviesRequest.getMovieScore())
 				.movieCategory(userMoviesRequest.getCategory())
 				.movieId(generateNumberUtil.generateUserId(7))
 				.movieName(userMoviesRequest.getName())
@@ -40,5 +47,11 @@ public class UserMovieServiceImpl implements MovieService {
 		userSaveMovieService.apply(userMovieModel);
 
 
+	}
+
+	@Override
+	public List<MovieListResponse> getUserMovieList() {
+
+		return getMovieListService.apply(getUserIdService.getUserId());
 	}
 }

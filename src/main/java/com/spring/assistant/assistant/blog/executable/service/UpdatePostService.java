@@ -4,7 +4,7 @@ import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.model.PostSaveModel;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 @Slf4j
-public class UpdatePostService implements BasicTask<PostSaveModel, PostCurrentUserResponse> {
+public class UpdatePostService implements SimpleTask<PostSaveModel, PostCurrentUserResponse> {
 
 	private final PostRepository postRepository;
 

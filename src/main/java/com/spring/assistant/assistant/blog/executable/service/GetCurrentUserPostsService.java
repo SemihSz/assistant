@@ -3,8 +3,8 @@ package com.spring.assistant.assistant.blog.executable.service;
 import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Service
-public class GetCurrentUserPostsService implements BasicTask<List<PostEntity>, List<PostCurrentUserResponse>> {
+public class GetCurrentUserPostsService implements SimpleTask<List<PostEntity>, List<PostCurrentUserResponse>> {
 
 
 	private final PostRepository postRepository;

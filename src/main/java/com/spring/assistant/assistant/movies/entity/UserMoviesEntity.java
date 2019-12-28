@@ -31,7 +31,9 @@ public class UserMoviesEntity {
 
 	private String movieCategory;
 
-	private int movieUserScore;
+	private double movieUserScore;
+
+	private double generalScore;
 
 	private int numberOfWatchTime;
 

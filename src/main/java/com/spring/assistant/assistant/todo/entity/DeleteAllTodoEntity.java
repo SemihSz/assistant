@@ -1,9 +1,16 @@
 package com.spring.assistant.assistant.todo.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -35,7 +42,7 @@ public class DeleteAllTodoEntity implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate expectFinishDate;
 
-    private Boolean isFinnished = false;
+    private Boolean isFinnished;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedDate;
@@ -57,8 +64,6 @@ public class DeleteAllTodoEntity implements Serializable {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate subTodoUpdateDate;
-
-    private Boolean isFinished = false;
 
     private String subTaskId;
 

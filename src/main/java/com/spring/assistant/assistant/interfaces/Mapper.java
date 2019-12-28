@@ -1,4 +1,4 @@
-package com.spring.assistant.assistant.executable.interfaces;
+package com.spring.assistant.assistant.interfaces;
 
 import java.util.function.BiFunction;
 

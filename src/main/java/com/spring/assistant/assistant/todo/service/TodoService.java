@@ -15,7 +15,6 @@ public interface TodoService {
     TodoDto createNewTodo(TodoDto todo);
     TodoDto getUser(String userId);
     TodoDto specialNewTodo(TodoDto todoDto);
-    TodoDto createNewSubTodoTask(TodoDto todo);
     TodoDto updateSpecifTask(TodoRequestModel todoRequestModel);
     TodoDto finishTodo(TodoTaskIdRequestModel todoTaskIdRequestModel);
     void deleteSpecificTodo(TodoTaskIdRequestModel todoTaskIdRequestModel);

@@ -3,7 +3,7 @@ package com.spring.assistant.assistant.blog.executable.service;
 import com.spring.assistant.assistant.blog.entity.DbUploadFileEntity;
 import com.spring.assistant.assistant.blog.model.UploadModelInput;
 import com.spring.assistant.assistant.blog.repository.DbUploadFileRepository;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class UploadPostService implements BasicTask<UploadModelInput, DbUploadFileEntity> {
+public class UploadPostService implements SimpleTask<UploadModelInput, DbUploadFileEntity> {
 
     private final DbUploadFileRepository dbUploadFileRepository;
 

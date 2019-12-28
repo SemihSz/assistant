@@ -1,6 +1,6 @@
 package com.spring.assistant.assistant.movies.service.executable;
 
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.movies.entity.UserMoviesEntity;
 import com.spring.assistant.assistant.movies.model.UserMovieModel;
 import com.spring.assistant.assistant.movies.repository.UserMoviesRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @AllArgsConstructor
 @Service
-public class UserSaveMovieService implements BasicTask<UserMovieModel, UserMoviesEntity> {
+public class UserSaveMovieService implements SimpleTask<UserMovieModel, UserMoviesEntity> {
 
 	private final UserMoviesRepository userMoviesRepository;
 

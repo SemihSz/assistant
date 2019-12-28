@@ -1,8 +1,8 @@
 package com.spring.assistant.assistant.todo.service.executable.service;
 
 import com.spring.assistant.assistant.exception.BusinessException;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.todo.entity.InProgressEntity;
 import com.spring.assistant.assistant.todo.repository.InProgressRepository;
 import com.spring.assistant.assistant.todo.service.executable.model.InProgressRequest;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class InProgressSaveService implements BasicTask<InProgressRequest, InProgressEntity> {
+public class InProgressSaveService implements SimpleTask<InProgressRequest, InProgressEntity> {
 
 	private final InProgressRepository inProgressRepository;
 

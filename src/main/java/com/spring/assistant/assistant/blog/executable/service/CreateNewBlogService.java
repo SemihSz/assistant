@@ -4,7 +4,7 @@ import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.model.PostSaveModel;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.BadgeResponse;
-import com.spring.assistant.assistant.executable.interfaces.Mappers;
+import com.spring.assistant.assistant.interfaces.Mappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

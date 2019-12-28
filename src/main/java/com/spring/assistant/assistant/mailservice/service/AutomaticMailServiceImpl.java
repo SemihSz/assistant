@@ -25,6 +25,7 @@ public class AutomaticMailServiceImpl implements Serializable {
 
     private TodoRepository todoRepository;
 
+
     public AutomaticMailServiceImpl(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
@@ -38,13 +39,11 @@ public class AutomaticMailServiceImpl implements Serializable {
 
 
     public void getAllAutomatic(MailInfoModel mailInfoModel, LocalDate exceptFinishDate) throws MessagingException {
-        Integer difference = 0;
-        difference = controlFinishDate(exceptFinishDate);
-        if (difference == 1) {
+
+        int difference = controlFinishDate(exceptFinishDate);
+        if (difference == 1 || difference == 0) {
             sendStandartMail(mailInfoModel);
         }
-
-
     }
 
     private Integer controlFinishDate(LocalDate expectDate) {

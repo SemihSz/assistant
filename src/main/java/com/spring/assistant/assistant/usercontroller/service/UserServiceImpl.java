@@ -1,5 +1,6 @@
 package com.spring.assistant.assistant.usercontroller.service;
 
+import com.spring.assistant.assistant.todo.service.executable.service.CreateAutoInProgressSaveService;
 import com.spring.assistant.assistant.todo.shared.utils.GenerateNumberUtil;
 import com.spring.assistant.assistant.usercontroller.Role;
 import com.spring.assistant.assistant.usercontroller.User;
@@ -26,22 +27,24 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Autowired
-    private  BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private GenerateNumberUtil generateNumberUtil;
 
-    public User findByEmail(String email){
+    @Autowired
+    private CreateAutoInProgressSaveService createAutoInProgressSaveService;
+
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public User save(UserRegistrationDto registration){
+    public User save(UserRegistrationDto registration) {
         User user = new User();
 
-        if (userRepository.findByUserId(generateNumberUtil.generateUserId(12))!=null){
+        if (userRepository.findByUserId(generateNumberUtil.generateUserId(12)) != null) {
             createUserId(user);
-        }
-        else{
+        } else {
             createUserId(user);
         }
 
@@ -49,7 +52,10 @@ public class UserServiceImpl implements UserService{
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
+        user.setReagainPassword(passwordEncoder.encode(registration.getConfirmPassword()));
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+        user.setUsername(registration.getFirstName());
+        createAutoInProgressSaveService.apply(user.getUserId());
         return userRepository.save(user);
     }
 

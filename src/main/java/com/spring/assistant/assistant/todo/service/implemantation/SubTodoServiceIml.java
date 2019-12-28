@@ -1,13 +1,15 @@
 package com.spring.assistant.assistant.todo.service.implemantation;
 
-import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.SubTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.SubTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.model.request.SubTodoRequestModel;
-import com.spring.assistant.assistant.todo.repository.DeleteAllTodoRepository;
 import com.spring.assistant.assistant.todo.repository.SubTodoRepository;
 import com.spring.assistant.assistant.todo.service.SubTodoService;
+import com.spring.assistant.assistant.todo.service.executable.model.DeleteTodoAndSubTaskModel;
+import com.spring.assistant.assistant.todo.service.executable.model.SubTaskSaveModel;
+import com.spring.assistant.assistant.todo.service.executable.service.DeleteTodoSaveService;
+import com.spring.assistant.assistant.todo.service.executable.service.SubTodoSaveService;
 import com.spring.assistant.assistant.todo.shared.SubTodoDto;
 import com.spring.assistant.assistant.todo.shared.TodoDto;
 import com.spring.assistant.assistant.todo.shared.enums.PrefixType;
@@ -34,13 +36,16 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
     @Autowired
     SubTodoRepository subTodoRepository;
 
-    @Autowired
-    private DeleteAllTodoRepository deleteAllTodoRepository;
-
     private LocalDate localDate = LocalDate.now();
 
     @Autowired
     private GenerateNumberUtil generateNumberUtil;
+
+    @Autowired
+    private SubTodoSaveService subTodoSaveService;
+
+    @Autowired
+    private DeleteTodoSaveService deleteTodoSaveService;
 
     @Override
     public SubTodoDto createNewSubTodo(SubTodoRequestModel subTodoRequestModel) {
@@ -90,81 +95,32 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
     @Override
     public SubTodoDto updateTheSubTask(SubTodoRequestModel subTodoRequestModel) {
 
-        if (subTodoRequestModel.getSubTaskId().isEmpty()){
+        if (subTodoRequestModel.getSubTaskId().isEmpty()) {
             logger.error("There is no sub task id", new Exception());
         }
-
         SubTodoEntity subTodoEntity = subTodoRepository.findBySubTaskId(subTodoRequestModel.getSubTaskId());
-        SubTodoEntity newSubTodoEntity1 = new SubTodoEntity();
-        if (subTodoEntity == null){
-            logger.error("Errorrrr" , new RuntimeException());
-        }
-        if (subTodoRequestModel.getSubTodoTitle().isEmpty()){
-            logger.info("Now Control the request of title is empty");
-            newSubTodoEntity1.setSubTodoTitle(subTodoEntity.getSubTodoTitle());
-        }
-        if (subTodoRequestModel.getSubTodoDescription().isEmpty()){
-            logger.info("Now Control the request of description is empty");
-            newSubTodoEntity1.setSubTodoDescription(subTodoEntity.getSubTodoDescription());
+        if (subTodoEntity == null) {
+            logger.error("Errorrrr", new RuntimeException());
         }
 
-        if (controlTitleDescription(subTodoRequestModel.getSubTodoTitle(),subTodoRequestModel.getSubTodoDescription())){
-            if (!subTodoRequestModel.getSubTodoTitle().isEmpty()){
-                newSubTodoEntity1.setSubTodoTitle(subTodoRequestModel.getSubTodoTitle());
-            }
-
-            if (!subTodoRequestModel.getSubTodoDescription().isEmpty()){
-                newSubTodoEntity1.setSubTodoDescription(subTodoRequestModel.getSubTodoDescription());
-            }
-
-            logger.info("Update the tittle and Description");
-
-        }else
-            logger.error("title and desc", new RuntimeException());
-
-
-        if (subTodoRequestModel.getSubTodoCategory().isEmpty()) {
-            newSubTodoEntity1.setSubTodoCategory(subTodoEntity.getSubTodoCategory());
-        }
-        else {
-            newSubTodoEntity1.setSubTodoCategory(subTodoRequestModel.getSubTodoCategory());
+        if (subTodoRequestModel.getSubTodoCreatedDate() == null || subTodoRequestModel.getSubTodoFinishDate() == null) {
+            saveSubTask(subTodoEntity, subTodoRequestModel);
         }
 
-        if (subTodoRequestModel.getSubTodoCreatedDate()==null){
-            newSubTodoEntity1.setSubTodoCreatedDate(subTodoEntity.getSubTodoCreatedDate());
-        }
-        if (subTodoRequestModel.getSubTodoFinishDate()==null){
-            newSubTodoEntity1.setSubTodoFinishDate(subTodoEntity.getSubTodoFinishDate());
+        if (!controlTheStartDateAndFinsih(subTodoRequestModel.getSubTodoCreatedDate(), subTodoRequestModel.getSubTodoFinishDate())) {
 
-        }
-        else {
-            if (controlTheStartDateAndFinsih(subTodoRequestModel.getSubTodoCreatedDate(),subTodoRequestModel.getSubTodoFinishDate())){
-                newSubTodoEntity1.setSubTodoCreatedDate(subTodoRequestModel.getSubTodoCreatedDate());
-                newSubTodoEntity1.setSubTodoFinishDate(subTodoRequestModel.getSubTodoFinishDate());
-            }
-            else
-                logger.error("Time problem", new DateTimeException("Local Date was wrong"));
-        }
+            saveSubTask(subTodoEntity, subTodoRequestModel);
+        } else
+            logger.error("Time problem", new DateTimeException("Local Date was wrong"));
 
-
-        newSubTodoEntity1.setSubTodoUpdateDate(localDate);
-        newSubTodoEntity1.setUserId(subTodoEntity.getUserId());
-        newSubTodoEntity1.setTaskId(subTodoEntity.getTaskId());
-        newSubTodoEntity1.setSubTaskId(subTodoRequestModel.getSubTaskId());
-
-        newSubTodoEntity1.setFinished(false);
-        subTodoRepository.delete(subTodoEntity);
-        subTodoRepository.save(newSubTodoEntity1);
-        SubTodoDto returnSubTodo = new SubTodoDto();
-        BeanUtils.copyProperties(newSubTodoEntity1, returnSubTodo);
-        return returnSubTodo;
+        return null;
     }
 
     @Override
     public void deleteSpecificTodo(SubTaskIdRequestModel subTaskIdRequestModel) {
         SubTodoEntity subTodoEntity = subTodoRepository.findBySubTaskId(subTaskIdRequestModel.getSubTaskId());
 
-        DeleteAllTodoEntity deleteAllTodoEntity = DeleteAllTodoEntity.builder()
+        final DeleteTodoAndSubTaskModel deleteAllTodoEntity = DeleteTodoAndSubTaskModel.builder()
                 .subTodoTitle(subTodoEntity.getSubTodoTitle())
                 .subTodoDescription(subTodoEntity.getSubTodoDescription())
                 .subTodoCategory(subTodoEntity.getSubTodoCategory())
@@ -173,9 +129,29 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
                 .subTodoUpdateDate(subTodoEntity.getSubTodoUpdateDate())
                 .subTaskId(subTodoEntity.getSubTaskId())
                 .todoPrefix(PrefixType.SUBTODO.toString())
+                .isFinnished(subTodoEntity.isFinished())
                 .build();
-        deleteAllTodoRepository.save(deleteAllTodoEntity);
+        deleteTodoSaveService.apply(deleteAllTodoEntity);
         subTodoRepository.delete(subTodoEntity);
+    }
+
+    private void saveSubTask(SubTodoEntity subTodoEntity, SubTodoRequestModel subTodoRequestModel) {
+
+        final SubTaskSaveModel subTaskSaveModel = SubTaskSaveModel.builder()
+                .subTodoTitle(subTodoRequestModel.getSubTodoTitle().isEmpty() ? subTodoEntity.getSubTodoTitle() : subTodoRequestModel.getSubTodoTitle())
+                .subTaskId(subTodoEntity.getSubTaskId())
+                .subTodoDescription(subTodoRequestModel.getSubTodoDescription().isEmpty() ? subTodoEntity.getSubTodoDescription() : subTodoRequestModel.getSubTodoDescription())
+                .subTodoCategory(subTodoRequestModel.getSubTodoCategory().isEmpty() ? subTodoEntity.getSubTodoCategory() : subTodoRequestModel.getSubTodoCategory())
+                .taskId(subTodoEntity.getTaskId())
+                .userId(subTodoEntity.getUserId())
+                .finishDate(subTodoRequestModel.getSubTodoFinishDate() == null ? subTodoEntity.getSubTodoFinishDate() : subTodoRequestModel.getSubTodoFinishDate())
+                .updateDate(localDate)
+                .createdDate(subTodoRequestModel.getSubTodoCreatedDate() == null ? subTodoEntity.getSubTodoCreatedDate() : subTodoRequestModel.getSubTodoCreatedDate())
+                .isFinished(false)
+                .build();
+
+        subTodoRepository.delete(subTodoEntity);
+        subTodoSaveService.apply(subTaskSaveModel);
     }
 
 
@@ -220,11 +196,6 @@ public class SubTodoServiceIml extends TodoServiceIml implements SubTodoService 
     @Override
     public TodoDto createNewTodo(TodoDto todo) {
         return super.createNewTodo(todo);
-    }
-
-    @Override
-    public TodoDto createNewSubTodoTask(TodoDto todo) {
-        return super.createNewSubTodoTask(todo);
     }
 
     @Override

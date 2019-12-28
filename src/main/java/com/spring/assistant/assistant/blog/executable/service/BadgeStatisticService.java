@@ -2,8 +2,8 @@ package com.spring.assistant.assistant.blog.executable.service;
 
 import com.spring.assistant.assistant.blog.response.BadgeResponse;
 import com.spring.assistant.assistant.blog.statistic.BadgeStatisticModel;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
-import com.spring.assistant.assistant.executable.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
+import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class BadgeStatisticService implements BasicTask<BadgeResponse, BadgeStatisticModel> {
+public class BadgeStatisticService implements SimpleTask<BadgeResponse, BadgeStatisticModel> {
 
 	private final GetUserIdService getUserIdService;
 

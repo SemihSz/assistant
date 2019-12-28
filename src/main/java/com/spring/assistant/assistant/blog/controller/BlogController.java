@@ -9,22 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,6 +28,8 @@ import java.util.List;
 @Slf4j
 public class BlogController {
 
+
+	//TODO Resim işini yap
 	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	private final PostService postService;
 
@@ -62,7 +59,7 @@ public class BlogController {
 
 	}
 
-	@ExceptionHandler({ResourceNotFoundException.class, Exception.class})
+	/*@ExceptionHandler({ResourceNotFoundException.class, Exception.class})
 	public ModelAndView handleError(HttpServletRequest req, Model model, ResourceNotFoundException exception)
 			throws ResourceNotFoundException {
 
@@ -81,7 +78,7 @@ public class BlogController {
 		mav.addObject("status", 500);
 		mav.setViewName("error");
 		return mav;
-	}
+	}*/
 
 	@GetMapping(path = "/get-current-user-list")
 	public ResponseEntity<List<PostEntity>> showCurrentUserList() {

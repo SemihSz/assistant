@@ -3,7 +3,7 @@ package com.spring.assistant.assistant.blog.executable.service;
 
 import com.spring.assistant.assistant.blog.model.PostBodyModel;
 import com.spring.assistant.assistant.blog.statistic.BodyStatisticModel;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import com.spring.assistant.assistant.todo.shared.utils.TextUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class BodyStatisticService implements BasicTask<PostBodyModel, BodyStatisticModel> {
+public class BodyStatisticService implements SimpleTask<PostBodyModel, BodyStatisticModel> {
 
 	@Autowired
 	TextUtil textUtil;

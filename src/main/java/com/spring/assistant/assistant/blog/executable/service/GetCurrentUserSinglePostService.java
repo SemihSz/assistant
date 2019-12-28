@@ -3,7 +3,7 @@ package com.spring.assistant.assistant.blog.executable.service;
 import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
-import com.spring.assistant.assistant.executable.interfaces.BasicTask;
+import com.spring.assistant.assistant.interfaces.SimpleTask;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @AllArgsConstructor
 @Service
-public class GetCurrentUserSinglePostService implements BasicTask<String, PostCurrentUserResponse> {
+public class GetCurrentUserSinglePostService implements SimpleTask<String, PostCurrentUserResponse> {
 
 	private final PostRepository postRepository;
 

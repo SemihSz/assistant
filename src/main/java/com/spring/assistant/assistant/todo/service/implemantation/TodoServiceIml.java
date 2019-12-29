@@ -91,7 +91,7 @@ public class TodoServiceIml implements TodoService, Serializable {
 		BeanUtils.copyProperties(todo, entityTodoEntity);
 		if (controlTheTitleOfTodo(todo.getTitle())) {
 			if (sizeOfTitle(todo.getTitle())) {
-				if (!descLenght(todo.getDescription())) {
+				if (descLenght(todo.getDescription())) {
 					if (!todo.getUserId().isEmpty() && todo.getUserId().equals("")) {
 						userId = todo.getUserId();
 					} else {

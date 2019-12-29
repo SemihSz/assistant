@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author semih on Aralık, 2019, 22.12.2019, 15:35:52
@@ -33,10 +34,10 @@ public class MoviesController {
 		return "redirect:/movie-and-tv/movies";
 	}
 
-	@GetMapping(path = "/movie-list")
-	public String showMoviesList() {
-		movieService.getUserMovieList();
-		return "okey";
+	@RequestMapping(path = "/movie-list", method = RequestMethod.GET)
+	public String showMoviesList(Model model) {
+		model.addAttribute("movies", movieService.getUserMovieList());
+		return "movie/show-movies";
 	}
 
 

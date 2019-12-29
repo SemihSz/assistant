@@ -45,4 +45,6 @@ public class UserMoviesEntity {
 
 	private String imageUrl;
 
+	private String movieTrailerLink;
+
 }

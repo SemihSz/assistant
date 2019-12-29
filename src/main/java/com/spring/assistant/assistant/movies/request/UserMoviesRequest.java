@@ -17,9 +17,9 @@ public class UserMoviesRequest extends BaseModel {
 
 	private String name;
 
-	private double movieScore;
+	private String movieScore;
 
-	private double userMovieScore;
+	private String userMovieScore;
 
 	private String numberOfWatch;
 
@@ -30,8 +30,11 @@ public class UserMoviesRequest extends BaseModel {
 
 	private String imageUrl;
 
+	private String trailerUrl;
+
 	@Builder
-	public UserMoviesRequest(String userId, String name, String numberOfWatch, Date date, String category, String imageUrl, double movieScore, double userMovieScore) {
+	public UserMoviesRequest(String userId, String name, String numberOfWatch, Date date, String category,
+	                         String imageUrl, String movieScore, String userMovieScore, String trailerUrl) {
 		super(userId);
 		this.name = name;
 		this.movieScore = movieScore;
@@ -40,5 +43,6 @@ public class UserMoviesRequest extends BaseModel {
 		this.category = category;
 		this.imageUrl = imageUrl;
 		this.userMovieScore = userMovieScore;
+		this.trailerUrl = trailerUrl;
 	}
 }

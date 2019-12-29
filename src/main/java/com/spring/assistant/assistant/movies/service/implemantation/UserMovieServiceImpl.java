@@ -33,8 +33,8 @@ public class UserMovieServiceImpl implements MovieService {
 
 
 		final UserMovieModel userMovieModel = UserMovieModel.builder()
-				.movieUserScore(userMoviesRequest.getUserMovieScore())
-				.generalScore(userMoviesRequest.getMovieScore())
+				.movieUserScore(Double.parseDouble(userMoviesRequest.getUserMovieScore()))
+				.generalScore(Double.parseDouble(userMoviesRequest.getMovieScore()))
 				.movieCategory(userMoviesRequest.getCategory())
 				.movieId(generateNumberUtil.generateUserId(7))
 				.movieName(userMoviesRequest.getName())
@@ -42,6 +42,7 @@ public class UserMovieServiceImpl implements MovieService {
 				.lastWatchDate(userMoviesRequest.getDate())
 				.numberOfWatchTime(Integer.parseInt(userMoviesRequest.getNumberOfWatch()))
 				.imageUrl(userMoviesRequest.getImageUrl())
+				.movieTrailerLink(userMoviesRequest.getTrailerUrl())
 				.build();
 
 		userSaveMovieService.apply(userMovieModel);

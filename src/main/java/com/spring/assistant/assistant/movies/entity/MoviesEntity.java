@@ -38,5 +38,7 @@ public class MoviesEntity {
 
 	private String movieCategory;
 
+	private String movieTrailerLink;
+
 
 }

@@ -120,7 +120,7 @@ public class TodoPageController {
             size = Integer.parseInt(request.getParameter("size"));
         }
 
-        model.addAttribute("customers", todoRepository.pages(getUserIdService.getUserId(), PageRequest.of(page, size, Sort.by(sortType))));
+        model.addAttribute("customers", todoRepository.pages(getUserIdService.getUserId(), PageRequest.of(page, size, Sort.by(sortType).descending())));
 
         return "about";
     }

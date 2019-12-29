@@ -16,18 +16,21 @@ public class UserSaveMovieService implements SimpleTask<UserMovieModel, UserMovi
 
 	private final UserMoviesRepository userMoviesRepository;
 
+	//Todo kullanıcnın izlediği filmlere göre kullancıya bir puan çıkarabilirsin csv de veri çekerek dene! veya db
 	@Override
 	public UserMoviesEntity apply(UserMovieModel userMovieModel) {
 
 		final UserMoviesEntity userMoviesEntity = UserMoviesEntity.builder()
 				.userId(userMovieModel.getUserId())
 				.movieUserScore(userMovieModel.getMovieUserScore())
+				.generalScore(userMovieModel.getGeneralScore())
 				.lastWatchDate(userMovieModel.getLastWatchDate())
 				.movieCategory(userMovieModel.getMovieCategory())
 				.movieName(userMovieModel.getMovieName())
 				.movieId(userMovieModel.getMovieId())
 				.imageUrl(userMovieModel.getImageUrl())
 				.numberOfWatchTime(userMovieModel.getNumberOfWatchTime())
+				.movieTrailerLink(userMovieModel.getMovieTrailerLink())
 				.build();
 
 		return userMoviesRepository.save(userMoviesEntity);

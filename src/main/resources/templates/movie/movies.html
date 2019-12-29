@@ -113,14 +113,30 @@
     </div>
     <br>
     <div class="container">
-        <label class="col-form-label"> Your Movie Score</label><input class="form-control" th:field="*{movieScore}"
-                                                                      type="number">
+        <label class="col-form-label"> Your Movie Score</label><input class="form-control" th:field="*{userMovieScore}"
+                                                                      type="text">
+    </div>
+    <br>
+    <div class="container">
+        <label class="col-form-label"> General Score</label><input class="form-control" th:field="*{movieScore}"
+                                                                   type="text">
     </div>
     <br>
     <div class="container">
         <label class="col-form-label">Number of Watch Time</label><input class="form-control text-center"
-                                                                         th:field="*{numberOfWatch}" type="number"
-                                                                         value="1">
+                                                                         th:field="*{numberOfWatch}" type="number">
+    </div>
+
+    <br>
+    <div class="container">
+        <label class="col-form-label">Movie Image Url</label><input class="form-control text-center"
+                                                                    th:field="*{imageUrl}" type="text">
+    </div>
+
+    <br>
+    <div class="container">
+        <label class="col-form-label">YouTube Trailer Url</label><input class="form-control text-center"
+                                                                        th:field="*{trailerUrl}" type="text">
     </div>
 
     <br>

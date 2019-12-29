@@ -30,9 +30,11 @@ public class UserMovieModel extends BaseModel {
 
 	private String imageUrl;
 
+	private String movieTrailerLink;
+
 	@Builder
 	public UserMovieModel(String userId, String movieName, String movieCategory, double movieUserScore, double generalScore,
-	                      int numberOfWatchTime, String movieId, Date lastWatchDate, String imageUrl) {
+	                      int numberOfWatchTime, String movieId, Date lastWatchDate, String imageUrl, String movieTrailerLink) {
 		super(userId);
 		this.movieName = movieName;
 		this.movieCategory = movieCategory;
@@ -42,5 +44,6 @@ public class UserMovieModel extends BaseModel {
 		this.lastWatchDate = lastWatchDate;
 		this.imageUrl = imageUrl;
 		this.generalScore = generalScore;
+		this.movieTrailerLink = movieTrailerLink;
 	}
 }

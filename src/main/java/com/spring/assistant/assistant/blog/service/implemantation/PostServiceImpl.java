@@ -23,6 +23,7 @@ import com.spring.assistant.assistant.blog.statistic.entity.StatisticEntity;
 import com.spring.assistant.assistant.general.GenerateService;
 import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import com.spring.assistant.assistant.todo.shared.enums.PostStatusType;
+import com.spring.assistant.assistant.todo.shared.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -84,6 +85,7 @@ public class PostServiceImpl implements PostService, Serializable {
                 .commentId(commentId)
                 .postStatusType(PostStatusType.NEW)
                 .urlLink(postRequestModel.getUrlLink())
+                .imageUrlLink(postRequestModel.getImageUrlLink())
                 .build();
 
 
@@ -150,7 +152,7 @@ public class PostServiceImpl implements PostService, Serializable {
                         ? userRequest.getBody() : postCurrentUserResponse.getBody())
                 .category((postCurrentUserResponse.getCategory().isEmpty() && !(postCurrentUserResponse.getCategory().equals(userRequest.getCategory())))
                         ? userRequest.getCategory() : postCurrentUserResponse.getCategory())
-                .createDate(userRequest.getCreateDate())
+                .createDate(DateUtils.asDate(userRequest.getCreateDate()))
                 .updatedDate(new Date())
                 .userId(getUserIdService.getUserId())
                 .urlLink((postCurrentUserResponse.getUrlLink().isEmpty() && !postCurrentUserResponse.getUrlLink().equals(userRequest.getUrlLink()))
@@ -165,10 +167,17 @@ public class PostServiceImpl implements PostService, Serializable {
                         ? userRequest.getBadgeFour() : badgeResponse.getBadgeFour())
                 .badgeFive((!userRequest.getBadgeFive().equals(badgeResponse.getBadgeFive()) && badgeResponse.getBadgeFive().isEmpty())
                         ? userRequest.getBadgeFive() : badgeResponse.getBadgeFive())
+                .imageUrlLink(userRequest.getImageUrlLink())
                 .build();
 
         final PostCurrentUserResponse newUserResponse = updatePostService.apply(postSaveModel);
 
-	    return newUserResponse;
+        return newUserResponse;
+    }
+
+    @Override
+    public PostEntity showIdImage(String commentId) {
+        final PostEntity imageUrlLink = postRepository.findByCommentId(commentId);
+        return imageUrlLink;
     }
 }

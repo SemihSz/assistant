@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,13 +15,15 @@ import java.util.Date;
 @Builder
 public class PostCurrentUserResponse {
 
+	private Long id;
+
 	private String title;
 
 	private String body;
 
 	private String attachFile;
 
-	private Date createDate;
+	private LocalDate createDate;
 
 	private String category;
 
@@ -43,4 +46,8 @@ public class PostCurrentUserResponse {
 	private String urlLink;
 
 	private String badgeAll;
+
+	private String userName;
+
+	private String imageUrlLink;
 }

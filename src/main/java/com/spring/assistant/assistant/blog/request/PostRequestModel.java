@@ -24,4 +24,6 @@ public class PostRequestModel {
 
 	private String urlLink;
 
+	private String imageUrlLink;
+
 }

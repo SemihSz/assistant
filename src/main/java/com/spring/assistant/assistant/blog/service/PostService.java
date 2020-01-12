@@ -17,6 +17,8 @@ public interface PostService<T> {
 
 	List<PostEntity> showCurrentUserList();
 
+	PostEntity showIdImage(String commentId);
+
 	List<PostCurrentUserResponse> postCurrentUserResponse();
 
 	PostCurrentUserResponse updatePostCurrentUserResponse(PostCurrentUserResponse postCurrentUserResponse);

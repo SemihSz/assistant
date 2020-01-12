@@ -17,7 +17,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
     List<PostEntity> findByUserId(String userId);
 
-    @Query("SELECT t FROM PostEntity t WHERE t.userId=:userId")
+
+	@Query("SELECT t FROM PostEntity t WHERE t.userId=:userId")
     Page<PostEntity> pages(@Param("userId") String userId, Pageable pageable);
 
 }

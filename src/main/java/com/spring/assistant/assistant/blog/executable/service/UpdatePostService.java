@@ -5,6 +5,7 @@ import com.spring.assistant.assistant.blog.model.PostSaveModel;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
 import com.spring.assistant.assistant.interfaces.SimpleTask;
+import com.spring.assistant.assistant.todo.shared.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class UpdatePostService implements SimpleTask<PostSaveModel, PostCurrentU
 				.badgeFour(postSaveModel.getBadgeFour())
 				.badgeFive(postSaveModel.getBadgeFive())
 				.urlLink(postSaveModel.getUrlLink())
+				.urlImageLink(postSaveModel.getImageUrlLink())
 				.build();
 
 		//Todo log koy
@@ -49,7 +51,7 @@ public class UpdatePostService implements SimpleTask<PostSaveModel, PostCurrentU
 				.title(postEntity.getTitle())
 				.body(postEntity.getBody())
 				.category(postEntity.getCategory())
-				.createDate(postEntity.getCreateDate())
+				.createDate(DateUtils.asLocalDate(postEntity.getCreateDate()))
 				.updatedDate(postEntity.getUpdatedDate())
 				.commentId(postEntity.getCommentId())
 				.postStatusType(postEntity.getPostStatusType())
@@ -59,6 +61,7 @@ public class UpdatePostService implements SimpleTask<PostSaveModel, PostCurrentU
 				.badgeFour(postEntity.getBadgeFour())
 				.badgeFive(postEntity.getBadgeFive())
 				.urlLink(postEntity.getUrlLink())
+				.imageUrlLink(postEntity.getUrlImageLink())
 				.build();
 
 		return postCurrentUserResponse;

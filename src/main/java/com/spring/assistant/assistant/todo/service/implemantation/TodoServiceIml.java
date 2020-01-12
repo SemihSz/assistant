@@ -91,7 +91,6 @@ public class TodoServiceIml implements TodoService, Serializable {
 		BeanUtils.copyProperties(todo, entityTodoEntity);
 		if (controlTheTitleOfTodo(todo.getTitle())) {
 			if (sizeOfTitle(todo.getTitle())) {
-				if (descLenght(todo.getDescription())) {
 					if (!todo.getUserId().isEmpty() && todo.getUserId().equals("")) {
 						userId = todo.getUserId();
 					} else {
@@ -119,10 +118,8 @@ public class TodoServiceIml implements TodoService, Serializable {
 					TodoEntity storeTodos = todoRepository.save(entityTodoEntity);
 					BeanUtils.copyProperties(storeTodos, returnValue);
 
-				} else {
-					showRunTimeMessag("Your description is so short");
 				}
-			}
+
 		} else {
 
 			showRunTimeMessag("Your title is so short");
@@ -144,6 +141,7 @@ public class TodoServiceIml implements TodoService, Serializable {
 		TodoEntity todoEntity = new TodoEntity();
 		BeanUtils.copyProperties(todos, todoEntity);
 		try {
+
 			final TodoUpdateModel todoUpdateModel = TodoUpdateModel.builder()
 					.description(todoRequestModel.getDescription().isEmpty() ? todos.get(0).getDescription() : todoRequestModel.getDescription())
 					.title(todoRequestModel.getTitle().isEmpty() ? todos.get(0).getTitle() : todoRequestModel.getTitle())

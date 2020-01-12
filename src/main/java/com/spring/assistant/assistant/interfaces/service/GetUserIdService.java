@@ -27,7 +27,7 @@ public class GetUserIdService implements SimpleTask<String, String> {
 
 	}
 
-	private String showEmailAddress() {
+	public String showEmailAddress() {
 
 		return userService.giveUserAuthenticationInformation();
 

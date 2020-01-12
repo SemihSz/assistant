@@ -46,10 +46,12 @@ public class PostSaveModel extends BaseModel {
 
 	private String urlLink;
 
+	private String imageUrlLink;
+
 	@Builder
 	public PostSaveModel(@NotNull String userId, @NotNull String title, @NotNull String body, @NotNull String category,
 	                     Date createDate, Date updatedDate, String commentId, PostStatusType postStatusType, String badgeOne,
-	                     String badgeTwo, String badgeThree, String badgeFour, String badgeFive, String urlLink) {
+	                     String badgeTwo, String badgeThree, String badgeFour, String badgeFive, String urlLink, String imageUrlLink) {
 		super(userId);
 		this.title = title;
 		this.body = body;
@@ -64,5 +66,6 @@ public class PostSaveModel extends BaseModel {
 		this.badgeFour = badgeFour;
 		this.badgeFive = badgeFive;
 		this.urlLink = urlLink;
+		this.imageUrlLink = imageUrlLink;
 	}
 }

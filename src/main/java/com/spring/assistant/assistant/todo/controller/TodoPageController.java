@@ -2,6 +2,7 @@ package com.spring.assistant.assistant.todo.controller;
 
 
 import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
+import com.spring.assistant.assistant.todo.entity.DeleteAllTodoEntity;
 import com.spring.assistant.assistant.todo.entity.TodoEntity;
 import com.spring.assistant.assistant.todo.model.request.CategoryRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoRequestModel;
@@ -9,6 +10,7 @@ import com.spring.assistant.assistant.todo.model.request.TodoSortRequestModel;
 import com.spring.assistant.assistant.todo.model.request.TodoTaskIdRequestModel;
 import com.spring.assistant.assistant.todo.model.response.TodoResponseAll;
 import com.spring.assistant.assistant.todo.model.response.TodoResponseModel;
+import com.spring.assistant.assistant.todo.repository.DeleteAllTodoRepository;
 import com.spring.assistant.assistant.todo.repository.TodoRepository;
 import com.spring.assistant.assistant.todo.service.CategoryService;
 import com.spring.assistant.assistant.todo.service.TodoService;
@@ -56,6 +58,9 @@ public class TodoPageController {
 
     @Autowired
     private TodoRepository todoRepository;
+
+    @Autowired
+    DeleteAllTodoRepository deleteAllTodoRepository;
 
     @Autowired
     private GetUserIdService getUserIdService;
@@ -253,8 +258,14 @@ public class TodoPageController {
 
     //TODO SHOW THE CURRENT USER TASK
     @GetMapping(value = "/demex")
-    public ResponseEntity<List<TodoEntity>> ss(){
+    public ResponseEntity<List<TodoEntity>> ss() {
         return ResponseEntity.ok().body(todoService.showTodoListCurrentUser());
+    }
+
+    @GetMapping(path = "/list-all")
+    public ResponseEntity<Iterable<DeleteAllTodoEntity>> list() {
+
+        return ResponseEntity.ok().body(deleteAllTodoRepository.findAll());
     }
 
 

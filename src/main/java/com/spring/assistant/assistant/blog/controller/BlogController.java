@@ -9,12 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,6 +94,20 @@ public class BlogController {
 		model.addAttribute("posts", postService.postCurrentUserResponse());
 		model.addAttribute("postRequestModel", postRequestModel);
 		return "blog/show-blogs";
+	}
+
+	@GetMapping(path = "/get-different-user-lists")
+	public ResponseEntity<List<PostCurrentUserResponse>> rgetList(PostRequestModel postRequestModel, Model model, HttpServletRequest request) {
+		request.getParameter("body");
+		model.addAttribute("posts", postService.postCurrentUserResponse());
+		model.addAttribute("postRequestModel", postRequestModel);
+		return ResponseEntity.ok().body(postService.postCurrentUserResponse());
+	}
+
+	@GetMapping(path = "/rest-api/{commentId}")
+	public ResponseEntity<PostEntity> getList(@PathVariable String commentId, @RequestHeader HttpHeaders httpHeaders) {
+		httpHeaders.add("comment", commentId);
+		return ResponseEntity.ok().body(postService.showIdImage(commentId));
 	}
 
 

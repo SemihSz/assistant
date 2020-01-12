@@ -4,6 +4,7 @@ import com.spring.assistant.assistant.blog.entity.PostEntity;
 import com.spring.assistant.assistant.blog.repository.PostRepository;
 import com.spring.assistant.assistant.blog.response.PostCurrentUserResponse;
 import com.spring.assistant.assistant.interfaces.SimpleTask;
+import com.spring.assistant.assistant.todo.shared.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,14 @@ public class GetCurrentUserSinglePostService implements SimpleTask<String, PostC
 		final PostEntity postEntity = postRepository.findByCommentId(commentId);
 
 		final PostCurrentUserResponse userResponse = PostCurrentUserResponse.builder()
+
 				.title(postEntity.getTitle())
 				.body(postEntity.getBody())
 				.commentId(postEntity.getCommentId())
 				.category(postEntity.getCategory())
 				.postStatusType(postEntity.getPostStatusType())
 				.attachFile(postEntity.getCategory())
-				.createDate(postEntity.getCreateDate())
+				.createDate(DateUtils.asLocalDate(postEntity.getCreateDate()))
 				.updatedDate(postEntity.getUpdatedDate())
 				.badgeOne(postEntity.getBadgeOne())
 				.badgeTwo(postEntity.getBadgeTwo())
@@ -36,6 +38,7 @@ public class GetCurrentUserSinglePostService implements SimpleTask<String, PostC
 				.badgeFour(postEntity.getBadgeFour())
 				.badgeFive(postEntity.getBadgeFive())
 				.urlLink(postEntity.getUrlLink())
+				.imageUrlLink(postEntity.getUrlImageLink())
 				.build();
 
 		//todo log koy

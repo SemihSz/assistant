@@ -76,5 +76,7 @@ public class PostEntity {
 	@Nullable
 	private String urlLink;
 
+	private String urlImageLink;
+
 
 }

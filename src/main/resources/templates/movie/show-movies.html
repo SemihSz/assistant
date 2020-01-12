@@ -258,6 +258,10 @@
 </nav>
 
 <div class="container">
+    <h2>Your Movie List</h2>
+</div>
+
+<div class="container">
     <div class="movie-card" th:each="movie : ${movies}">
         <div class="movie-header manOfSteel"
              th:style="'background-image:url('+ ${movie.movieUrl} +'); background-size: cover;'">

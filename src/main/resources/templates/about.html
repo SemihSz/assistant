@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -12,32 +12,299 @@
 </head>
 
 <body>
-    <div class="container">
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    <a class="text-muted">Subscribe</a>
-                </div>
-                <div class="col-4 text-center">
-                    <a class="blog-header-logo text-dark" href="#">Large</a>
-                </div>
-                <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="text-muted" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-                    </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
-                </div>
-            </div>
-        </header>
-        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
-            <div class="col-md-6 px-0">
-                <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
-                <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Semih WebSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/list">Show Task List</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br>
+<div class="container">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
+            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
+                efficiently about what's most interesting in this post's contents.</p>
+            <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
         </div>
     </div>
-<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</div>
+
+
+<div class="card align-items-lg-start">
+    <div class="card-body align-items-lg-end">
+        <div th:switch="${todos}" class="container">
+            <div class="align-items-center">
+                <br>
+                <a data-toggle="modal" data-target=".bd-example-modal-xl" class="btn btn-primary text-light"><i> Add
+                    Todo</i></a>
+                <a data-toggle="modal" data-target=".bd-example-modal-sm" class="btn btn-primary text-light"><i> Add
+                    Category</i></a>
+            </div>
+            <br>
+            <div class="alert alert-warning">
+                If you want to sort operation.<strong>Select one!</strong> Indicates a warning that might need
+                attention.
+            </div>
+            <div>
+                <form th:action="@{/home/sort-todo}" th:object="${todoSortRequestModel}" method="post">
+                    <div class="input-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{id}" value="id">
+                            <label class="form-check-label">
+                                ID
+                            </label>
+                        </div>&nbsp;&nbsp;
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{importantLevel}"
+                                   value="importantLevel">
+                            <label class="form-check-label">
+                                Important Level
+                            </label>
+                        </div>&nbsp;&nbsp;
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{createdDate}" value="createdDate">
+                            <label class="form-check-label">
+                                Created Date
+                            </label>
+                        </div>&nbsp; &nbsp;
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:field="*{category}" value="category">
+                            <label class="form-check-label">
+                                Category
+                            </label>
+                        </div>&nbsp;&nbsp;
+                        <div>
+                            <button type="submit" class="btn btn-success">Sort</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog"
+                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <form th:action="@{/home/create-todo}" th:object="${todoRequestModel}" method="post">
+                            <div class="container">
+                                <label class="col-form-label">Title</label><input type="text" class="form-control"
+                                                                                  th:field="*{title}">
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">Description</label><input type="text" class="form-control"
+                                                                                        th:field="*{description}">
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">Category</label>
+                                <select class="form-control" th:field="*{category}">
+                                    <option
+                                            th:each="category : ${categories}"
+                                            th:text="${category.categoryName}"
+                                            th:value="${category.categoryName}"
+
+                                    ></option>
+                                </select>
+
+
+                            </div>
+
+                            <div class="container">
+                                <label class="col-form-label">Important Level</label>
+                                <select class="form-control" th:field="*{importantLevel}">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+
+                            </div>
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="targetDate">Created Date</label>
+                                    <input class="form-control" th:field="*{createdDate}" type="date" id="targetDate"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="finishedDate">Finished Date</label>
+                                    <input class="form-control" type="date" th:field="*{expectFinishDate}"
+                                           id="finishedDate"/>
+                                </div>
+
+                                <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
+
+                            </div>
+                            <div class="container">
+                                <label class="col-form-label">User ID</label><input type="text" class="form-control"
+                                                                                    th:field="*{userId}">
+                            </div>
+                            <br>
+                            <div class="container">
+                                <input type="submit" class="btn btn-success" value="Submit"/>
+                            </div>
+                        </form>
+
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <form th:action="@{home/category}" th:object="${categoryRequestModel}" method="post">
+                            <div class="container">
+                                <label class="col-form-label">Add Category Into Database</label><input type="text"
+                                                                                                       class="form-control"
+                                                                                                       th:field="*{categoryName}">
+                            </div>
+                            <br>
+                            <div class="container">
+                                <input type="submit" class="btn btn-info" value="Submit">
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <table class="table table-bordered table-responsive-lg table-hover" style="margin-top: 25px; width: 200px">
+            <thead>
+            <tr>
+                <th class="text-center th-sm">ID</th>
+                <th class="text-center th-sm">Title</th>
+                <th class="text-center th-sm">Category</th>
+                <th class="text-center th-sm"><a th:href="@{/home/list/importantLevel}">Level</a></th>
+                <th class="text-center th-sm"><a th:href="@{/home/list/createdDate}">Created Date</a></th>
+                <th class="text-center th-sm"><a th:href="@{/home/list/updatedDate}">Updated Date</a></th>
+                <th class="text-center th-sm"><a th:href="@{/home/list/expectFinishDate}">Finish Date</a></th>
+                <th class="text-center th-sm">Is Done?</th>
+                <th class="text-center th-sm">Task ID</th>
+                <th class="text-center th-sm" style="width: 5%">Update</th>
+                <th class="text-center th-sm" style="width: 10%">Finish</th>
+                <th class="text-center th-sm" style="width: 10%">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-success" style="font-size: 12px" th:each="customer : ${customers}"
+                th:if="${customer.isFinnished() == true}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.title}"></td>
+                <td th:text="${customer.category}"></td>
+                <td th:text="${customer.importantLevel}"></td>
+                <td th:text="${customer.createdDate}"></td>
+                <td th:text="${customer.updatedDate}"></td>
+                <td th:text="${customer.expectFinishDate}"></td>
+                <td><span style='font-size:20px;'>&#9989;</span></td>
+                <td>
+                    <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${customer.userId},taskId=${customer.taskId})}"
+                       th:text="${customer.taskId}"></a></td>
+                <td class="table text-center"><a class="btn btn-warning"
+                                                 th:href="@{/home/update/{taskId}(taskId=${customer.taskId})}">Update</a>
+                </td>
+                <td class="table text-center"><a>-</a></td>
+                <td class="table text-center"><a class="btn btn-danger"
+                                                 th:href="@{/home/delete/{taskId}(taskId=${customer.taskId})}">Delete</a>
+                </td>
+
+            </tr>
+            <tr class="table-warning" style="font-size: 12px" th:each="customer : ${customers}"
+                th:if="${customer.isFinnished() == false}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.title}"></td>
+                <td th:text="${customer.category}"></td>
+                <td th:text="${customer.importantLevel}"></td>
+                <td th:text="${customer.createdDate}"></td>
+                <td th:text="${customer.updatedDate}"></td>
+                <td th:text="${customer.expectFinishDate}"></td>
+                <td><span style='font-size:20px;'>&#10060;</span></td>
+                <td>
+                    <a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${customer.userId},taskId=${customer.taskId})}"
+                       th:text="${customer.taskId}"></a></td>
+                <td class="table text-center"><a class="btn btn-warning"
+                                                 th:href="@{/home/update/{taskId}(taskId=${customer.taskId})}">Update</a>
+                </td>
+                <td class="table text-center"><a class="btn btn-success"
+                                                 th:href="@{/home/finish/{taskId}(taskId=${customer.taskId})}">Finish</a>
+                </td>
+                <td class="table text-center"><a class="btn btn-danger"
+                                                 th:href="@{/home/delete/{taskId}(taskId=${customer.taskId})}">Delete</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- customers pagination -->
+        <nav aria-label="Pagination" th:if="${customers.totalPages gt 0}">
+            <ul class="pagination justify-content-center font-weight-bold">
+                <li class="page-item" th:classappend="${customers.number eq 0} ? 'disabled'">
+                    <a aria-label="Previous"
+                       class="page-link"
+                       data-toggle="tooltip"
+                       th:href="@{home/list?page={id}(id=${customers.number lt 2 ? 1 : customers.number})}"
+                       title="Previous Page">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq customers.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, customers.totalPages, 1)}">
+                    <a class="page-link" data-toggle="tooltip" th:href="@{home/list?page={id}(id=${i})}"
+                       th:text="${i}" th:title="${'Page '+ i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${customers.number + 1 eq customers.totalPages} ? 'disabled'">
+                    <a aria-label="Next"
+                       class="page-link"
+                       data-toggle="tooltip" th:href="@{home/list?page={id}(id=${customers.number + 2})}"
+                       title="Next Page">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script>
+        $('#targetDate').datepicker(
+            {
+                format: 'yyyy-MM-dd'
+            }
+        );
+        $('#finishedDate').datepicker(
+            {
+                format: 'yyyy-MM-dd'
+            }
+        );
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable({
+                "paging": "simple" // false to disable pagination (or any other option)
+            });
+            $('.dataTables_length').addClass('bs-select');
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
 </body>
 </html>

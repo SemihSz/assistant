@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script>
+    <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script>
+    <script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script>
+    <meta charset='UTF-8'>
+    <meta content="noindex" name="robots">
+    <link href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico"
+          rel="shortcut icon" type="image/x-icon"/>
+    <link color="#111"
+          href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"
+          rel="mask-icon" type=""/>
+    <link href="https://codepen.io/ryanparag/pen/LLrVbo?depth=everything&order=popularity&page=10&q=movie&show_forks=false"
+          rel="canonical"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css' rel='stylesheet prefetch'>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet prefetch'>
+    <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <style class="cp-pen-styles">@import url("https://fonts.googleapis.com/css?family=Arimo:400,700");
+
+    body {
+        height: 100%;
+        width: 100%;
+        background: #e9e9e9;
+        font-family: 'Arimo', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #010b26;
+    }
+
+    * {
+        -webkit-transition: 300ms;
+        transition: 300ms;
+    }
+
+    .intro {
+        text-align: center;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    h1, h2, h3, h4, h5, p {
+        font-weight: 400;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a:hover {
+        color: #6ABCEA;
+    }
+
+    .container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        max-width: 100%;
+        margin-top: 10vh;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+    .movie-card {
+        background: #ffffff;
+        box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 315px;
+        margin: 2em;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .movie-header {
+        padding: 0;
+        margin: 0;
+        height: 367px;
+        width: 100%;
+        display: block;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .manOfSteel {
+        background-size: cover;
+    }
+
+    .babyDriver {
+        background: url("https://i0.wp.com/media2.slashfilm.com/slashfilm/wp/wp-content/images/baby-driver-poster.jpg");
+        background-size: cover;
+    }
+
+    .theDarkTower {
+        background: url("http://cdn.collider.com/wp-content/uploads/2017/03/the-dark-tower-poster.jpg");
+        background-size: cover;
+        background-position: 100% 100%;
+    }
+
+    .bladeRunner2049 {
+        background: url("http://cdn.collider.com/wp-content/uploads/2017/05/blade-runner-2049-poster-ryan-gosling.jpeg");
+        background-size: cover;
+        background-position: 100% 80%;
+    }
+
+    .header-icon-container {
+        position: relative;
+    }
+
+    .header-icon {
+        width: 100%;
+        height: 367px;
+        line-height: 367px;
+        text-align: center;
+        vertical-align: middle;
+        margin: 0 auto;
+        color: #ffffff;
+        font-size: 54px;
+        text-shadow: 0px 0px 20px #6abcea, 0px 5px 20px #6ABCEA;
+        opacity: .85;
+    }
+
+    .header-icon:hover {
+        background: rgba(0, 0, 0, 0.15);
+        font-size: 74px;
+        text-shadow: 0px 0px 20px #6abcea, 0px 5px 30px #6ABCEA;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        opacity: 1;
+    }
+
+    .movie-card:hover {
+        -webkit-transform: scale(1.03);
+        transform: scale(1.03);
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .movie-content {
+        padding: 18px 18px 24px 18px;
+        margin: 0;
+    }
+
+    .movie-content-header, .movie-info {
+        display: table;
+        width: 100%;
+    }
+
+    .movie-title {
+        font-size: 24px;
+        margin: 0;
+        display: table-cell;
+    }
+
+    .imax-logo {
+        width: 50px;
+        height: 15px;
+        background: url("https://6a25bbd04bd33b8a843e-9626a8b6c7858057941524bfdad5f5b0.ssl.cf5.rackcdn.com/media_kit/3e27ede823afbf139c57f1c78a03c870.jpg") no-repeat;
+        background-size: contain;
+        display: table-cell;
+        float: right;
+        position: relative;
+        margin-top: 5px;
+    }
+
+    .movie-info {
+        margin-top: 1em;
+    }
+
+    .info-section {
+        display: table-cell;
+        text-transform: uppercase;
+        text-align: center;
+        width: 60px;
+        height: 24px;
+    }
+
+    .info-section:first-of-type {
+        text-align: left;
+    }
+
+    .info-section:last-of-type {
+        text-align: right;
+    }
+
+    .info-section label {
+        display: block;
+        color: rgba(0, 0, 0, 0.5);
+        margin-bottom: .5em;
+        font-size: 9px;
+    }
+
+    .info-section span {
+        font-weight: 700;
+        font-size: 11px;
+    }
+
+    @media screen and (max-width: 500px) {
+        .movie-card {
+            width: 95%;
+            max-width: 95%;
+            margin: 1em;
+            display: block;
+        }
+
+        .container {
+            padding: 0;
+            margin: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd">
+    <a class="navbar-brand" href="/home/about">
+        <img alt="" class="d-inline-block align-top" height="30" src="/docs/4.0/assets/brand/bootstrap-solid.svg"
+             width="30">
+        Assistant
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home/create">Todo Create <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/list">Todo List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/list">Add Sub Todo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/blog/create-blog">Create Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/movie-and-tv/movies">Add Movie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/blog/get-different-user-list">Blog</a>
+            </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Your Movie List</h2>
+</div>
+
+<div class="container">
+    <div class="movie-card" th:each="movie : ${movies}">
+        <div class="movie-header manOfSteel"
+             th:style="'background-image:url('+ ${movie.movieUrl} +'); background-size: cover;'">
+            <div class="header-icon-container">
+                <a th:href="${movie.movieTrailerLink}">
+                    <i class="material-icons header-icon"></i>
+                </a>
+            </div>
+        </div><!--movie-header-->
+        <div class="movie-content">
+            <div class="movie-content-header">
+                <a>
+                    <h3 class="movie-title" th:text="${movie.movieName}"></h3>
+                </a>
+
+            </div>
+            <div class="movie-info">
+                <div class="info-section" style="width: 81px; height: 44px;">
+                    <label>Last Date</label>
+                    <span th:text="${movie.lastWatchDate}"></span>
+                </div><!--date,time-->
+                <div class="info-section">
+                    <label>Categ.</label>
+                    <span th:text="${movie.movieCategory}"></span>
+                </div><!--date,time-->
+                <div class="info-section">
+                    <label># Watch.</label>
+                    <span th:text="${movie.numberOfWatchTime}"></span>
+                </div><!--screen-->
+                <div class="info-section">
+                    <label>General S.</label>
+                    <span th:text="${movie.movieGeneralScore}"></span>
+                </div><!--row-->
+                <div class="info-section">
+                    <label>User S.</label>
+                    <span th:text="${movie.userMovieScore}"></span>
+                </div><!--seat-->
+            </div>
+        </div><!--movie-content-->
+    </div><!--movie-card-->
+
+</div><!--container-->
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+    var count = [[${movies}]];
+
+    console.log(count[0]);
+    var serializedMyObj = JSON.stringify(count);
+    var obj1 = JSON.parse(serializedMyObj);
+    console.log("movie is : " + serializedMyObj.indexOf("movieName", 4).toString() + " , category is " + obj1.movieCategory);
+</script>
+</body>
+</html>

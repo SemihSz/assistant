@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Show Blogs</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<style>
+    body {
+        font-size: 20px;
+        color: #212529;
+        font-family: 'Lora', 'Times New Roman', serif;
+    }
+
+    p {
+        line-height: 1.5;
+        margin: 30px 0;
+    }
+
+    p a {
+        text-decoration: underline;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 800;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    a {
+        color: #212529;
+        transition: all 0.2s;
+    }
+
+    a:focus, a:hover {
+        color: #0085A1;
+    }
+
+    blockquote {
+        font-style: italic;
+        color: #868e96;
+    }
+
+    .section-heading {
+        font-size: 36px;
+        font-weight: 700;
+        margin-top: 60px;
+    }
+
+    .caption {
+        font-size: 14px;
+        font-style: italic;
+        display: block;
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    ::-moz-selection {
+        color: #fff;
+        background: #0085A1;
+        text-shadow: none;
+    }
+
+    ::selection {
+        color: #fff;
+        background: #0085A1;
+        text-shadow: none;
+    }
+
+    img::-moz-selection {
+        color: #fff;
+        background: transparent;
+    }
+
+    img::selection {
+        color: #fff;
+        background: transparent;
+    }
+
+    img::-moz-selection {
+        color: #fff;
+        background: transparent;
+    }
+
+    #mainNav {
+        position: absolute;
+        border-bottom: 1px solid #e9ecef;
+        background-color: white;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    #mainNav .navbar-brand {
+        font-weight: 800;
+        color: #343a40;
+    }
+
+    #mainNav .navbar-toggler {
+        font-size: 12px;
+        font-weight: 800;
+        padding: 13px;
+        text-transform: uppercase;
+        color: #343a40;
+    }
+
+    #mainNav .navbar-nav > li.nav-item > a {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    @media only screen and (min-width: 992px) {
+        #mainNav {
+            border-bottom: 1px solid transparent;
+            background: transparent;
+        }
+
+        #mainNav .navbar-brand {
+            padding: 10px 20px;
+            color: #fff;
+        }
+
+        #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        #mainNav .navbar-nav > li.nav-item > a {
+            padding: 10px 20px;
+            color: #fff;
+        }
+
+        #mainNav .navbar-nav > li.nav-item > a:focus, #mainNav .navbar-nav > li.nav-item > a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
+        #mainNav {
+            transition: background-color 0.2s;
+            /* Force Hardware Acceleration in WebKit */
+            transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+        }
+
+        #mainNav.is-fixed {
+            /* when the user scrolls down, we hide the header right above the viewport */
+            position: fixed;
+            top: -67px;
+            transition: transform 0.2s;
+            border-bottom: 1px solid white;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #mainNav.is-fixed .navbar-brand {
+            color: #212529;
+        }
+
+        #mainNav.is-fixed .navbar-brand:focus, #mainNav.is-fixed .navbar-brand:hover {
+            color: #0085A1;
+        }
+
+        #mainNav.is-fixed .navbar-nav > li.nav-item > a {
+            color: #212529;
+        }
+
+        #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
+            color: #0085A1;
+        }
+
+        #mainNav.is-visible {
+            /* if the user changes the scrolling direction, we show the header */
+            transform: translate3d(0, 100%, 0);
+        }
+    }
+
+    header.masthead {
+        margin-bottom: 50px;
+        background: no-repeat center center;
+        background-color: #868e96;
+        background-attachment: scroll;
+        position: relative;
+        background-size: cover;
+    }
+
+    header.masthead .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #212529;
+        opacity: 0.5;
+    }
+
+    header.masthead .page-heading,
+    header.masthead .post-heading,
+    header.masthead .site-heading {
+        padding: 200px 0 150px;
+        color: white;
+    }
+
+    @media only screen and (min-width: 768px) {
+        header.masthead .page-heading,
+        header.masthead .post-heading,
+        header.masthead .site-heading {
+            padding: 200px 0;
+        }
+    }
+
+    header.masthead .page-heading,
+    header.masthead .site-heading {
+        text-align: center;
+    }
+
+    header.masthead .page-heading h1,
+    header.masthead .site-heading h1 {
+        font-size: 50px;
+        margin-top: 0;
+    }
+
+    header.masthead .page-heading .subheading,
+    header.masthead .site-heading .subheading {
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 1.1;
+        display: block;
+        margin: 10px 0 0;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    @media only screen and (min-width: 768px) {
+        header.masthead .page-heading h1,
+        header.masthead .site-heading h1 {
+            font-size: 80px;
+        }
+    }
+
+    header.masthead .post-heading h1 {
+        font-size: 35px;
+    }
+
+    header.masthead .post-heading .meta,
+    header.masthead .post-heading .subheading {
+        line-height: 1.1;
+        display: block;
+    }
+
+    header.masthead .post-heading .subheading {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 10px 0 30px;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    header.masthead .post-heading .meta {
+        font-size: 20px;
+        font-weight: 300;
+        font-style: italic;
+        font-family: 'Lora', 'Times New Roman', serif;
+    }
+
+    header.masthead .post-heading .meta a {
+        color: #fff;
+    }
+
+    @media only screen and (min-width: 768px) {
+        header.masthead .post-heading h1 {
+            font-size: 55px;
+        }
+
+        header.masthead .post-heading .subheading {
+            font-size: 30px;
+        }
+    }
+
+    .post-preview > a {
+        color: #212529;
+    }
+
+    .post-preview > a:focus, .post-preview > a:hover {
+        text-decoration: none;
+        color: #0085A1;
+    }
+
+    .post-preview > a > .post-title {
+        font-size: 30px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+
+    .post-preview > a > .post-subtitle {
+        font-weight: 300;
+        margin: 0 0 10px;
+    }
+
+    .post-preview > .post-meta {
+        font-size: 18px;
+        font-style: italic;
+        margin-top: 0;
+        color: #868e96;
+    }
+
+    .post-preview > .post-meta > a {
+        text-decoration: none;
+        color: #212529;
+    }
+
+    .post-preview > .post-meta > a:focus, .post-preview > .post-meta > a:hover {
+        text-decoration: underline;
+        color: #0085A1;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .post-preview > a > .post-title {
+            font-size: 36px;
+        }
+    }
+
+    .floating-label-form-group {
+        font-size: 14px;
+        position: relative;
+        margin-bottom: 0;
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .floating-label-form-group input,
+    .floating-label-form-group textarea {
+        font-size: 1.5em;
+        position: relative;
+        z-index: 1;
+        padding: 0;
+        resize: none;
+        border: none;
+        border-radius: 0;
+        background: none;
+        box-shadow: none !important;
+        font-family: 'Lora', 'Times New Roman', serif;
+    }
+
+    .floating-label-form-group input::-webkit-input-placeholder,
+    .floating-label-form-group textarea::-webkit-input-placeholder {
+        color: #868e96;
+        font-family: 'Lora', 'Times New Roman', serif;
+    }
+
+    .floating-label-form-group label {
+        font-size: 0.85em;
+        line-height: 1.764705882em;
+        position: relative;
+        z-index: 0;
+        top: 2em;
+        display: block;
+        margin: 0;
+        transition: top 0.3s ease, opacity 0.3s ease;
+        vertical-align: middle;
+        vertical-align: baseline;
+        opacity: 0;
+    }
+
+    .floating-label-form-group .help-block {
+        margin: 15px 0;
+    }
+
+    .floating-label-form-group-with-value label {
+        top: 0;
+        opacity: 1;
+    }
+
+    .floating-label-form-group-with-focus label {
+        color: #0085A1;
+    }
+
+    form .form-group:first-child .floating-label-form-group {
+        border-top: 1px solid #dee2e6;
+    }
+
+    footer {
+        padding: 50px 0 65px;
+    }
+
+    footer .list-inline {
+        margin: 0;
+        padding: 0;
+    }
+
+    footer .copyright {
+        font-size: 14px;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 14px;
+        font-weight: 800;
+        padding: 15px 25px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-radius: 0;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .btn-primary {
+        background-color: #0085A1;
+        border-color: #0085A1;
+    }
+
+    .top-buffer {
+        margin-top: 40px;
+    }
+
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        color: #fff;
+        background-color: #00657b !important;
+        border-color: #00657b !important;
+    }
+
+    .btn-lg {
+        font-size: 16px;
+        padding: 25px 35px;
+    }
+
+    .size {
+        padding: 0;
+        margin: 0;
+        height: 250px;
+        width: 100%;
+        display: block;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Semih WebSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/create">Add Todo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">l
+                    Logout</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/blog/get-different-user-list">Show All Personal Blog</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div class="container">
+    <!--<div id="blog" class="row">
+        <div th:action="@{/blog/get-different-user-listl}">
+            <div th:each="post : ${posts}" class="col-md-10 blogShort">
+                <h1 th:text="*{post.title}"></h1>
+                <div class="container">
+                    <img style="height: 50px; width: 50px;" src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_SX675_AL_.jpg" alt="post img"
+                         class="pull-left img-responsive thumb margin10 img-thumbnail">
+                </div>
+                <br>
+                <article th:text="*{post.body}"><p>
+                </p></article>
+                <br>
+                <a th:href="*{post.urlLink}" th:if="${post.getUrlLink() != null}" th:text="*{post.urlLink}"></a>
+                <br><br><br>
+                <span class="badge" th:text="*{post.createDate}"></span>
+                <div class="pull-right"><span th:if="${post.getBadgeOne() != null}" th:text="*{post.getBadgeOne()}"
+                                              class="badge badge-dark"></span> <span
+                        th:if="${post.getBadgeTwo() != null}" th:text="*{post.getBadgeTwo()}"
+                        class="badge badge-primary"></span> <span th:if="${post.getBadgeThree() != null}"
+                                                                  th:text="*{post.getBadgeThree()}"
+                                                                  class="badge badge-success"></span> <span
+                        th:if="${post.getBadgeFour() != null}" th:text="*{post.getBadgeFour()}"
+                        class="badge badge-info"></span> <span th:if="${post.getBadgeFive() != null}"
+                                                               th:text="*{post.getBadgeFive()}"
+                                                               class="badge badge-warning"></span>®
+
+                </div>
+                <hr>
+                <br><br><br><br>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="container" th:action="@{/blog/get-different-user-list}">
+
+        <div class="row top-buffer" th:each="post : ${posts}">
+            <div class="col" th:style="'background-image:url('+ ${post.imageUrlLink} +'); background-size: cover;'">
+
+            </div>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    <a href="#"><h2 class="post-title" id="title">
+                    </h2>
+                        <h3 class="post-subtitle">
+                            Problems look mighty small from 150 miles up
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by
+                        <a href="#" th:text="*{post.userName}"></a>
+                        <a th:text="*{post.createDate}"></a>
+                    </p>
+                    <div class="pull-right"><span class="badge badge-dark" th:if="${post.getBadgeOne() != null}"
+                                                  th:text="*{post.getBadgeOne()}"></span> <span
+                            class="badge badge-primary" th:if="${post.getBadgeTwo() != null}"
+                            th:text="*{post.getBadgeTwo()}"></span> <span class="badge badge-success"
+                                                                          th:if="${post.getBadgeThree() != null}"
+                                                                          th:text="*{post.getBadgeThree()}"></span>
+                        <span
+                                class="badge badge-info" th:if="${post.getBadgeFour() != null}"
+                                th:text="*{post.getBadgeFour()}"></span> <span class="badge badge-warning"
+                                                                               th:if="${post.getBadgeFive() != null}"
+                                                                               th:text="*{post.getBadgeFive()}"></span>®
+                    </div>
+                    <br><br>
+                    <a class="btn btn-success pull-right marginBottom10 text-light" id="myBtn" th:href="*{post.urlLink}"
+                       th:if="${post.getUrlLink() != null}">READ MORE</a>
+                    <a class="btn btn-warning pull-right marginBottom10 text-light" data-target=".bd-example-modal-xl"
+                       data-toggle="modal">Update</a>
+                    <div aria-hidden="true" aria-labelledby="myExtraLargeModalLabel"
+                         class="modal fade bd-example-modal-xl"
+                         role="dialog" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <form method="post"
+                                      th:action="@{/blog/update-post/{commentId}(commentId =${post.getCommentId()})}"
+                                      th:object="${postRequestModel}">
+                                    <div class="container">
+                                        <label class="col-form-label">Title</label><input class="form-control"
+                                                                                          th:field="*{title}"
+                                                                                          type="text">
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                        <label for="exampleFormControlTextarea1">Body</label>
+                                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea1"
+                                                  rows="10"
+                                                  th:field="*{body}"></textarea>
+                                    </div>
+                                    <br>
+                                    <div class="container">
+                                        <label class="col-form-label">Category</label><input class="form-control"
+                                                                                             th:field="*{category}"
+                                                                                             type="text">
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="container">
+                                        <div class="alert alert-warning">
+                                            You have write max.<strong> 5 words</strong> and each words have space
+                                            character between them.
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <label class="col-form-label" for="badge">Badge</label><input
+                                            class="form-control" id="badge"
+                                            th:field="*{badgeAll}" type="text">
+                                    </div>
+
+                                    <div class="container">
+                                        <label class="col-form-label">Url Link</label><input class="form-control"
+                                                                                             th:field="*{urlLink}"
+                                                                                             type="url">
+                                    </div>
+
+
+                                    <br>
+                                    <div class="container">
+                                        <input class="btn btn-success" type="submit" value="Submit"/>
+                                    </div>
+                                </form>
+
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br><br><br><br>
+            </div>
+
+        </div>
+        <br><br><br><br>
+        <div>
+            <button onclick="myFunction()">Click</button>
+            <div>
+                <label id="body"></label>
+                <img id="myImg">
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="deneme.js"></script>
+    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="delete.js"></script>
+
+
+    <script>
+
+        async function getData() {
+            const url = 'http://localhost:8080/blog/get-different-user-lists';
+            const response = await fetch(url);
+            const data = await response.json();
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].title);
+                console.log(data[i].body);
+                console.log(data[i].id);
+                console.log(data[i].createDate);
+                console.log(data[i].category);
+                console.log(data[i].commentId);
+                console.log(data[i].badgeOne);
+                console.log(data[i].badgeTwo);
+
+                const title = data[i].title;
+                const body = data[i].body;
+                const id = data[i].id;
+                const commentId = data[i].commentId;
+                document.getElementById('title').textContent = title;
+                document.getElementById('body').textContent = body;
+                getCategoryList(commentId);
+                document.getElementById("myImg").src = data[i].imageUrlLink;
+            }
+
+
+        }
+
+
+        getDeleteAllTodoList();
+        getData();
+
+
+        // var request = new XMLHttpRequest();
+        // request.open('GET', 'http://localhost:8080/blog/get-different-user-list', true);
+        // request.onload = function() {
+        //     // Begin accessing JSON data here
+        //     var data = JSON.parse(this.response);
+        //     console.log(data);
+        //     if (request.status >= 200 && request.status < 400) {
+        //         data.forEach(movie => {
+        //             const card = document.createElement('div');
+        //             card.setAttribute('class', 'card');
+        //
+        //             const h1 = document.createElement('h1');
+        //             h1.textContent = movie.title;
+        //
+        //             const p = document.createElement('p');
+        //             movie.description = movie.description.substring(0, 300);
+        //             p.textContent = `${movie.description}...`;
+        //
+        //             container.appendChild(card);
+        //             card.appendChild(h1);
+        //             card.appendChild(p);
+        //         })
+        //     } else {
+        //         const errorMessage = document.createElement('marquee');
+        //         errorMessage.textContent = `Gah, it's not working!`;
+        //         app.appendChild(errorMessage);
+        //     }
+        // };
+        //
+        // request.send()
+
+    </script>
+
+
+</body>
+</html>

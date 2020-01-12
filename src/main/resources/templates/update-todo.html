@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title></title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Semih WebSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/create">Add Todo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/list">Show Task List</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div class="mx-auto">
+    <form  th:action="@{/home/update/{taskId}/(taskId=${updateTodoRequestModel.taskId})}" th:object="${updateTodoRequestModel}" method="post">
+        <div class="container">
+            <label class="col-form-label">Title</label><input type="text" class="form-control" th:field="*{title}">
+        </div>
+        <div class="container">
+            <label class="col-form-label">Description</label><input type="text" class="form-control"
+                                                                    th:field="*{description}">
+        </div>
+        <div class="container">
+            <label class="col-form-label">category</label><input type="text" class="form-control" th:field="*{category}">
+        </div>
+
+
+        <div class="container">
+            <div class="form-group">
+                <label for="targetDate">Created Date</label>
+                <input class="form-control" th:field="*{createdDate}" type="date" id="targetDate" />
+            </div>
+
+            <div class="form-group">
+                <label for="finishedDate">Finished Date</label>
+                <input class="form-control" type="date" th:field="*{expectFinishDate}" id="finishedDate" />
+            </div>
+
+            <!--<label class="col-form-label">Expected Date</label><input class="form-control" type="text" th:field="*{expectFinishDate}" >-->
+
+        </div>
+
+        <br>
+        <div class="container">
+            <input type="submit" class="btn btn-success" value="Submit"/>
+        </div>
+    </form>
+</div>
+<script>
+    $('#targetDate').datepicker(
+        {
+            format:'yyyy-MM-dd'
+        }
+    );
+    $('#finishedDate').datepicker(
+        {
+            format:'yyyy-MM-dd'
+        }
+    );
+</script>
+
+<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

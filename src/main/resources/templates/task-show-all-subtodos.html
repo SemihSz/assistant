@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>About</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <style>
+        .table {
+            margin: auto;
+            width: 50% !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Semih WebSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/subtask/list">Show Task List</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br><br>
+<div id="showList" style="display: block" class="align-middle">
+    <div class="card align-middle">
+        <div class="card-body align-middle">
+            <div th:switch="${subtodo}"  class="align-middle" >
+                <div class="col-md-10">
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-lg table-hover text-center align-middle">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Title</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">User ID</th>
+                                <th class="text-center">Created Date</th>
+                                <th class="text-center">Expect Finish Date</th>
+                                <th class="text-center">Task ID</th>
+                                <th class="text-center">Is Finished?</th>
+                                <th class="text-center">Sub Task Id</th>
+                                <th class="text-center">Update</th>
+                                <th class="text-center">Finish</th>
+                                <th class="text-center">Delete</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="todo : ${subtodo}" th:if="${todo.finished == false}" class="table-danger">
+                                <td th:text="${todo.id}"></td>
+                                <td th:text="${todo.subTodoTitle}"></td>
+                                <td th:text="${todo.subTodoDescription}"></td>
+                                <td th:text="${todo.subTodoCategory}"></td>
+                                <td th:text="${todo.userId}"></td>
+                                <td th:text="${todo.subTodoCreatedDate}"></td>
+                                <td th:text="${todo.subTodoFinishDate}"></td>
+                                <td> <a th:text="${todo.taskId}" th:href="@{/subtask/show-specific-task-id-sub-todo-list/{taskId}/(taskId=${todo.taskId})}" onclick="disable()"></a></td>
+                                <td th:text="${todo.finished}"></td>
+                                <td th:text="${todo.subTaskId}"></td>
+                                <td class="table"><a class="btn btn-warning" th:href="@{/subtask/update/{subTaskId}/(subTaskId=${todo.subTaskId})}" >Update</a></td>
+                                <td class="table"><a class="btn btn-success" th:href="@{/subtask/show-specific-task-id-sub-todo-list/finish/{subTaskId}/{taskId}(subTaskId=${todo.subTaskId},taskId=${todo.taskId})}">Finish</a></td>
+                                <td class="table"><a class="btn btn-danger" th:href="@{/subtask/show-specific-task-id-sub-todo-list/delete/{subTaskId}/{taskId}(subTaskId=${todo.subTaskId},taskId=${todo.taskId})}">Delete</a></td>
+                                <!--<td><a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}" th:text="${todo.taskId}"></a></td>-->
+                            </tr>
+                            <tr th:each="todo : ${subtodo}" th:if="${todo.finished == true}" class="table-success">
+                                <td th:text="${todo.id}"></td>
+                                <td th:text="${todo.subTodoTitle}"></td>
+                                <td th:text="${todo.subTodoDescription}"></td>
+                                <td th:text="${todo.subTodoCategory}"></td>
+                                <td th:text="${todo.userId}"></td>
+                                <td th:text="${todo.subTodoCreatedDate}"></td>
+                                <td th:text="${todo.subTodoFinishDate}"></td>
+                                <td> <a th:text="${todo.taskId}" th:href="@{/subtask/show-specific-task-id-sub-todo-list/{taskId}/(taskId=${todo.taskId})}"></a></td>
+                                <td th:text="${todo.finished}"></td>
+                                <td th:text="${todo.subTaskId}"></td>
+                                <td class="table"><a class="btn btn-warning" th:href="@{/subtask/update/{subTaskId}/(subTaskId=${todo.subTaskId})}">Update</a></td>
+                                <td class="table"><a>-</a></td>
+                                <td class="table"><a class="btn btn-danger" th:href="@{/subtask/show-specific-task-id-sub-todo-list/delete/{subTaskId}/{taskId}(subTaskId=${todo.subTaskId},taskId=${todo.taskId})}">Delete</a></td>
+
+                                <!--<td><a th:href="@{/subtask/detail/{userId}/{taskId}(userId=${todo.userId},taskId=${todo.taskId})}" th:text="${todo.taskId}"></a></td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

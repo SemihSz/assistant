@@ -605,14 +605,6 @@
             </div>
 
         </div>
-        <br><br><br><br>
-        <div>
-            <button onclick="myFunction()">Click</button>
-            <div>
-                <label id="body"></label>
-                <img id="myImg">
-            </div>
-        </div>
 
     </div>
 
@@ -648,13 +640,19 @@
                 getCategoryList(commentId);
                 document.getElementById("myImg").src = data[i].imageUrlLink;
             }
+        }
 
-
+        async function getBlogInformation() {
+            const url = "http://localhost:8080/home/list";
+            const response = await fetch(url);
+            const data = await response.json(response);
+            console.log(data)
         }
 
 
         getDeleteAllTodoList();
         getData();
+        getBlogInformation();
 
 
         // var request = new XMLHttpRequest();

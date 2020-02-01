@@ -40,5 +40,7 @@ public class MoviesController {
 		return "movie/show-movies";
 	}
 
+	//TODO movie sayfasına pageable olayını ekle js yazılacak. VE dashboard yapımı
+
 
 }

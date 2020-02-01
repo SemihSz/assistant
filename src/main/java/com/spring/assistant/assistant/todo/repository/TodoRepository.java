@@ -16,24 +16,30 @@ import java.util.List;
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
-    TodoEntity findById(long id);
+	TodoEntity findById(long id);
 
-    List<TodoEntity> findByTaskId(String taskId);
+	List<TodoEntity> findByTaskId(String taskId);
 
-    TodoEntity findByUserId(String userId);
+	TodoEntity findByUserId(String userId);
 
-    @Query("SELECT t FROM TodoEntity t WHERE t.userId=:userId")
-    List<TodoEntity> finds(@Param("userId") String userId);
+	@Query("SELECT t FROM TodoEntity t WHERE t.userId=:userId")
+	List<TodoEntity> finds(@Param("userId") String userId);
 
-    @Query("SELECT t FROM TodoEntity t WHERE t.userId=:userId")
-    Page<TodoEntity> pages(@Param("userId") String userId, Pageable pageable);
+	@Query("SELECT t FROM TodoEntity  t where t.userId=:userId AND t.isFinnished=false")
+	List<TodoEntity> showInProgressList(@Param("userId") String userId);
 
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query("UPDATE TodoEntity t SET t.isFinnished = true, t.updatedDate=:updatedDate, t.email=:email WHERE t.taskId=:taskId")
-    int update(@Param("taskId") String taskId,
-               @Param("updatedDate") LocalDate updatedDate,
-               @Param("email") String email);
+	@Query("SELECT t FROM TodoEntity  t where t.userId=:userId AND t.isFinnished=true ")
+	List<TodoEntity> showFinishList(@Param("userId") String userId);
+
+	@Query("SELECT t FROM TodoEntity t WHERE t.userId=:userId")
+	Page<TodoEntity> pages(@Param("userId") String userId, Pageable pageable);
+
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("UPDATE TodoEntity t SET t.isFinnished = true, t.updatedDate=:updatedDate, t.email=:email WHERE t.taskId=:taskId")
+	int update(@Param("taskId") String taskId,
+	           @Param("updatedDate") LocalDate updatedDate,
+	           @Param("email") String email);
 
 
 }

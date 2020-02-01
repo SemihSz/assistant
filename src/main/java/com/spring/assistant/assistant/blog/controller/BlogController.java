@@ -110,5 +110,7 @@ public class BlogController {
 		return ResponseEntity.ok().body(postService.showIdImage(commentId));
 	}
 
+	//TODO Delete Blog yap db'ye kayıt  dashboard göster
+
 
 }

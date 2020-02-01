@@ -4,11 +4,11 @@ import com.spring.assistant.assistant.todo.entity.CategoryEntity;
 import com.spring.assistant.assistant.todo.model.request.CategoryRequestModel;
 import com.spring.assistant.assistant.todo.repository.CategoryRepository;
 import com.spring.assistant.assistant.todo.service.CategoryService;
-import com.spring.assistant.assistant.todo.shared.CategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,12 +36,25 @@ public class CategoryServiceImpl implements CategoryService {
         return (List<CategoryEntity>) categoryRepository.findAll();
     }
 
-    private boolean checkCategoryNameLenght(String categoryName){
+    private boolean checkCategoryNameLenght(String categoryName) {
         return categoryName.length() >= 2;
     }
 
     @Override
     public boolean controlCategoryNameIsNotExsist(String categoryName) {
         return categoryRepository.findByCategoryName(categoryName) == null;
+    }
+
+    @Override
+    public List<String> findAllCategoryListName() {
+        Iterable<CategoryEntity> categoryEntities = categoryRepository.findAll();
+
+        List<String> result = new ArrayList<>();
+
+        for (CategoryEntity str : categoryEntities) {
+            result.add(str.getCategoryName());
+        }
+
+        return result;
     }
 }

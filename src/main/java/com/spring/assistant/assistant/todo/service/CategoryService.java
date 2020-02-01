@@ -12,4 +12,6 @@ public interface CategoryService {
     void createNewCategory(CategoryRequestModel categoryRequestModel);
     List<CategoryEntity> showCategories();
     boolean controlCategoryNameIsNotExsist(String categoryName);
+
+	List<String> findAllCategoryListName();
 }

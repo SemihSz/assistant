@@ -70,6 +70,4 @@ public class DeleteAllTodoEntity implements Serializable {
     private String todoPrefix;
 
 
-
-
 }

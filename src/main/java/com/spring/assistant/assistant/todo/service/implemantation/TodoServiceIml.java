@@ -43,7 +43,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+//todo çok eski kaldı değimesi lazım ileride
 
+//TODO bu kısım için eklemen gerekenler , kullanıcı todo excected date den önce bitirse bunu başarlı işlem olarak kayıt et. Eğer kullanıcı bu işlemi daha sonra bitirdiyse arada geçen gün sayısı kadar db'de tut.
 
 @Primary
 @Service
@@ -84,7 +86,6 @@ public class TodoServiceIml implements TodoService, Serializable {
 
 	@Override
 	public TodoDto createNewTodo(TodoDto todo) {
-		//Todo model oluşturup save yerine göndermek lazım karışık gözüküyor
 		TodoEntity entityTodoEntity = new TodoEntity();
 		TodoDto returnValue = new TodoDto();
 		String userId = null;

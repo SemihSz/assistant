@@ -242,12 +242,6 @@ public class TodoPageController {
         TodoDto todoDto = todoService.finishTodo(todoTaskIdRequestModel);
         return "redirect:/home/list";
     }
-    //TODO DELETE Sonlarda Test et
-    @GetMapping(value = "delete-all")
-    public String deleteAllTodos(){
-        todoService.deleteAll();
-        return "redirect:/home";
-    }
 
     @GetMapping(value = "/delete/{taskId}")
     public String deleteSpecificTodo(@PathVariable("taskId") String taskId, @ModelAttribute("finishTodoRequestModel") TodoTaskIdRequestModel todoTaskIdRequestModel){

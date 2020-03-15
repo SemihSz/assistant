@@ -32,7 +32,9 @@ public class CollectionService implements Mapper<DashboardModel, UserAllInformat
 
 	private Collection<CollectionAll> buildCollectionService(DashboardModel dashboardModel, UserAllInformationModel userAllInformationModel) {
 
-		final Map<String, List<KeyAndValue>> emailResultMap = userAllInformationModel.getKeyAndValuesEmail().stream().collect(Collectors.groupingBy(KeyAndValue::getKey));
+		final Map<String, List<KeyAndValue>> emailResultMap = userAllInformationModel.getKeyAndValuesEmail()
+				.stream()
+				.collect(Collectors.groupingBy(KeyAndValue::getKey));
 
 		final Collection<CollectionAll> collectionAll = Collections.singleton(CollectionAll.builder()
 				.allUserInformationCollections(userAllInformationModel)
@@ -49,7 +51,9 @@ public class CollectionService implements Mapper<DashboardModel, UserAllInformat
 
 		Map<String, Double> getSizeOfMap = new HashMap<>();
 
-		final int size = emailResultMap.get(EmailType.NOTSEND.getEmailType()).size() + emailResultMap.get(EmailType.NEW.getEmailType()).size() + emailResultMap.get(EmailType.SEND.getEmailType()).size();
+		final int size = emailResultMap.get(EmailType.NOTSEND.getEmailType()).size()
+				+ emailResultMap.get(EmailType.NEW.getEmailType()).size()
+				+ emailResultMap.get(EmailType.SEND.getEmailType()).size();
 
 		getSizeOfMap.put(EmailType.NOTSEND.getEmailType(), getPercentage(emailResultMap.get(EmailType.NOTSEND.getEmailType()).size(), size));
 		getSizeOfMap.put(EmailType.NEW.getEmailType(), getPercentage(emailResultMap.get(EmailType.NEW.getEmailType()).size(), size));

@@ -12,24 +12,29 @@ public class GenerateNumberUtil {
     private final Random random = new SecureRandom();
 	private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?&";
 	private final int ITERATIONS = 10000;
-    private final int KEY_LENGHT = 256;
+	private final int KEY_LENGHT = 256;
 
-    protected static final Integer FILE_ID_LENGHT = 21;
-    protected static final Integer COMENT_ID_LENGHT = 15;
+	protected static final Integer FILE_ID_LENGHT = 21;
+	protected static final Integer COMENT_ID_LENGHT = 15;
 
-    public String generateUserId(int lenght) {
+	public String generateUserId(int lenght) {
 
-        return generateRandomString(lenght);
-    }
+		return generateRandomString(lenght);
+	}
 
-    public String generateUploadId() {
+	public String generateMovieAndTvId(int lenght) {
 
-        return generateRandomString(FILE_ID_LENGHT);
-    }
+		return generateRandomString(lenght);
+	}
 
-    private String generateRandomString(int lenght) {
+	public String generateUploadId() {
 
-        StringBuilder retrun = new StringBuilder(lenght);
+		return generateRandomString(FILE_ID_LENGHT);
+	}
+
+	private String generateRandomString(int lenght) {
+
+		StringBuilder retrun = new StringBuilder(lenght);
 
         for (int i = 0; i < lenght; i++) {
 

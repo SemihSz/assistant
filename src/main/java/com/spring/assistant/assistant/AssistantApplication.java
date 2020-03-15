@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestTemplate;
 
 
 @ComponentScan(basePackages = "com.spring.assistant")
@@ -16,9 +17,21 @@ public class AssistantApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AssistantApplication.class, args);
 	}
+
 	@Bean(name = "SubTodoServiceIml")
-	public SubTodoServiceIml subTodoServiceIml(){return new SubTodoServiceIml();}
+	public SubTodoServiceIml subTodoServiceIml() {
+		return new SubTodoServiceIml();
+	}
+
 	@Bean(name = "TodoServiceIml")
 	@Primary
-	public TodoServiceIml serviceIml(){return new TodoServiceIml();}
+	public TodoServiceIml serviceIml() {
+		return new TodoServiceIml();
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
 }

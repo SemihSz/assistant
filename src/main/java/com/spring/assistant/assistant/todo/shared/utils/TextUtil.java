@@ -103,5 +103,11 @@ public class TextUtil {
 
 	}
 
+	public String[] separateString(String s) {
+		String a = s.replaceAll("\\s+", "");
+		String[] neList = a.split(",");
+		return neList;
+	}
+
 
 }

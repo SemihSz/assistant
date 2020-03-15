@@ -7,14 +7,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public enum ImportantType {
 
-    FIVE("5"),
-    FOUR("4"),
-    THREE("3"),
-    TWO("2"),
-    ONE("1");
+	FIVE("Very Important"),
+	FOUR("Important"),
+	THREE("Neutral"),
+	TWO("Not Neutral"),
+	ONE("Not Important");
 
-    @Getter
-    @Setter
-    public String importantLevelNum;
+	@Getter
+	@Setter
+	public String importantLevelNum;
 
 }

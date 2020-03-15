@@ -25,17 +25,37 @@ public class TodoDateCompareService implements SimpleTask<List<TodoEntity>, List
 
 	private List<TodoDateCompareModel> comparatorService(List<TodoEntity> todoEntities) {
 		List<TodoDateCompareModel> todoDateCompareModels = new ArrayList<>();
+		List<TodoEntity> passList = new ArrayList<>();
+		List<TodoEntity> notPassList = new ArrayList<>();
+		List<TodoEntity> equalList = new ArrayList<>();
+
+		int passExpectedDate = 0;
+		int notPassExpectedDate = 0;
+		int isEqualDay = 0;
 		for (TodoEntity todoEntity : todoEntities) {
 			if (compareDate(LocalDate.now(), todoEntity.getExpectFinishDate()) < 0) {
-				final TodoDateCompareModel todoDateCompareModel = TodoDateCompareModel.builder()
-						.userId(todoEntity.getUserId())
-						.taskId(todoEntity.getTaskId())
-						.differences(compareDate(LocalDate.now(), todoEntity.getExpectFinishDate()))
-						.build();
-
-				todoDateCompareModels.add(todoDateCompareModel);
+				passExpectedDate++;
+				passList.add(todoEntity);
+			} else if (compareDate(LocalDate.now(), todoEntity.getExpectFinishDate()) == 0) {
+				isEqualDay++;
+				equalList.add(todoEntity);
+			} else {
+				notPassExpectedDate++;
+				notPassList.add(todoEntity);
 			}
 		}
+
+		final TodoDateCompareModel todoDateCompareModel = TodoDateCompareModel.builder()
+				.passExpectedDate(passExpectedDate)
+				.notPassExpectedDate(notPassExpectedDate)
+				.isEqual(isEqualDay)
+				.passList(passList)
+				.notPassList(notPassList)
+				.equalList(equalList)
+				.build();
+
+		todoDateCompareModels.add(todoDateCompareModel);
+
 		log.info("TodoDateCompareService is working correctly");
 
 		return todoDateCompareModels;
@@ -45,6 +65,4 @@ public class TodoDateCompareService implements SimpleTask<List<TodoEntity>, List
 
 		return end.compareTo(now);
 	}
-
-
 }

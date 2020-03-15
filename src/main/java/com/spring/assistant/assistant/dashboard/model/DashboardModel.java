@@ -1,11 +1,13 @@
 package com.spring.assistant.assistant.dashboard.model;
 
+import com.spring.assistant.assistant.todo.service.executable.model.TodoDateCompareModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +40,6 @@ public class DashboardModel {
 
 	private UserAllInformationModel setUserAllInf;
 
-	private Integer passExpectedDateSize;
+	private List<TodoDateCompareModel> passExpectedDateSize;
 
 }

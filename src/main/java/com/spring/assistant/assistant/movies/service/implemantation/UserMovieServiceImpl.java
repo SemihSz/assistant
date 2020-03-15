@@ -36,7 +36,7 @@ public class UserMovieServiceImpl implements MovieService {
 				.movieUserScore(Double.parseDouble(userMoviesRequest.getUserMovieScore()))
 				.generalScore(Double.parseDouble(userMoviesRequest.getMovieScore()))
 				.movieCategory(userMoviesRequest.getCategory())
-				.movieId(generateNumberUtil.generateUserId(7))
+				.movieId(generateNumberUtil.generateMovieAndTvId(7))
 				.movieName(userMoviesRequest.getName())
 				.userId(getUserIdService.getUserId())
 				.lastWatchDate(userMoviesRequest.getDate())

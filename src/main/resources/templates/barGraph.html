@@ -17,9 +17,23 @@
             box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
             max-width: 550px;
             height: 475px;
-            margin-left: 10%;
+            margin-left: 1%;
             border-radius: 10px;
             overflow: hidden;
+        }
+
+        .scard-two {
+            background-color: #fff;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            max-width: 520px;
+            height: 475px;
+            margin-left: 1%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .highcharts-description {
+            margin-left: 7px;
         }
 
         .highcharts-figure, .highcharts-data-table table {
@@ -182,9 +196,15 @@
                     </p>
                 </figure>
             </div>
-            <div class="scard">
+            <div class="scard-two">
                 <figure class="highcharts-figure">
                     <div id="pie"></div>
+                    <p class="highcharts-description">
+                        A basic column chart compares rainfall values between four cities.
+                        Tokyo has the overall highest amount of rainfall, followed by New York.
+                        The chart is making use of the axis crosshair feature, to highlight
+                        months as they are hovered over.
+                    </p>
                 </figure>
             </div>
         </div>
@@ -202,12 +222,61 @@
                     </p>
                 </figure>
             </div>
+            <div class="scard-two">
+                <figure class="highcharts-figure">
+                    <div id="pie-todo-state"></div>
+                    <p class="highcharts-description">
+                        A basic column chart compares rainfall values between four cities.
+                        Tokyo has the overall highest amount of rainfall, followed by New York.
+                        The chart is making use of the axis crosshair feature, to highlight
+                        months as they are hovered over.
+                    </p>
+                </figure>
+            </div>
         </div>
         <br>
         <hr>
         <br>
+        <h2>To-do Date Dashboard</h2>
         <div class="row mb-4">
+            <div class="col-xl-3 col-sm-6 py-2">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body bg-warning">
+                        <div class="rotate">
+                            <i class="fa fa-user fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase"># To-do Today!</h6>
+                        <h1 class="display-4" id="isEqualDay"></h1>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-xl-3 col-sm-6 py-2">
+                <div class="card text-white bg-warning h-100">
+                    <div class="card-body bg-info">
+                        <div class="rotate">
+                            <i class="fa fa-share fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase"># To-do Not Pass Expected Date</h6>
+                        <h1 class="display-4" id="notPassExpectDate"></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 py-2">
+                <div class="card text-white bg-danger h-100">
+                    <div class="card-body bg-danger" onclick="console.log(1);">
+                        <div class="rotate">
+                            <i class="fa fa-list fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase"># Todo Pass Expected Date</h6>
+                        <h1 class="display-4" id="passTheExpectedDate"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h2>To-do Timeline</h2>
+        <div class="row mb-4">
             <div class="col-xl-3 col-sm-6 py-2">
                 <div class="card bg-success text-white h-100">
                     <div class="card-body bg-success">
@@ -219,7 +288,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-xl-3 col-sm-6 py-2">
                 <div class="card text-white bg-warning h-100">
                     <div class="card-body bg-warning">
@@ -228,18 +296,6 @@
                         </div>
                         <h6 class="text-uppercase">Progress # Todo </h6>
                         <h1 class="display-4" id="progressTodo"></h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6 py-2">
-                <div class="card text-white bg-danger h-100">
-                    <div class="card-body bg-danger">
-                        <div class="rotate">
-                            <i class="fa fa-list fa-4x"></i>
-                        </div>
-                        <h6 class="text-uppercase"># Todo Pass Expected Date</h6>
-                        <h1 class="display-4" id="passTheExpectedDate"></h1>
                     </div>
                 </div>
             </div>
@@ -293,6 +349,128 @@
         </div>
     </div>
     <hr>
+    <br>
+    <h2>Movie Part</h2>
+    <hr>
+    <div class="row">
+        <div class="scard">
+            <figure class="highcharts-figure">
+                <div id="movie-category"></div>
+                <p class="highcharts-description">
+                    A basic column chart compares rainfall values between four cities.
+                    Tokyo has the overall highest amount of rainfall, followed by New York.
+                    The chart is making use of the axis crosshair feature, to highlight
+                    months as they are hovered over.
+                </p>
+            </figure>
+        </div>
+        <div class="scard-two">
+            <figure class="highcharts-figure">
+                <div id="movie-count"></div>
+                <p class="highcharts-description">
+                    A basic column chart compares rainfall values between four cities.
+                    Tokyo has the overall highest amount of rainfall, followed by New York.
+                    The chart is making use of the axis crosshair feature, to highlight
+                    months as they are hovered over.
+                </p>
+            </figure>
+        </div>
+    </div>
+
+
+    <br>
+    <div class="row">
+        <div class="scard">
+            <figure class="highcharts-figure">
+                <div id="movie-category-average"></div>
+                <p class="highcharts-description">
+                    A basic column chart compares rainfall values between four cities.
+                    Tokyo has the overall highest amount of rainfall, followed by New York.
+                    The chart is making use of the axis crosshair feature, to highlight
+                    months as they are hovered over.
+                </p>
+            </figure>
+        </div>
+        <div class="scard-two">
+            <figure class="highcharts-figure">
+                <div id=""></div>
+                <p class="highcharts-description">
+                    A basic column chart compares rainfall values between four cities.
+                    Tokyo has the overall highest amount of rainfall, followed by New York.
+                    The chart is making use of the axis crosshair feature, to highlight
+                    months as they are hovered over.
+                </p>
+            </figure>
+        </div>
+    </div>
+
+
+    <br>
+    <hr>
+    <h2>Notifications</h2>
+    <hr>
+    <div class="row">
+        <div class="card" style="width: 300px; background-color: #272a3c;">
+            <div class="card-header">
+                <div class="card-title" style="color: #dee2e6">To-do Notification</div>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                    </thead>
+                    <tbody class="table">
+                    <tr>
+                        <div class="alert alert-primary" role="alert"
+                             style="background-color: #ff8d72; color: #dee2e6; border-color: #272a3c">
+                            <span><b>Primary - </b> The chart is making use of the axis crosshair feature,
+                                to highlight months as they are hovered over.</span>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="alert alert-primary" role="alert"
+                             style="background-color: #1d8cf8; color: #dee2e6; border-color: #272a3c">
+                            <span><b>Secondary - </b> The chart is making use of the axis crosshair feature, to highlight
+                                     months as they are hovered over.</span>
+                        </div>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal">Launch demo modal</a>
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody class="table">
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>4</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
 
@@ -320,8 +498,6 @@
         const url = 'http://localhost:8080/get-todo-category';
         const response = await fetch(url);
         const data = await response.json();
-        console.log(typeof data);
-        console.log(data.valueOf());
         var category = [];
         var values = [];
         for (var key in data) {
@@ -383,8 +559,6 @@
         const data = await response.json();
         const todo = data.numberOfTodoDelete;
         const subTodo = data.numberOfSubTodoDelete;
-        console.log(todo);
-        console.log(subTodo);
         document.getElementById("delete-todo").innerHTML = todo;
         document.getElementById("delete-sub-todo").innerHTML = subTodo;
 
@@ -394,7 +568,6 @@
         const url = 'http://localhost:8080/show-all-dashboard-parameter';
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
         const movie = data.numberOfMovies;
         const todo = data.numberOfTodo;
         const allTodo = data.allTodo;
@@ -415,8 +588,6 @@
         const url = 'http://localhost:8080/get-all-collection';
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data[0].allUserInformationCollections);
-        console.log(data[0].getEmailTypeAndSize);
         var category = [];
         var values = [];
         for (var key in data[0].getEmailTypeAndSize) {
@@ -431,10 +602,12 @@
             importantValue.push(data[0].dashboardModel.importantLevelCount[set]);
         }
 
-        const passTheExpectedDate = data[0].dashboardModel.passExpectedDateSize;
+        const passTheExpectedDate = data[0].dashboardModel.passExpectedDateSize[0].passExpectedDate;
+        const notPassExpectDate = data[0].dashboardModel.passExpectedDateSize[0].notPassExpectedDate;
+        const isEqualDay = data[0].dashboardModel.passExpectedDateSize[0].isEqual;
         document.getElementById("passTheExpectedDate").innerHTML = passTheExpectedDate;
-
-        console.log(values);
+        document.getElementById("notPassExpectDate").innerHTML = notPassExpectDate;
+        document.getElementById("isEqualDay").innerHTML = isEqualDay;
 
         Highcharts.chart('pie', {
             chart: {
@@ -444,7 +617,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'To-do type of email pie chart'
+                text: 'To-do Show Email State'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -477,6 +650,48 @@
             }]
         });
 
+        Highcharts.chart('pie-todo-state', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+
+            },
+            title: {
+                text: 'Show To-do Timeline'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Pass',
+                    y: passTheExpectedDate,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Not Pass',
+                    y: notPassExpectDate
+                }, {
+                    name: 'Equal',
+                    y: isEqualDay
+                }]
+            }]
+        });
+
         Highcharts.chart('importantLevel', {
             chart: {
                 plotBackgroundColor: null,
@@ -485,7 +700,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'To-do important category'
+                text: 'To-do Important Level'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -524,6 +739,47 @@
                 ]
             }]
         });
+
+        Highcharts.chart('s', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'To-do state'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Pass',
+                    y: passTheExpectedDate,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Not Pass',
+                    y: notPassExpectDate
+                }, {
+                    name: 'Is Equal',
+                    y: isEqualDay
+                }]
+            }]
+        });
     }
 
     async function getTodoSubTodoDeleteCategory() {
@@ -539,11 +795,185 @@
         }
     }
 
+    async function showUserMovie() {
+        const url = 'http://localhost:8080/show-user-movie';
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.countMovieCategory);
+
+        var category = [];
+        var values = [];
+        for (var key in data.countMovieCategory) {
+            category.push(key);
+            values.push(data.countMovieCategory[key]);
+
+        }
+        var movieName = [];
+        var countOfMovie = [];
+        for (var s in data.numberOfMoviesCount) {
+            movieName.push(s);
+            countOfMovie.push(data.numberOfMoviesCount[s]);
+        }
+        const maxNumber = data.maxCategoryCount;
+        console.log(values);
+
+        Highcharts.chart('movie-category', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Show Number of Movie And TV Categories and Count'
+            },
+            subtitle: {
+                text: 'assistant app'
+            },
+            xAxis: {
+                categories: category,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max: maxNumber + 4,
+                title: {
+                    text: 'Numbers Todo'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    color: '#3ecfff'
+                }
+            },
+            series: [{
+                name: 'Movie Category',
+                data: values
+
+            }]
+        });
+
+        Highcharts.chart('movie-count', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Movie Count of Three'
+            },
+            subtitle: {
+                text: 'assistant app'
+            },
+            xAxis: {
+                categories: movieName,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max: 40,
+                title: {
+                    text: 'Movie Count'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    color: '#ffb618'
+                }
+            },
+            series: [{
+                name: 'Movie Count',
+                data: countOfMovie
+
+            }]
+        });
+        var movieCategoryAverageName = [];
+        var movieCategoryAverageScore = [];
+        for (var t in data.movieCategoryResponse.userWatchMovieAverage) {
+            movieCategoryAverageName.push(t);
+            movieCategoryAverageScore.push(data.movieCategoryResponse.userWatchMovieAverage[t]);
+        }
+        var movieUnderCategoryAverageName = [];
+        var movieUnderCategoryAverageScore = [];
+        for (var k in data.movieCategoryResponse.userWatchMovieAverageUnderFive) {
+            movieUnderCategoryAverageName.push(k);
+            movieUnderCategoryAverageScore.push(data.movieCategoryResponse.userWatchMovieAverageUnderFive[k]);
+        }
+        Highcharts.chart('movie-category-average', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Movie Category Average'
+            },
+            subtitle: {
+                text: 'assistant app'
+            },
+            xAxis: {
+                categories: movieCategoryAverageName,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max: 10.0,
+                title: {
+                    text: 'Average'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    color: '#ff1a35'
+                }
+            },
+            series: [{
+                name: 'Movie Category Average',
+                data: movieCategoryAverageScore
+
+            }, {
+                name: 'Movie Category Average Under 5',
+                data: movieUnderCategoryAverageScore
+
+            }]
+        });
+
+
+    }
+
     async function getBlogDetailDashboard() {
         const url = 'http://localhost:8080/show-blog-statistic';
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.allBlogLength);
         document.getElementById("all").innerHTML = data.allBlogLength;
         var category = [];
         var values = [];
@@ -552,8 +982,13 @@
             values.push(data.blogCategory[key]);
 
         }
-        console.log(category[3] + ": " + values[3]);
         document.getElementById("get1").innerHTML = category[3] + ": " + values[3];
+    }
+
+    async function getterNotification() {
+        const url = 'http://localhost:8080/notification-todo';
+        const response = await fetch(url);
+        const data = await response.json();
     }
 
     getAllCollectionDataSpecificUser();
@@ -563,7 +998,8 @@
     getTodoSubTodoNumber();
     getBlogDetailDashboard();
     getTodoSubTodoDeleteCategory();
-
+    showUserMovie();
+    getterNotification();
 
 </script>
 <script src="webjars/jquery/2.1.1/jquery.min.js"></script>

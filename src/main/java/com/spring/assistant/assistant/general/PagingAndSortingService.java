@@ -28,7 +28,6 @@ public class PagingAndSortingService {
 	/**
 	 * @param filterParameters: "page"->0, "size"->20, "sort"->employee,DESC
 	 * @return &sort=employee,DESC
-	 * @author kodgemisi
 	 */
 	public String buildMultiParamPartUrl(final HashMap<String, Object> filterParameters) {
 		StringBuilder sb = new StringBuilder(0);

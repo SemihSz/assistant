@@ -4,15 +4,20 @@ import com.spring.assistant.assistant.dashboard.model.CollectionAll;
 import com.spring.assistant.assistant.dashboard.model.DashboardBlogModel;
 import com.spring.assistant.assistant.dashboard.model.DashboardDeleteModel;
 import com.spring.assistant.assistant.dashboard.model.DashboardModel;
-import com.spring.assistant.assistant.dashboard.service.DashboardService;
+import com.spring.assistant.assistant.dashboard.model.DashboardMovieModel;
+import com.spring.assistant.assistant.dashboard.model.NotificationTodoModel;
+import com.spring.assistant.assistant.dashboard.request.DashboardRequest;
+import com.spring.assistant.assistant.dashboard.service.DashboardServiceInterface;
 import com.spring.assistant.assistant.interfaces.service.GetUserIdService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,9 +28,11 @@ import java.util.Map;
 public class GraphController {
 
 
-	private final DashboardService dashboardService;
+	private final DashboardServiceInterface dashboardService;
 
 	private final GetUserIdService getUserIdService;
+
+	private final RestTemplate restTemplate;
 
 	@GetMapping("/displayBarGraph")
 	public String barGraph(Model model) {
@@ -60,5 +67,24 @@ public class GraphController {
 	@GetMapping("/get-all-collection")
 	public ResponseEntity<Collection<CollectionAll>> getAllCollection() {
 		return ResponseEntity.ok().body(dashboardService.getAllCollection(getUserIdService.getUserId()));
+	}
+
+	//TODO PathVariable kullan!!
+	@GetMapping("/show-user-movie")
+	public ResponseEntity<DashboardMovieModel> getMovie(DashboardRequest dashboardRequest) {
+		dashboardRequest.setUserInput(3);
+		dashboardRequest.setUserId(getUserIdService.getUserId());
+		return ResponseEntity.ok().body(dashboardService.getMovieData(dashboardRequest));
+	}
+
+	@GetMapping("/notification-todo")
+	public ResponseEntity<List<NotificationTodoModel>> getNotification() {
+		return ResponseEntity.ok().body(dashboardService.getNotifications(getUserIdService.getUserId()));
+	}
+
+	@GetMapping("/ddd")
+	public ResponseEntity<String> getResrest() {
+		return restTemplate.getForEntity("http://127.0.0.1:5000/python", String.class, getUserIdService.getUserId());
+
 	}
 }

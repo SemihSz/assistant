@@ -9,8 +9,8 @@ import java.util.Random;
 @NoArgsConstructor
 public class GenerateNumberUtil {
 
-    private final Random random = new SecureRandom();
-	private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?&";
+	private final Random random = new SecureRandom();
+	private final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?&_=+^%/(){}][";
 	private final int ITERATIONS = 10000;
 	private final int KEY_LENGHT = 256;
 

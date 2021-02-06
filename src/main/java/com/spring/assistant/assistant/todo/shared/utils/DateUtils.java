@@ -3,6 +3,8 @@ package com.spring.assistant.assistant.todo.shared.utils;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,5 +32,18 @@ public class DateUtils {
 
 	public static LocalDateTime asLocalDateTime(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+	}
+
+	public static Date stringToDate(String dob) {
+		//Instantiating the SimpleDateFormat class
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		//Parsing the given String to Date object
+		try {
+			Date date = formatter.parse(dob);
+			return date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
